@@ -1,9 +1,9 @@
 Color: White
-Gap: 0.0
+Gap: 5.0
 Opacity: 0.8
-ShowCircle: true
-ShowCross: true
+ShowCircle: false
+ShowCross: false
 ShowDot: true
 ShowPlus: false
-Size: 500.0
-Thickness: 2
+Size: 10.0
+Thickness: 1.8
