@@ -23,20 +23,7 @@ namespace CrosshairOverlay.Settings
             _deserializer = builder.WithNamingConvention(PascalCaseNamingConvention.Instance).Build();
         }
 
-        public T ParseConfigurationFile(string fileName)
-        {
-            var fileManager = new FileManager(fileName);
-            if (!fileManager.FileExists())
-            {
-                throw new Exception($"{fileName} needs to be present in the same directory as the executable");
-            }
-
-            var yaml = fileManager.ReadFile();
-            var configuration = _deserializer.Deserialize<T>(yaml);
-            return configuration;
-        }
-
-        public ConfigFile ParseConfigurationMain(string configFileName, byte[] configResource)
+        public ConfigFile Parse(string configFileName, byte[] configResource)
         {
             var yamlResource = Encoding.Default.GetString(configResource);
             if (configFileName == null)
@@ -55,33 +42,7 @@ namespace CrosshairOverlay.Settings
             return configuration;
         }
 
-        public void Merge(Dictionary<object, object> primary, Dictionary<object, object> secondary)
-        {
-            foreach (var tuple in secondary)
-            {
-                if (!primary.ContainsKey(tuple.Key))
-                {
-                    primary.Add(tuple.Key, tuple.Value);
-                    continue;
-                }
-
-                var primaryValue = primary[tuple.Key];
-                if (!(primaryValue is IDictionary))
-                {
-                    primary[tuple.Key] = tuple.Value;
-                    continue;
-                }
-                else
-                {
-                    if (secondary[tuple.Key] != null)
-                    {
-                        Merge((Dictionary<object, object>)primaryValue, (Dictionary<object, object>)secondary[tuple.Key]);
-                    }
-                }
-            }
-        }
-
-        public void SerializeToFile(T _)
+        public void Save(T _)
         {
             var config = ConfigFile.Loaded;
             using (var streamWriter = new StreamWriter("Config.yaml"))

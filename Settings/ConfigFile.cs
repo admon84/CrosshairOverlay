@@ -11,13 +11,13 @@ namespace CrosshairOverlay.Settings
         public static void Load()
         {
             var configParser = new ConfigParser<ConfigFile>();
-            Loaded = configParser.ParseConfigurationMain("./Config.yaml", Properties.Resources.Config);
+            Loaded = configParser.Parse("./Config.yaml", Properties.Resources.Config);
             Default = Loaded;
         }
 
         public void Save()
         {
-            new ConfigParser<ConfigFile>().SerializeToFile(this);
+            new ConfigParser<ConfigFile>().Save(this);
         }
 
         [YamlMember(Alias = "Color", ApplyNamingConventions = false)]
