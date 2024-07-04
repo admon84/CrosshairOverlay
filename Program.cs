@@ -14,26 +14,22 @@ namespace CrosshairOverlay
         private static readonly string appNameVersion = $"{appName} {appVersion}";
 
         private static ConfigForm configForm;
-        private static NotifyIcon trayIcon;
-        private static Overlay overlay;
-        private static BackgroundWorker backWorkOverlay = new BackgroundWorker();
         private static Mutex mutex = null;
+        private static Overlay overlay;
+        private static NotifyIcon trayIcon;
+        private static BackgroundWorker worker = new BackgroundWorker();
 
         [STAThread]
         public static void Main()
         {
             try
             {
-                bool createdNew;
-                mutex = new Mutex(true, appName, out createdNew);
-
+                mutex = new Mutex(true, appName, out var createdNew);
                 if (!createdNew)
                 {
-                    MessageBox.Show($"{appName} is already running." + (new Random().NextDouble() < 0.05 ? " Better go catch it!" : ""), appNameVersion, MessageBoxButtons.OK);
+                    MessageBox.Show($"{appName} is already running.", appNameVersion, MessageBoxButtons.OK);
                     return;
                 }
-
-                ConfigFile.Load();
 
                 Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
                 Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
@@ -42,8 +38,10 @@ namespace CrosshairOverlay
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var contextMenu = new ContextMenuStrip();
+                ConfigFile.Load();
+                configForm = new ConfigForm();
 
+                var contextMenu = new ContextMenuStrip();
                 contextMenu.Items.AddRange(new ToolStripItem[]
                 {
                     new ToolStripMenuItem("Config", null, ShowConfigForm),
@@ -59,16 +57,15 @@ namespace CrosshairOverlay
                     Visible = true
                 };
 
-                configForm = new ConfigForm();
-                backWorkOverlay.DoWork += new DoWorkEventHandler(RunOverlay);
-                backWorkOverlay.WorkerSupportsCancellation = true;
-                backWorkOverlay.RunWorkerAsync();
+                worker.DoWork += new DoWorkEventHandler(RunOverlay);
+                worker.WorkerSupportsCancellation = true;
+                worker.RunWorkerAsync();
 
                 Application.Run();
             }
             catch (Exception e)
             {
-                ProcessException(e);
+                HandleException(e);
             }
         }
 
@@ -92,28 +89,26 @@ namespace CrosshairOverlay
             }
         }
 
-        private static void TrayExit(object sender, EventArgs e)
-        {
-            Dispose();
-
-            Application.Exit();
-        }
-
-        private static void ProcessException(Exception e)
-        {
-            MessageBox.Show(e.Message, $"Error - {appNameVersion}", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            Application.Exit();
-        }
-
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            ProcessException((Exception)e.ExceptionObject);
+            HandleException((Exception)e.ExceptionObject);
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            ProcessException(e.Exception);
+            HandleException(e.Exception);
+        }
+
+        private static void HandleException(Exception e)
+        {
+            MessageBox.Show(e.Message, $"Error - {appNameVersion}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Application.Exit();
+        }
+
+        private static void TrayExit(object sender, EventArgs e)
+        {
+            Dispose();
+            Application.Exit();
         }
 
         private static void Dispose()
@@ -122,16 +117,12 @@ namespace CrosshairOverlay
             {
                 configForm.Dispose();
             }
-
             overlay.Dispose();
-
             trayIcon.Dispose();
-
-            if (backWorkOverlay.IsBusy)
+            if (worker.IsBusy)
             {
-                backWorkOverlay.CancelAsync();
+                worker.CancelAsync();
             }
-
             mutex.Dispose();
         }
     }

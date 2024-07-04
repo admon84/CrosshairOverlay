@@ -17,19 +17,13 @@ namespace CrosshairOverlay
         public Overlay()
         {
             GameOverlay.TimerService.EnableHighPrecisionTimers();
-
-            var gfx = new Graphics()
-            {
-                PerPrimitiveAntiAliasing = true
-            };
-
+            var gfx = new Graphics() { PerPrimitiveAntiAliasing = true };
             _window = new GraphicsWindow(0, 0, SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height, gfx)
             {
                 FPS = 60,
                 IsTopmost = true,
                 IsVisible = true
             };
-
             _window.DrawGraphics += _window_DrawGraphics;
             _window.DestroyGraphics += _window_DestroyGraphics;
         }
@@ -39,16 +33,12 @@ namespace CrosshairOverlay
             if (_isDisposed || _isDrawing) return;
 
             _isDrawing = true;
-
             var gfx = e.Graphics;
-
             lock (_lock)
             {
                 gfx.ClearScene();
-
                 _drawing.DrawCrosshair(gfx);
             }
-
             _isDrawing = false;
         }
 
@@ -76,9 +66,7 @@ namespace CrosshairOverlay
                 if (!_isDisposed)
                 {
                     _isDisposed = true;
-
                     _window.Dispose();
-
                     if (_drawing != null)
                     {
                         _drawing.Dispose();
