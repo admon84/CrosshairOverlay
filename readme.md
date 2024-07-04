@@ -1,27 +1,17 @@
 # CrosshairOverlay
 
-Draw a crosshair on the screen on top of other windows.
+CrosshairOverlay is a small C# application that draws a customizable crosshair on your screen.
 
-## Introduction
-
-CrosshairOverlay is a small C# application that draws a crosshair on top of other windows. It includes a settings form for easy configuration.
-
-## Features
-
-- Draws a crosshair on the screen
-- Customizable crosshair settings (color, size, style, etc.)
-
-## Installation
+![crosshair-overlay](https://github.com/admon84/CrosshairOverlay/assets/10291543/a1feccbd-0b2b-48bd-9a6a-b1974cd60654)
 
 ### Prerequisites
 
 - .NET Framework (version 4.7 or higher)
 
-### Steps
+### Build
 
 1. Download or clone the repository.
-2. Navigate to the project directory.
-3. Build the project using your preferred IDE (e.g. Visual Studio)
+2. Build the project using your preferred IDE (e.g. Visual Studio)
 
 ### Usage
 
@@ -31,11 +21,3 @@ CrosshairOverlay is a small C# application that draws a crosshair on top of othe
    - **Pause**: Temporarily disable the crosshair overlay.
    - **Exit**: Close the application.
 3. Use the settings form to customize the crosshair.
-
-### Configuration
-
-The settings form allows you to customize the following options:
-
-- Color: Choose the color of the crosshair.
-- Shape: Change the shape of the crosshair.
-- Size: Adjust the size of the crosshair.
