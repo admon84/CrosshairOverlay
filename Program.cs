@@ -1,5 +1,4 @@
-﻿using CrosshairOverlay.Settings;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
@@ -8,25 +7,26 @@ namespace CrosshairOverlay
 {
     public static class Program
     {
-        private static readonly string appName = "CrosshairOverlay";
-        private static readonly string appVersion = $"v{typeof(Program).Assembly.GetName().Version}";
-        private static readonly string appNameVersion = $"{appName} {appVersion}";
+        private static readonly string _appName = "CrosshairOverlay";
+        private static readonly string _appVersion = $"v{typeof(Program).Assembly.GetName().Version}";
+        private static readonly string _appNameVersion = $"{_appName} {_appVersion}";
 
-        private static ConfigForm configForm;
-        private static Mutex mutex = null;
-        private static Overlay overlay;
-        private static NotifyIcon trayIcon;
-        private static BackgroundWorker worker = new BackgroundWorker();
+        private static SettingsForm settingsForm;
+        private static Mutex _mutex = null;
+        private static Overlay _overlay;
+        private static NotifyIcon _trayIcon;
+        private static BackgroundWorker _worker = new BackgroundWorker();
+        private static bool _isPaused = false;
 
         [STAThread]
         public static void Main()
         {
             try
             {
-                mutex = new Mutex(true, appName, out var createdNew);
+                _mutex = new Mutex(true, _appName, out var createdNew);
                 if (!createdNew)
                 {
-                    MessageBox.Show($"{appName} is already running.", appNameVersion, MessageBoxButtons.OK);
+                    MessageBox.Show($"{_appName} is already running.", _appNameVersion, MessageBoxButtons.OK);
                     return;
                 }
 
@@ -37,28 +37,26 @@ namespace CrosshairOverlay
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                Config.Load();
-                configForm = new ConfigForm();
-
                 var contextMenu = new ContextMenuStrip();
                 contextMenu.Items.AddRange(new ToolStripItem[]
                 {
-                    new ToolStripMenuItem("Config", null, ShowConfigForm),
+                    new ToolStripMenuItem("Settings", null, ShowSettingsForm),
                     new ToolStripSeparator(),
+                    new ToolStripMenuItem("Pause", null, TrayPause),
                     new ToolStripMenuItem("Exit", null, TrayExit)
                 });
 
-                trayIcon = new NotifyIcon()
+                _trayIcon = new NotifyIcon()
                 {
                     Icon = Properties.Resources.Icon,
                     ContextMenuStrip = contextMenu,
-                    Text = appNameVersion,
+                    Text = _appNameVersion,
                     Visible = true
                 };
 
-                worker.DoWork += new DoWorkEventHandler(RunOverlay);
-                worker.WorkerSupportsCancellation = true;
-                worker.RunWorkerAsync();
+                _worker.DoWork += new DoWorkEventHandler(RunOverlay);
+                _worker.WorkerSupportsCancellation = true;
+                _worker.RunWorkerAsync();
 
                 Application.Run();
             }
@@ -68,23 +66,28 @@ namespace CrosshairOverlay
             }
         }
 
-        private static void RunOverlay(object sender, DoWorkEventArgs e)
+        private static void ShowSettingsForm(object sender, EventArgs e)
         {
-            using (overlay = new Overlay())
+            if (settingsForm == null || settingsForm.IsDisposed)
             {
-                overlay.Run();
+                settingsForm = new SettingsForm();
             }
-        }
 
-        private static void ShowConfigForm(object sender, EventArgs e)
-        {
-            if (configForm.Visible)
+            if (settingsForm.Visible)
             {
-                configForm.Activate();
+                settingsForm.Activate();
             }
             else
             {
-                configForm.ShowDialog();
+                settingsForm.ShowDialog();
+            }
+        }
+
+        private static void RunOverlay(object sender, DoWorkEventArgs e)
+        {
+            using (_overlay = new Overlay())
+            {
+                _overlay.Run();
             }
         }
 
@@ -100,7 +103,7 @@ namespace CrosshairOverlay
 
         private static void HandleException(Exception e)
         {
-            MessageBox.Show(e.Message, $"Error - {appNameVersion}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(e.Message, $"Error - {_appNameVersion}", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Application.Exit();
         }
 
@@ -110,19 +113,35 @@ namespace CrosshairOverlay
             Application.Exit();
         }
 
+        private static void TrayPause(object sender, EventArgs e)
+        {
+            if (_isPaused)
+            {
+                _overlay.Unpause();
+                _isPaused = false;
+                ((ToolStripMenuItem)sender).Text = "Pause";
+            }
+            else
+            {
+                _overlay.Pause();
+                _isPaused = true;
+                ((ToolStripMenuItem)sender).Text = "Unpause";
+            }
+        }
+
         private static void Dispose()
         {
-            if (configForm != null)
+            if (settingsForm != null)
             {
-                configForm.Dispose();
+                settingsForm.Dispose();
             }
-            overlay.Dispose();
-            trayIcon.Dispose();
-            if (worker.IsBusy)
+            _overlay.Dispose();
+            _trayIcon.Dispose();
+            if (_worker.IsBusy)
             {
-                worker.CancelAsync();
+                _worker.CancelAsync();
             }
-            mutex.Dispose();
+            _mutex.Dispose();
         }
     }
 }

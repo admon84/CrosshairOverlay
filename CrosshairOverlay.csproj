@@ -10,12 +10,14 @@
     <RootNamespace>CrosshairOverlay</RootNamespace>
     <CustomAssemblyName />
     <AssemblyName Condition=" '$(CustomAssemblyName)' != '' ">$(CustomAssemblyName)</AssemblyName>
-    <AssemblyName Condition=" '$(Configuration)' == 'Release' AND '$(CustomAssemblyName)' == '' ">$(RandomGuid)</AssemblyName>
+    <AssemblyName Condition=" '$(Configuration)' == 'Release' AND '$(CustomAssemblyName)' == ''">$(RandomGuid)</AssemblyName>
     <AssemblyName Condition=" '$(Configuration)' == 'Debug' AND '$(CustomAssemblyName)' == ''">CrosshairOverlay</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,11 +28,15 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetCulture>en</TargetCulture>
+    <ProductName>CrosshairOverlay</ProductName>
+    <PublisherName>admon84</PublisherName>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>0.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>false</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -58,6 +64,21 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>CrosshairOverlay</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>553B8173E7642B0597D76CE2603CBEF2BE2D3116</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>CrosshairOverlay_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,16 +92,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\ConfigForm.cs">
+    <Compile Include="Settings.cs" />
+    <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ConfigForm.Designer.cs">
-      <DependentUpon>ConfigForm.cs</DependentUpon>
+    <Compile Include="Forms\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Drawing\Crosshair.cs" />
-    <Compile Include="Utils\TypeConverters.cs" />
-    <Compile Include="Settings\Config.cs" />
     <Compile Include="Overlay.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,14 +109,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utils\ConfigParser.cs" />
-    <Compile Include="Utils\FileManager.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="Config.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -104,26 +116,33 @@
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Resources\Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="GameOverlay.Net">
       <Version>4.3.1</Version>
     </PackageReference>
-    <PackageReference Include="YamlDotNet">
-      <Version>12.0.2</Version>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Forms\ConfigForm.resx">
-      <DependentUpon>ConfigForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Icon.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
