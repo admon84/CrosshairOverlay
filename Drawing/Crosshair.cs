@@ -9,6 +9,7 @@ namespace CrosshairOverlay.Drawing
     class Crosshair
     {
         private Dictionary<(Color, float), SolidBrush> _brushes = new Dictionary<(Color, float), SolidBrush>();
+        private static readonly float _scale = .707f;
 
         public void DrawCrosshair(Graphics gfx)
         {
@@ -28,22 +29,29 @@ namespace CrosshairOverlay.Drawing
 
             if (Config.Current.ShowCross)
             {
-                var scale = .707f;
-                var diff = scale * size;
-                var pad = scale * gap;
-                gfx.DrawLine(brush, x - diff - pad, y - diff - pad, x - pad, y - pad, stroke);
-                gfx.DrawLine(brush, x + pad, y + pad, x + diff + pad, y + diff + pad, stroke);
-                gfx.DrawLine(brush, x - diff - pad, y + diff + pad, x - pad, y + pad, stroke);
-                gfx.DrawLine(brush, x + pad, y - pad, x + diff + pad, y - diff - pad, stroke);
+                DrawCross(gfx, brush, x, y, _scale * size, _scale * gap, stroke);
             }
 
             if (Config.Current.ShowPlus)
             {
-                gfx.DrawLine(brush, x - size - gap, y, x - gap, y, stroke);
-                gfx.DrawLine(brush, x, y + size + gap, x, y + gap, stroke);
-                gfx.DrawLine(brush, x + gap, y, x + size + gap, y, stroke);
-                gfx.DrawLine(brush, x, y - gap, x, y - size - gap, stroke);
+                DrawPlus(gfx, brush, x, y, size, gap, stroke);
             }
+        }
+
+        private void DrawCross(Graphics gfx, SolidBrush brush, float x, float y, float size, float gap, float stroke)
+        {
+            gfx.DrawLine(brush, x - size - gap, y - size - gap, x - gap, y - gap, stroke);
+            gfx.DrawLine(brush, x + gap, y + gap, x + size + gap, y + size + gap, stroke);
+            gfx.DrawLine(brush, x - size - gap, y + size + gap, x - gap, y + gap, stroke);
+            gfx.DrawLine(brush, x + gap, y - gap, x + size + gap, y - size - gap, stroke);
+        }
+
+        private void DrawPlus(Graphics gfx, SolidBrush brush, float x, float y, float size, float gap, float stroke)
+        {
+            gfx.DrawLine(brush, x - size - gap, y, x - gap, y, stroke);
+            gfx.DrawLine(brush, x, y + size + gap, x, y + gap, stroke);
+            gfx.DrawLine(brush, x + gap, y, x + size + gap, y, stroke);
+            gfx.DrawLine(brush, x, y - gap, x, y - size - gap, stroke);
         }
 
         private SolidBrush CreateBrush(Graphics gfx, Color color, float opacity = 1)
