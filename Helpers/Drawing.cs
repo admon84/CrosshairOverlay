@@ -8,6 +8,7 @@ namespace CrosshairOverlay.Helpers
     class Drawing
     {
         private Dictionary<(Color, float), SolidBrush> _brushes = new Dictionary<(Color, float), SolidBrush>();
+        private float _crossScale = .667f;
 
         public void DrawCrosshair(Graphics gfx)
         {
@@ -27,8 +28,8 @@ namespace CrosshairOverlay.Helpers
 
             if (ConfigFile.Loaded.ShowCross)
             {
-                var diff = size * .667f;
-                var pad = gap * .667f;
+                var diff = _crossScale * size;
+                var pad = _crossScale * gap;
                 gfx.DrawLine(brush, x - diff - pad, y - diff - pad, x - pad, y - pad, stroke);
                 gfx.DrawLine(brush, x + pad, y + pad, x + diff + pad, y + diff + pad, stroke);
                 gfx.DrawLine(brush, x - diff - pad, y + diff + pad, x - pad, y + pad, stroke);
