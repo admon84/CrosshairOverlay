@@ -6,85 +6,85 @@ using GameOverlay.Windows;
 
 namespace CrosshairOverlay
 {
-	public class Overlay : IDisposable
-	{
-		private bool _isDisposed = false;
-		private bool _isDrawing = false;
-		private static readonly object _lock = new object();
-		private Drawing _drawing = new Drawing();
-		private readonly GraphicsWindow _window;
+    public class Overlay : IDisposable
+    {
+        private bool _isDisposed = false;
+        private bool _isDrawing = false;
+        private static readonly object _lock = new object();
+        private Drawing _drawing = new Drawing();
+        private readonly GraphicsWindow _window;
 
-		public Overlay()
-		{
-			GameOverlay.TimerService.EnableHighPrecisionTimers();
+        public Overlay()
+        {
+            GameOverlay.TimerService.EnableHighPrecisionTimers();
 
-			var gfx = new Graphics()
-			{
-				PerPrimitiveAntiAliasing = true
-			};
+            var gfx = new Graphics()
+            {
+                PerPrimitiveAntiAliasing = true
+            };
 
-			_window = new GraphicsWindow(0, 0, SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height, gfx)
-			{
-				FPS = 60,
-				IsTopmost = true,
-				IsVisible = true
-			};
+            _window = new GraphicsWindow(0, 0, SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height, gfx)
+            {
+                FPS = 60,
+                IsTopmost = true,
+                IsVisible = true
+            };
 
-			_window.DrawGraphics += _window_DrawGraphics;
-			_window.DestroyGraphics += _window_DestroyGraphics;
-		}
+            _window.DrawGraphics += _window_DrawGraphics;
+            _window.DestroyGraphics += _window_DestroyGraphics;
+        }
 
-		private void _window_DrawGraphics(object sender, DrawGraphicsEventArgs e)
-		{
-			if (_isDisposed || _isDrawing) return;
+        private void _window_DrawGraphics(object sender, DrawGraphicsEventArgs e)
+        {
+            if (_isDisposed || _isDrawing) return;
 
-			_isDrawing = true;
+            _isDrawing = true;
 
-			var gfx = e.Graphics;
+            var gfx = e.Graphics;
 
-			lock (_lock)
-			{
-				gfx.ClearScene();
+            lock (_lock)
+            {
+                gfx.ClearScene();
 
-				_drawing.DrawCrosshair(gfx);
-			}
+                _drawing.DrawCrosshair(gfx);
+            }
 
-			_isDrawing = false;
-		}
+            _isDrawing = false;
+        }
 
-		private void _window_DestroyGraphics(object sender, DestroyGraphicsEventArgs e)
-		{
-			if (_drawing != null)
-			{
-				_drawing.Dispose();
-			}
-			_drawing = null;
-		}
+        private void _window_DestroyGraphics(object sender, DestroyGraphicsEventArgs e)
+        {
+            if (_drawing != null)
+            {
+                _drawing.Dispose();
+            }
+            _drawing = null;
+        }
 
-		public void Run()
-		{
-			_window.Create();
-			_window.Join();
-		}
+        public void Run()
+        {
+            _window.Create();
+            _window.Join();
+        }
 
-		~Overlay() => Dispose();
+        ~Overlay() => Dispose();
 
-		public void Dispose()
-		{
-			lock (_lock)
-			{
-				if (!_isDisposed)
-				{
-					_isDisposed = true;
+        public void Dispose()
+        {
+            lock (_lock)
+            {
+                if (!_isDisposed)
+                {
+                    _isDisposed = true;
 
-					_window.Dispose();
+                    _window.Dispose();
 
-					if (_drawing != null)
-					{
-						_drawing.Dispose();
-					}
-				}
-			}
-		}
-	}
+                    if (_drawing != null)
+                    {
+                        _drawing.Dispose();
+                    }
+                }
+            }
+        }
+    }
 }
