@@ -1,5 +1,6 @@
 ﻿using CrosshairOverlay.Drawing;
 using System;
+using System.Threading;
 using System.Windows.Forms;
 using GameOverlay.Drawing;
 using GameOverlay.Windows;
@@ -8,7 +9,10 @@ namespace CrosshairOverlay
 {
     public class Overlay : IDisposable
     {
-        private static readonly object _lock = new object();
+        private bool _isRunning;
+        private bool _isPaused;
+        private static readonly object _pauseLock = new object();
+        private static readonly object _drawLock = new object();
         private readonly GraphicsWindow _window;
 
         private Crosshair _crosshair = new Crosshair();
@@ -18,15 +22,18 @@ namespace CrosshairOverlay
         public Overlay()
         {
             GameOverlay.TimerService.EnableHighPrecisionTimers();
-            var gfx = new Graphics() { PerPrimitiveAntiAliasing = true };
+            var gfx = new Graphics()
+            {
+                PerPrimitiveAntiAliasing = false
+            };
             _window = new GraphicsWindow(0, 0, SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height, gfx)
             {
-                FPS = 60,
+                FPS = 30,
                 IsTopmost = true,
-                IsVisible = true
+                IsVisible = true,
             };
-            _window.DrawGraphics += _window_DrawGraphics;
             _window.DestroyGraphics += _window_DestroyGraphics;
+            _window.DrawGraphics += _window_DrawGraphics;
         }
 
         private void _window_DrawGraphics(object sender, DrawGraphicsEventArgs e)
@@ -35,10 +42,14 @@ namespace CrosshairOverlay
 
             _isDrawing = true;
             var gfx = e.Graphics;
-            lock (_lock)
+            lock (_drawLock)
             {
                 gfx.ClearScene();
-                _crosshair.DrawCrosshair(gfx);
+
+                if (!_isPaused)
+                {
+                    _crosshair.DrawCrosshair(gfx);
+                }
             }
             _isDrawing = false;
         }
@@ -54,15 +65,52 @@ namespace CrosshairOverlay
 
         public void Run()
         {
+            _isRunning = true;
             _window.Create();
+            while (_isRunning)
+            {
+                lock (_pauseLock)
+                {
+                    if (_isPaused)
+                    {
+                        Monitor.Wait(_pauseLock);
+                    }
+                }
+                Thread.Sleep(10);
+            }
             _window.Join();
+        }
+
+        public void Pause()
+        {
+            lock (_pauseLock)
+            {
+                _isPaused = true;
+            }
+        }
+
+        public void Unpause()
+        {
+            lock (_pauseLock)
+            {
+                _isPaused = false;
+                Monitor.Pulse(_pauseLock);
+            }
+        }
+
+        public void Stop()
+        {
+            _isRunning = false;
+            Unpause();
         }
 
         ~Overlay() => Dispose();
 
         public void Dispose()
         {
-            lock (_lock)
+            Stop();
+
+            lock (_drawLock)
             {
                 if (!_isDisposed)
                 {

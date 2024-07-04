@@ -1,5 +1,4 @@
-﻿using CrosshairOverlay.Settings;
-using CrosshairOverlay.Utils;
+﻿using CrosshairOverlay.Utils;
 using GameOverlay.Drawing;
 using System.Collections.Generic;
 using Color = System.Drawing.Color;
@@ -8,50 +7,40 @@ namespace CrosshairOverlay.Drawing
 {
     class Crosshair
     {
+        private Settings _settings = Settings.Instance;
         private Dictionary<(Color, float), SolidBrush> _brushes = new Dictionary<(Color, float), SolidBrush>();
-        private static readonly float _scale = .707f;
 
         public void DrawCrosshair(Graphics gfx)
         {
-            var (x, y) = (gfx.Width / 2, gfx.Height / 2);
-            var brush = CreateBrush(gfx, Config.Current.Color, Config.Current.Opacity);
-            var (gap, size, stroke) = (Config.Current.Gap, Config.Current.Size, Config.Current.Thickness);
+            var (x, y) = (gfx.Width / 2f, gfx.Height / 2f);
+            var fillColor = CreateBrush(gfx, _settings.FillColor);
+            var outlineColor = CreateBrush(gfx, _settings.OutlineColor);
+            var width = _settings.CrosshairWidth;
+            var outline = _settings.CrosshairOutline;
+            var size = _settings.CrosshairSize;
+            var gap = _settings.CrosshairGap;
+            var outlineWidth = width + outline;
 
-            if (Config.Current.ShowDot)
+            if (_settings.CrosshairDot)
             {
-                gfx.FillEllipse(brush, x, y, stroke, stroke);
+                gfx.FillCircle(outlineColor, x, y, outlineWidth);
+                gfx.FillCircle(fillColor, x, y, width);
             }
 
-            if (Config.Current.ShowCircle)
+            if (_settings.CrosshairCross)
             {
-                gfx.DrawEllipse(brush, x, y, size, size, stroke);
+                gfx.DrawRectangle(outlineColor, x - size - gap, y, x - gap, y, outlineWidth);
+                gfx.DrawRectangle(outlineColor, x + size + gap, y, x + gap, y, outlineWidth);
+
+                gfx.DrawRectangle(outlineColor, x, y - size - gap, x, y - gap, outlineWidth);
+                gfx.DrawRectangle(outlineColor, x, y + size + gap, x, y + gap, outlineWidth);
+
+                gfx.DrawRectangle(fillColor, x - size - gap, y, x - gap, y, width);
+                gfx.DrawRectangle(fillColor, x + size + gap, y, x + gap, y, width);
+
+                gfx.DrawRectangle(fillColor, x, y - size - gap, x, y - gap, width);
+                gfx.DrawRectangle(fillColor, x, y + size + gap, x, y + gap, width);
             }
-
-            if (Config.Current.ShowCross)
-            {
-                DrawCross(gfx, brush, x, y, _scale * size, _scale * gap, stroke);
-            }
-
-            if (Config.Current.ShowPlus)
-            {
-                DrawPlus(gfx, brush, x, y, size, gap, stroke);
-            }
-        }
-
-        private void DrawCross(Graphics gfx, SolidBrush brush, float x, float y, float size, float gap, float stroke)
-        {
-            gfx.DrawLine(brush, x - size - gap, y - size - gap, x - gap, y - gap, stroke);
-            gfx.DrawLine(brush, x + gap, y + gap, x + size + gap, y + size + gap, stroke);
-            gfx.DrawLine(brush, x - size - gap, y + size + gap, x - gap, y + gap, stroke);
-            gfx.DrawLine(brush, x + gap, y - gap, x + size + gap, y - size - gap, stroke);
-        }
-
-        private void DrawPlus(Graphics gfx, SolidBrush brush, float x, float y, float size, float gap, float stroke)
-        {
-            gfx.DrawLine(brush, x - size - gap, y, x - gap, y, stroke);
-            gfx.DrawLine(brush, x, y + size + gap, x, y + gap, stroke);
-            gfx.DrawLine(brush, x + gap, y, x + size + gap, y, stroke);
-            gfx.DrawLine(brush, x, y - gap, x, y - size - gap, stroke);
         }
 
         private SolidBrush CreateBrush(Graphics gfx, Color color, float opacity = 1)
