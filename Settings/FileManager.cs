@@ -16,40 +16,7 @@ namespace CrosshairOverlay.Settings
         }
 
         public string GetPath() => _filePathRelative;
-        public string GetAbsolutePath() => _fullPath;
         public bool FileExists() => File.Exists(_fullPath);
-
-        public void CreateFile()
-        {
-            if (FileExists())
-            {
-                throw new Exception($"Trying to create {_fullPath} even though file exists.");
-            }
-
-            try
-            {
-                File.Create(_fullPath).Close();
-            }
-            catch (Exception e)
-            {
-                throw new Exception($"Trying to create {_fullPath} : {e.Message}");
-            }
-        }
-
-        public void DeleteFile()
-        {
-            try
-            {
-                if (FileExists())
-                {
-                    File.Delete(_fullPath);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception($"Tried to remove {_fullPath} but got error: {e.Message}");
-            }
-        }
 
         public string ReadFile()
         {
@@ -75,23 +42,6 @@ namespace CrosshairOverlay.Settings
                 throw new Exception($"The file {_filePathRelative} was empty.");
             }
             return sb.ToString();
-        }
-
-        public bool WriteFile(string content)
-        {
-            try
-            {
-                using (StreamWriter sw = File.CreateText(_filePathRelative))
-                {
-                    sw.WriteLine(content);
-                    sw.Close();
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception($"The file {_filePathRelative} could not be written: {e.Message}");
-            }
-            return true;
         }
     }
 }
