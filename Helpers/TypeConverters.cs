@@ -27,7 +27,7 @@ namespace CrosshairOverlay.Helpers
         {
             if (value != null)
             {
-                emitter.Emit(new Scalar(null, ((Color)value).ToString()));
+                emitter.Emit(new Scalar(null, ((Color)value).ToColorName()));
             }
         }
     }
