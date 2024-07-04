@@ -5,14 +5,12 @@ namespace CrosshairOverlay.Settings
 {
     public class ConfigFile
     {
-        public static ConfigFile Default { get; set; }
         public static ConfigFile Loaded { get; set; }
 
         public static void Load()
         {
             var configParser = new ConfigParser<ConfigFile>();
             Loaded = configParser.Parse("./Config.yaml", Properties.Resources.Config);
-            Default = Loaded;
         }
 
         public void Save()

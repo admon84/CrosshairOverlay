@@ -25,7 +25,7 @@ namespace CrosshairOverlay
             
             btnColor.BackColor = ConfigFile.Loaded.Color;
             btnColor.ForeColor = ContrastTextColor(btnColor.BackColor);
-            btnColorReset.Visible = ConfigFile.Loaded.Color != ConfigFile.Default.Color;
+            btnColorReset.Visible = ConfigFile.Loaded.Color != Color.White;
         }
 
         private List<Color> customColors = new List<Color>();
@@ -68,17 +68,15 @@ namespace CrosshairOverlay
                 ConfigFile.Loaded.Color = colorDlg.Color;
                 btnColor.BackColor = colorDlg.Color;
                 btnColor.ForeColor = ContrastTextColor(btnColor.BackColor);
-
                 btnColorReset.Visible = true;
             }
         }
 
         private void btnColorReset_Click(object sender, EventArgs e)
         {
-            ConfigFile.Loaded.Color = ConfigFile.Default.Color;
+            ConfigFile.Loaded.Color = Color.White;
             btnColor.BackColor = ConfigFile.Loaded.Color;
             btnColor.ForeColor = ContrastTextColor(btnColor.BackColor);
-
             btnColorReset.Visible = false;
         }
 
