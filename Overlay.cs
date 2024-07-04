@@ -8,11 +8,12 @@ namespace CrosshairOverlay
 {
     public class Overlay : IDisposable
     {
+        private static readonly object _lock = new object();
+        private readonly GraphicsWindow _window;
+
+        private Drawing _drawing = new Drawing();
         private bool _isDisposed = false;
         private bool _isDrawing = false;
-        private static readonly object _lock = new object();
-        private Drawing _drawing = new Drawing();
-        private readonly GraphicsWindow _window;
 
         public Overlay()
         {

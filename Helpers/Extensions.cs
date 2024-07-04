@@ -16,14 +16,6 @@ namespace CrosshairOverlay.Helpers
             return new Color(color.R, color.G, color.B, color.A);
         }
 
-        public static string ToProperCase(this string text)
-        {
-            return Regex.Replace(text, "(\\B[A-Z])", " $1");
-        }
-
-        public static string ToPascalCase(this string text)
-        {
-            return text.Replace(" ", "");
-        }
+        public static string ToColorName(this SystemColor color) => color.IsNamedColor ? color.Name : $"{color.R}, {color.G}, {color.B}";
     }
 }

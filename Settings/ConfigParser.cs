@@ -20,10 +20,7 @@ namespace CrosshairOverlay.Settings
             {
                 builder.IgnoreUnmatchedProperties();
             }
-
-            _deserializer = builder
-                .WithNamingConvention(PascalCaseNamingConvention.Instance)
-                .Build();
+            _deserializer = builder.WithNamingConvention(PascalCaseNamingConvention.Instance).Build();
         }
 
         public T ParseConfigurationFile(string fileName)
@@ -101,7 +98,6 @@ namespace CrosshairOverlay.Settings
                 var serializer = new SerializerBuilder()
                     .WithNamingConvention(PascalCaseNamingConvention.Instance)
                     .WithTypeConverter(new FloatTypeConverter())
-                    .WithTypeConverter(new CrosshairStyleTypeConverter())
                     .WithTypeConverter(new ColorTypeConverter())
                     .Build();
                 serializer.Serialize(streamWriter, config);

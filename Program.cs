@@ -1,5 +1,4 @@
-﻿using CrosshairOverlay.Helpers;
-using CrosshairOverlay.Settings;
+﻿using CrosshairOverlay.Settings;
 using System;
 using System.ComponentModel;
 using System.Threading;
