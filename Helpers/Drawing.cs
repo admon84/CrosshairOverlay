@@ -13,25 +13,7 @@ namespace CrosshairOverlay.Helpers
         {
             var (x, y) = (gfx.Width / 2, gfx.Height / 2);
             var brush = CreateBrush(gfx, ConfigFile.Loaded.Color, ConfigFile.Loaded.Opacity);
-            var (size, stroke) = (ConfigFile.Loaded.Size, ConfigFile.Loaded.Thickness);
-
-            void DrawCross(float gap = 0)
-            {
-                var diff = size * .667f;
-                var pad = gap * .667f;
-                gfx.DrawLine(brush, x - diff - pad, y - diff - pad, x - pad, y - pad, stroke);
-                gfx.DrawLine(brush, x + pad, y + pad, x + diff + pad, y + diff + pad, stroke);
-                gfx.DrawLine(brush, x - diff - pad, y + diff + pad, x - pad, y + pad, stroke);
-                gfx.DrawLine(brush, x + pad, y - pad, x + diff + pad, y - diff - pad, stroke);
-            };
-
-            void DrawPlus(float gap = 0)
-            {
-                gfx.DrawLine(brush, x - size - gap, y, x - gap, y, stroke);
-                gfx.DrawLine(brush, x, y + size + gap, x, y + gap, stroke);
-                gfx.DrawLine(brush, x + gap, y, x + size + gap, y, stroke);
-                gfx.DrawLine(brush, x, y - gap, x, y - size - gap, stroke);
-            };
+            var (gap, size, stroke) = (ConfigFile.Loaded.Gap, ConfigFile.Loaded.Size, ConfigFile.Loaded.Thickness);
 
             if (ConfigFile.Loaded.ShowDot)
             {
@@ -45,12 +27,20 @@ namespace CrosshairOverlay.Helpers
 
             if (ConfigFile.Loaded.ShowCross)
             {
-                DrawCross(ConfigFile.Loaded.Gap);
+                var diff = size * .667f;
+                var pad = gap * .667f;
+                gfx.DrawLine(brush, x - diff - pad, y - diff - pad, x - pad, y - pad, stroke);
+                gfx.DrawLine(brush, x + pad, y + pad, x + diff + pad, y + diff + pad, stroke);
+                gfx.DrawLine(brush, x - diff - pad, y + diff + pad, x - pad, y + pad, stroke);
+                gfx.DrawLine(brush, x + pad, y - pad, x + diff + pad, y - diff - pad, stroke);
             }
 
             if (ConfigFile.Loaded.ShowPlus)
             {
-                DrawPlus(ConfigFile.Loaded.Gap);
+                gfx.DrawLine(brush, x - size - gap, y, x - gap, y, stroke);
+                gfx.DrawLine(brush, x, y + size + gap, x, y + gap, stroke);
+                gfx.DrawLine(brush, x + gap, y, x + size + gap, y, stroke);
+                gfx.DrawLine(brush, x, y - gap, x, y - size - gap, stroke);
             }
         }
 
