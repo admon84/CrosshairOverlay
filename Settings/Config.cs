@@ -1,21 +1,22 @@
-﻿using System.Drawing;
+using CrosshairOverlay.Utils;
+using System.Drawing;
 using YamlDotNet.Serialization;
 
 namespace CrosshairOverlay.Settings
 {
-    public class ConfigFile
+    public class Config
     {
-        public static ConfigFile Loaded { get; set; }
+        public static Config Current { get; set; }
 
         public static void Load()
         {
-            var configParser = new ConfigParser<ConfigFile>();
-            Loaded = configParser.Parse("./Config.yaml", Properties.Resources.Config);
+            var configParser = new ConfigParser<Config>();
+            Current = configParser.Parse("./Config.yaml", Properties.Resources.Config);
         }
 
         public void Save()
         {
-            new ConfigParser<ConfigFile>().Save(this);
+            new ConfigParser<Config>().Save(this);
         }
 
         [YamlMember(Alias = "Color", ApplyNamingConventions = false)]

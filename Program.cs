@@ -37,7 +37,7 @@ namespace CrosshairOverlay
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                ConfigFile.Load();
+                Config.Load();
                 configForm = new ConfigForm();
 
                 var contextMenu = new ContextMenuStrip();

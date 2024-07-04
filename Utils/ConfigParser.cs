@@ -1,13 +1,10 @@
-﻿using CrosshairOverlay.Helpers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using CrosshairOverlay.Settings;
 using System.IO;
 using System.Text;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace CrosshairOverlay.Settings
+namespace CrosshairOverlay.Utils
 {
     public class ConfigParser<T>
     {
@@ -16,35 +13,35 @@ namespace CrosshairOverlay.Settings
         public ConfigParser()
         {
             var builder = new DeserializerBuilder();
-            if (typeof(T) == typeof(ConfigFile))
+            if (typeof(T) == typeof(Config))
             {
                 builder.IgnoreUnmatchedProperties();
             }
             _deserializer = builder.WithNamingConvention(PascalCaseNamingConvention.Instance).Build();
         }
 
-        public ConfigFile Parse(string configFileName, byte[] configResource)
+        public Config Parse(string configFileName, byte[] configResource)
         {
             var yamlResource = Encoding.Default.GetString(configResource);
             if (configFileName == null)
             {
-                return _deserializer.Deserialize<ConfigFile>(yamlResource);
+                return _deserializer.Deserialize<Config>(yamlResource);
             }
 
             var fileManager = new FileManager(configFileName);
             if (!fileManager.FileExists())
             {
-                return _deserializer.Deserialize<ConfigFile>(yamlResource);
+                return _deserializer.Deserialize<Config>(yamlResource);
             }
 
             var yamlFile = fileManager.ReadFile();
-            var configuration = _deserializer.Deserialize<ConfigFile>(yamlFile);
+            var configuration = _deserializer.Deserialize<Config>(yamlFile);
             return configuration;
         }
 
         public void Save(T _)
         {
-            var config = ConfigFile.Loaded;
+            var config = Config.Current;
             using (var streamWriter = new StreamWriter("Config.yaml"))
             {
                 var serializer = new SerializerBuilder()

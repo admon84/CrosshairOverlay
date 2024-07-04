@@ -1,4 +1,4 @@
-﻿using CrosshairOverlay.Helpers;
+﻿using CrosshairOverlay.Drawing;
 using System;
 using System.Windows.Forms;
 using GameOverlay.Drawing;
@@ -11,7 +11,7 @@ namespace CrosshairOverlay
         private static readonly object _lock = new object();
         private readonly GraphicsWindow _window;
 
-        private Drawing _drawing = new Drawing();
+        private Crosshair _crosshair = new Crosshair();
         private bool _isDisposed = false;
         private bool _isDrawing = false;
 
@@ -38,18 +38,18 @@ namespace CrosshairOverlay
             lock (_lock)
             {
                 gfx.ClearScene();
-                _drawing.DrawCrosshair(gfx);
+                _crosshair.DrawCrosshair(gfx);
             }
             _isDrawing = false;
         }
 
         private void _window_DestroyGraphics(object sender, DestroyGraphicsEventArgs e)
         {
-            if (_drawing != null)
+            if (_crosshair != null)
             {
-                _drawing.Dispose();
+                _crosshair.Dispose();
             }
-            _drawing = null;
+            _crosshair = null;
         }
 
         public void Run()
@@ -68,9 +68,9 @@ namespace CrosshairOverlay
                 {
                     _isDisposed = true;
                     _window.Dispose();
-                    if (_drawing != null)
+                    if (_crosshair != null)
                     {
-                        _drawing.Dispose();
+                        _crosshair.Dispose();
                     }
                 }
             }

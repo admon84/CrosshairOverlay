@@ -1,9 +1,9 @@
 ﻿using CrosshairOverlay.Settings;
 using System;
-using System.Windows.Forms;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace CrosshairOverlay
 {
@@ -13,19 +13,19 @@ namespace CrosshairOverlay
         {
             InitializeComponent();
 
-            chkCircle.Checked = ConfigFile.Loaded.ShowCircle;
-            chkCross.Checked = ConfigFile.Loaded.ShowCross;
-            chkDot.Checked = ConfigFile.Loaded.ShowDot;
-            chkPlus.Checked = ConfigFile.Loaded.ShowPlus;
+            chkCircle.Checked = Config.Current.ShowCircle;
+            chkCross.Checked = Config.Current.ShowCross;
+            chkDot.Checked = Config.Current.ShowDot;
+            chkPlus.Checked = Config.Current.ShowPlus;
 
-            numSize.Value = (decimal)ConfigFile.Loaded.Size;
-            numGap.Value = (decimal)ConfigFile.Loaded.Gap;
-            numThickness.Value = (decimal)ConfigFile.Loaded.Thickness;
-            numOpacity.Value = (decimal)(ConfigFile.Loaded.Opacity * 100);
+            numSize.Value = (decimal)Config.Current.Size;
+            numGap.Value = (decimal)Config.Current.Gap;
+            numThickness.Value = (decimal)Config.Current.Thickness;
+            numOpacity.Value = (decimal)(Config.Current.Opacity * 100);
             
-            btnColor.BackColor = ConfigFile.Loaded.Color;
+            btnColor.BackColor = Config.Current.Color;
             btnColor.ForeColor = ContrastTextColor(btnColor.BackColor);
-            btnColorReset.Visible = ConfigFile.Loaded.Color != Color.White;
+            btnColorReset.Visible = Config.Current.Color != Color.White;
         }
 
         private List<Color> customColors = new List<Color>();
@@ -65,7 +65,7 @@ namespace CrosshairOverlay
             var (colorDlg, colorResult) = SelectColor(btnColor.BackColor);
             if (colorResult == DialogResult.OK)
             {
-                ConfigFile.Loaded.Color = colorDlg.Color;
+                Config.Current.Color = colorDlg.Color;
                 btnColor.BackColor = colorDlg.Color;
                 btnColor.ForeColor = ContrastTextColor(btnColor.BackColor);
                 btnColorReset.Visible = true;
@@ -74,50 +74,80 @@ namespace CrosshairOverlay
 
         private void btnColorReset_Click(object sender, EventArgs e)
         {
-            ConfigFile.Loaded.Color = Color.White;
-            btnColor.BackColor = ConfigFile.Loaded.Color;
+            Config.Current.Color = Color.White;
+            btnColor.BackColor = Config.Current.Color;
             btnColor.ForeColor = ContrastTextColor(btnColor.BackColor);
             btnColorReset.Visible = false;
         }
 
         private void numSize_ValueChanged(object sender, EventArgs e)
         {
-            ConfigFile.Loaded.Size = (float)numSize.Value;
+            Config.Current.Size = (float)numSize.Value;
         }
 
         private void numGap_ValueChanged(object sender, EventArgs e)
         {
-            ConfigFile.Loaded.Gap = (float)numGap.Value;
+            Config.Current.Gap = (float)numGap.Value;
         }
 
         private void numThickness_ValueChanged(object sender, EventArgs e)
         {
-            ConfigFile.Loaded.Thickness = (float)numThickness.Value;
+            Config.Current.Thickness = (float)numThickness.Value;
         }
 
         private void numOpacity_ValueChanged(object sender, EventArgs e)
         {
-            ConfigFile.Loaded.Opacity = (float)(numOpacity.Value) * .01f;
+            Config.Current.Opacity = (float)(numOpacity.Value) * .01f;
         }
 
         private void chkCircle_CheckedChanged(object sender, EventArgs e)
         {
-            ConfigFile.Loaded.ShowCircle = chkCircle.Checked;
+            Config.Current.ShowCircle = chkCircle.Checked;
+            DisableUnusedControls();
         }
 
         private void chkDot_CheckedChanged(object sender, EventArgs e)
         {
-            ConfigFile.Loaded.ShowDot = chkDot.Checked;
+            Config.Current.ShowDot = chkDot.Checked;
+            DisableUnusedControls();
         }
 
         private void chkCross_CheckedChanged(object sender, EventArgs e)
         {
-            ConfigFile.Loaded.ShowCross = chkCross.Checked;
+            Config.Current.ShowCross = chkCross.Checked;
+            DisableUnusedControls();
         }
 
         private void chkPlus_CheckedChanged(object sender, EventArgs e)
         {
-            ConfigFile.Loaded.ShowPlus = chkPlus.Checked;
+            Config.Current.ShowPlus = chkPlus.Checked;
+            DisableUnusedControls();
+        }
+
+        private void DisableUnusedControls()
+        {
+            numGap.Enabled = true;
+            numSize.Enabled = true;
+            numThickness.Enabled = true;
+            numOpacity.Enabled = true;
+            btnColor.Enabled = true;
+
+            if (!Config.Current.ShowCross && !Config.Current.ShowPlus)
+            {
+                numGap.Enabled = false;
+
+                if (!Config.Current.ShowCircle)
+                {
+                    numSize.Enabled = false;
+
+                    if (!Config.Current.ShowDot)
+                    {
+                        numThickness.Enabled = false;
+                        numOpacity.Enabled = false;
+                        btnColor.Enabled = false;
+                    }
+                }
+            }
         }
     }
 }

@@ -1,42 +1,43 @@
 ﻿using CrosshairOverlay.Settings;
-using System.Collections.Generic;
+using CrosshairOverlay.Utils;
 using GameOverlay.Drawing;
+using System.Collections.Generic;
 using Color = System.Drawing.Color;
 
-namespace CrosshairOverlay.Helpers
+namespace CrosshairOverlay.Drawing
 {
-    class Drawing
+    class Crosshair
     {
         private Dictionary<(Color, float), SolidBrush> _brushes = new Dictionary<(Color, float), SolidBrush>();
-        private float _crossScale = .667f;
 
         public void DrawCrosshair(Graphics gfx)
         {
             var (x, y) = (gfx.Width / 2, gfx.Height / 2);
-            var brush = CreateBrush(gfx, ConfigFile.Loaded.Color, ConfigFile.Loaded.Opacity);
-            var (gap, size, stroke) = (ConfigFile.Loaded.Gap, ConfigFile.Loaded.Size, ConfigFile.Loaded.Thickness);
+            var brush = CreateBrush(gfx, Config.Current.Color, Config.Current.Opacity);
+            var (gap, size, stroke) = (Config.Current.Gap, Config.Current.Size, Config.Current.Thickness);
 
-            if (ConfigFile.Loaded.ShowDot)
+            if (Config.Current.ShowDot)
             {
                 gfx.FillEllipse(brush, x, y, stroke, stroke);
             }
 
-            if (ConfigFile.Loaded.ShowCircle)
+            if (Config.Current.ShowCircle)
             {
                 gfx.DrawEllipse(brush, x, y, size, size, stroke);
             }
 
-            if (ConfigFile.Loaded.ShowCross)
+            if (Config.Current.ShowCross)
             {
-                var diff = _crossScale * size;
-                var pad = _crossScale * gap;
+                var scale = .707f;
+                var diff = scale * size;
+                var pad = scale * gap;
                 gfx.DrawLine(brush, x - diff - pad, y - diff - pad, x - pad, y - pad, stroke);
                 gfx.DrawLine(brush, x + pad, y + pad, x + diff + pad, y + diff + pad, stroke);
                 gfx.DrawLine(brush, x - diff - pad, y + diff + pad, x - pad, y + pad, stroke);
                 gfx.DrawLine(brush, x + pad, y - pad, x + diff + pad, y - diff - pad, stroke);
             }
 
-            if (ConfigFile.Loaded.ShowPlus)
+            if (Config.Current.ShowPlus)
             {
                 gfx.DrawLine(brush, x - size - gap, y, x - gap, y, stroke);
                 gfx.DrawLine(brush, x, y + size + gap, x, y + gap, stroke);
@@ -55,7 +56,7 @@ namespace CrosshairOverlay.Helpers
             return _brushes[key];
         }
 
-        ~Drawing() => Dispose();
+        ~Crosshair() => Dispose();
 
         public void Dispose()
         {

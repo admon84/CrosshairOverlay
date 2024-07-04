@@ -5,7 +5,7 @@ using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 
-namespace CrosshairOverlay.Helpers
+namespace CrosshairOverlay.Utils
 {
     internal sealed class FloatTypeConverter : IYamlTypeConverter
     {

@@ -1,8 +1,7 @@
-﻿using System.Text.RegularExpressions;
-using Color = GameOverlay.Drawing.Color;
+﻿using Color = GameOverlay.Drawing.Color;
 using SystemColor = System.Drawing.Color;
 
-namespace CrosshairOverlay.Helpers
+namespace CrosshairOverlay.Utils
 {
     public static class Extensions
     {

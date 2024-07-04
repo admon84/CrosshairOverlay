@@ -77,9 +77,10 @@
     <Compile Include="Forms\ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Extensions.cs" />
-    <Compile Include="Helpers\Drawing.cs" />
-    <Compile Include="Helpers\TypeConverters.cs" />
+    <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Drawing\Crosshair.cs" />
+    <Compile Include="Utils\TypeConverters.cs" />
+    <Compile Include="Settings\Config.cs" />
     <Compile Include="Overlay.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,9 +89,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Settings\ConfigFile.cs" />
-    <Compile Include="Settings\ConfigParser.cs" />
-    <Compile Include="Settings\FileManager.cs" />
+    <Compile Include="Utils\ConfigParser.cs" />
+    <Compile Include="Utils\FileManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -125,6 +125,7 @@
   <ItemGroup>
     <None Include="Resources\Icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>echo Assembly Version: @(VersionNumber)</PostBuildEvent>

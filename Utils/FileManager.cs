@@ -1,8 +1,8 @@
-﻿using System.Text;
-using System;
+﻿using System;
 using System.IO;
+using System.Text;
 
-namespace CrosshairOverlay.Settings
+namespace CrosshairOverlay.Utils
 {
     public class FileManager
     {
