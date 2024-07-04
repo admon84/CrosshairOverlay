@@ -163,7 +163,7 @@ namespace CrosshairOverlay
             this.gbSettings.Margin = new System.Windows.Forms.Padding(4);
             this.gbSettings.Name = "gbSettings";
             this.gbSettings.Padding = new System.Windows.Forms.Padding(4);
-            this.gbSettings.Size = new System.Drawing.Size(217, 163);
+            this.gbSettings.Size = new System.Drawing.Size(217, 167);
             this.gbSettings.TabIndex = 5;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Settings";
@@ -206,7 +206,7 @@ namespace CrosshairOverlay
             // 
             this.numThickness.DecimalPlaces = 1;
             this.numThickness.Increment = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
             65536});
@@ -276,11 +276,11 @@ namespace CrosshairOverlay
             // 
             this.gbColor.Controls.Add(this.btnColor);
             this.gbColor.Controls.Add(this.btnColorReset);
-            this.gbColor.Location = new System.Drawing.Point(14, 280);
+            this.gbColor.Location = new System.Drawing.Point(14, 284);
             this.gbColor.Margin = new System.Windows.Forms.Padding(4);
             this.gbColor.Name = "gbColor";
             this.gbColor.Padding = new System.Windows.Forms.Padding(4);
-            this.gbColor.Size = new System.Drawing.Size(217, 70);
+            this.gbColor.Size = new System.Drawing.Size(217, 67);
             this.gbColor.TabIndex = 6;
             this.gbColor.TabStop = false;
             // 
@@ -288,7 +288,7 @@ namespace CrosshairOverlay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(247, 364);
+            this.ClientSize = new System.Drawing.Size(246, 365);
             this.Controls.Add(this.gbColor);
             this.Controls.Add(this.gbSettings);
             this.Controls.Add(this.gbShape);

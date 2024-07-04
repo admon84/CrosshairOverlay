@@ -36,31 +36,22 @@ namespace CrosshairOverlay.Settings
             return configuration;
         }
 
-        public ConfigFile ParseConfigurationMain(byte[] resourcePrimary, string fileNameOverride = null)
+        public ConfigFile ParseConfigurationMain(string configFileName, byte[] configResource)
         {
-            var yamlPrimary = Encoding.Default.GetString(resourcePrimary);
-            if (fileNameOverride == null)
+            var yamlResource = Encoding.Default.GetString(configResource);
+            if (configFileName == null)
             {
-                return _deserializer.Deserialize<ConfigFile>(yamlPrimary);
+                return _deserializer.Deserialize<ConfigFile>(yamlResource);
             }
 
-            var fileManagerOverride = new FileManager(fileNameOverride);
-            if (!fileManagerOverride.FileExists())
+            var fileManager = new FileManager(configFileName);
+            if (!fileManager.FileExists())
             {
-                return _deserializer.Deserialize<ConfigFile>(yamlPrimary);
+                return _deserializer.Deserialize<ConfigFile>(yamlResource);
             }
 
-            var yamlOverride = fileManagerOverride.ReadFile();
-            var primaryConfig = _deserializer.Deserialize<Dictionary<object, object>>(yamlPrimary);
-            var secondaryConfig = _deserializer.Deserialize<Dictionary<object, object>>(yamlOverride);
-            if (secondaryConfig != null)
-            {
-                Merge(primaryConfig, secondaryConfig);
-            }
-
-            var serializer = new SerializerBuilder().Build();
-            var yaml = serializer.Serialize(primaryConfig);
-            var configuration = _deserializer.Deserialize<ConfigFile>(yaml);
+            var yamlFile = fileManager.ReadFile();
+            var configuration = _deserializer.Deserialize<ConfigFile>(yamlFile);
             return configuration;
         }
 

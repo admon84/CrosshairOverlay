@@ -11,8 +11,8 @@ namespace CrosshairOverlay.Settings
         public static void Load()
         {
             var configParser = new ConfigParser<ConfigFile>();
-            Default = configParser.ParseConfigurationMain(Properties.Resources.Config);
-            Loaded = configParser.ParseConfigurationMain(Properties.Resources.Config, $"./Config.yaml");
+            Loaded = configParser.ParseConfigurationMain("./Config.yaml", Properties.Resources.Config);
+            Default = Loaded;
         }
 
         public void Save()
