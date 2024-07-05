@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.grpFillColor = new System.Windows.Forms.GroupBox();
+            this.chkFillColor = new System.Windows.Forms.CheckBox();
             this.btnFillColor = new System.Windows.Forms.Button();
             this.lblFillColorAlpha = new System.Windows.Forms.Label();
             this.fillColorAlpha = new System.Windows.Forms.TrackBar();
@@ -44,17 +45,14 @@
             this.lblWidthValue = new System.Windows.Forms.Label();
             this.lblGapValue = new System.Windows.Forms.Label();
             this.lblSizeValue = new System.Windows.Forms.Label();
-            this.lblOutline = new System.Windows.Forms.Label();
             this.crosshairOutline = new System.Windows.Forms.TrackBar();
-            this.lblWidth = new System.Windows.Forms.Label();
             this.crosshairWidth = new System.Windows.Forms.TrackBar();
-            this.lblGap = new System.Windows.Forms.Label();
             this.crosshairGap = new System.Windows.Forms.TrackBar();
-            this.lblSize = new System.Windows.Forms.Label();
             this.crosshairSize = new System.Windows.Forms.TrackBar();
             this.tabSettings = new System.Windows.Forms.TabControl();
             this.tabGlobal = new System.Windows.Forms.TabPage();
             this.grpOutlineColor = new System.Windows.Forms.GroupBox();
+            this.chkOutlineColor = new System.Windows.Forms.CheckBox();
             this.lblOutlineColorAlpha = new System.Windows.Forms.Label();
             this.outlineColorAlpha = new System.Windows.Forms.TrackBar();
             this.tabDot = new System.Windows.Forms.TabPage();
@@ -129,6 +127,14 @@
             this.circleCrosshairWidth = new System.Windows.Forms.TrackBar();
             this.circleCrosshairGap = new System.Windows.Forms.TrackBar();
             this.circleCrosshairSize = new System.Windows.Forms.TrackBar();
+            this.chkSize = new System.Windows.Forms.CheckBox();
+            this.chkGap = new System.Windows.Forms.CheckBox();
+            this.chkWidth = new System.Windows.Forms.CheckBox();
+            this.chkOutline = new System.Windows.Forms.CheckBox();
+            this.lblOutline = new System.Windows.Forms.Label();
+            this.lblWidth = new System.Windows.Forms.Label();
+            this.lblGap = new System.Windows.Forms.Label();
+            this.lblSize = new System.Windows.Forms.Label();
             this.grpFillColor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fillColorAlpha)).BeginInit();
             this.grpShape.SuspendLayout();
@@ -176,6 +182,7 @@
             // 
             // grpFillColor
             // 
+            this.grpFillColor.Controls.Add(this.chkFillColor);
             this.grpFillColor.Controls.Add(this.btnFillColor);
             this.grpFillColor.Controls.Add(this.lblFillColorAlpha);
             this.grpFillColor.Controls.Add(this.fillColorAlpha);
@@ -186,11 +193,23 @@
             this.grpFillColor.TabStop = false;
             this.grpFillColor.Text = "Fill Color";
             // 
+            // chkFillColor
+            // 
+            this.chkFillColor.AutoSize = true;
+            this.chkFillColor.Checked = true;
+            this.chkFillColor.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkFillColor.Enabled = false;
+            this.chkFillColor.Location = new System.Drawing.Point(14, 35);
+            this.chkFillColor.Name = "chkFillColor";
+            this.chkFillColor.Size = new System.Drawing.Size(15, 14);
+            this.chkFillColor.TabIndex = 54;
+            this.chkFillColor.UseVisualStyleBackColor = true;
+            // 
             // btnFillColor
             // 
             this.btnFillColor.BackColor = System.Drawing.Color.Transparent;
             this.btnFillColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFillColor.Location = new System.Drawing.Point(14, 30);
+            this.btnFillColor.Location = new System.Drawing.Point(35, 30);
             this.btnFillColor.Name = "btnFillColor";
             this.btnFillColor.Size = new System.Drawing.Size(79, 23);
             this.btnFillColor.TabIndex = 46;
@@ -228,7 +247,7 @@
             // 
             this.btnOutlineColor.BackColor = System.Drawing.Color.Transparent;
             this.btnOutlineColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOutlineColor.Location = new System.Drawing.Point(14, 29);
+            this.btnOutlineColor.Location = new System.Drawing.Point(35, 29);
             this.btnOutlineColor.Name = "btnOutlineColor";
             this.btnOutlineColor.Size = new System.Drawing.Size(79, 23);
             this.btnOutlineColor.TabIndex = 48;
@@ -283,17 +302,21 @@
             // 
             // grpSize
             // 
+            this.grpSize.Controls.Add(this.lblSize);
+            this.grpSize.Controls.Add(this.lblGap);
+            this.grpSize.Controls.Add(this.lblWidth);
+            this.grpSize.Controls.Add(this.lblOutline);
+            this.grpSize.Controls.Add(this.chkSize);
+            this.grpSize.Controls.Add(this.chkGap);
+            this.grpSize.Controls.Add(this.chkWidth);
+            this.grpSize.Controls.Add(this.chkOutline);
             this.grpSize.Controls.Add(this.lblOutlineValue);
             this.grpSize.Controls.Add(this.lblWidthValue);
             this.grpSize.Controls.Add(this.lblGapValue);
             this.grpSize.Controls.Add(this.lblSizeValue);
-            this.grpSize.Controls.Add(this.lblOutline);
             this.grpSize.Controls.Add(this.crosshairOutline);
-            this.grpSize.Controls.Add(this.lblWidth);
             this.grpSize.Controls.Add(this.crosshairWidth);
-            this.grpSize.Controls.Add(this.lblGap);
             this.grpSize.Controls.Add(this.crosshairGap);
-            this.grpSize.Controls.Add(this.lblSize);
             this.grpSize.Controls.Add(this.crosshairSize);
             this.grpSize.Location = new System.Drawing.Point(6, 219);
             this.grpSize.Name = "grpSize";
@@ -353,17 +376,6 @@
             this.lblSizeValue.Text = "0.0";
             this.lblSizeValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lblOutline
-            // 
-            this.lblOutline.AutoSize = true;
-            this.lblOutline.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOutline.Location = new System.Drawing.Point(11, 186);
-            this.lblOutline.Name = "lblOutline";
-            this.lblOutline.Size = new System.Drawing.Size(40, 13);
-            this.lblOutline.TabIndex = 50;
-            this.lblOutline.Text = "Outline";
-            this.lblOutline.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // crosshairOutline
             // 
             this.crosshairOutline.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -373,17 +385,6 @@
             this.crosshairOutline.Size = new System.Drawing.Size(160, 45);
             this.crosshairOutline.TabIndex = 49;
             this.crosshairOutline.TickStyle = System.Windows.Forms.TickStyle.Both;
-            // 
-            // lblWidth
-            // 
-            this.lblWidth.AutoSize = true;
-            this.lblWidth.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWidth.Location = new System.Drawing.Point(11, 135);
-            this.lblWidth.Name = "lblWidth";
-            this.lblWidth.Size = new System.Drawing.Size(35, 13);
-            this.lblWidth.TabIndex = 48;
-            this.lblWidth.Text = "Width";
-            this.lblWidth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // crosshairWidth
             // 
@@ -396,17 +397,6 @@
             this.crosshairWidth.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.crosshairWidth.Scroll += new System.EventHandler(this.crosshairWidth_Scroll);
             // 
-            // lblGap
-            // 
-            this.lblGap.AutoSize = true;
-            this.lblGap.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGap.Location = new System.Drawing.Point(11, 84);
-            this.lblGap.Name = "lblGap";
-            this.lblGap.Size = new System.Drawing.Size(27, 13);
-            this.lblGap.TabIndex = 46;
-            this.lblGap.Text = "Gap";
-            this.lblGap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // crosshairGap
             // 
             this.crosshairGap.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -418,17 +408,6 @@
             this.crosshairGap.TickFrequency = 5;
             this.crosshairGap.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.crosshairGap.Scroll += new System.EventHandler(this.crosshairGap_Scroll);
-            // 
-            // lblSize
-            // 
-            this.lblSize.AutoSize = true;
-            this.lblSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSize.Location = new System.Drawing.Point(11, 33);
-            this.lblSize.Name = "lblSize";
-            this.lblSize.Size = new System.Drawing.Size(27, 13);
-            this.lblSize.TabIndex = 44;
-            this.lblSize.Text = "Size";
-            this.lblSize.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // crosshairSize
             // 
@@ -470,6 +449,7 @@
             // 
             // grpOutlineColor
             // 
+            this.grpOutlineColor.Controls.Add(this.chkOutlineColor);
             this.grpOutlineColor.Controls.Add(this.btnOutlineColor);
             this.grpOutlineColor.Controls.Add(this.lblOutlineColorAlpha);
             this.grpOutlineColor.Controls.Add(this.outlineColorAlpha);
@@ -479,6 +459,18 @@
             this.grpOutlineColor.TabIndex = 52;
             this.grpOutlineColor.TabStop = false;
             this.grpOutlineColor.Text = "Outline Color";
+            // 
+            // chkOutlineColor
+            // 
+            this.chkOutlineColor.AutoSize = true;
+            this.chkOutlineColor.Checked = true;
+            this.chkOutlineColor.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkOutlineColor.Enabled = false;
+            this.chkOutlineColor.Location = new System.Drawing.Point(14, 34);
+            this.chkOutlineColor.Name = "chkOutlineColor";
+            this.chkOutlineColor.Size = new System.Drawing.Size(15, 14);
+            this.chkOutlineColor.TabIndex = 55;
+            this.chkOutlineColor.UseVisualStyleBackColor = true;
             // 
             // lblOutlineColorAlpha
             // 
@@ -1384,6 +1376,90 @@
             this.circleCrosshairSize.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.circleCrosshairSize.Scroll += new System.EventHandler(this.circleCrosshairSize_Scroll);
             // 
+            // chkSize
+            // 
+            this.chkSize.AutoSize = true;
+            this.chkSize.Checked = true;
+            this.chkSize.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSize.Enabled = false;
+            this.chkSize.Location = new System.Drawing.Point(14, 33);
+            this.chkSize.Name = "chkSize";
+            this.chkSize.Size = new System.Drawing.Size(15, 14);
+            this.chkSize.TabIndex = 66;
+            this.chkSize.UseVisualStyleBackColor = true;
+            // 
+            // chkGap
+            // 
+            this.chkGap.AutoSize = true;
+            this.chkGap.Checked = true;
+            this.chkGap.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkGap.Enabled = false;
+            this.chkGap.Location = new System.Drawing.Point(14, 84);
+            this.chkGap.Name = "chkGap";
+            this.chkGap.Size = new System.Drawing.Size(15, 14);
+            this.chkGap.TabIndex = 65;
+            this.chkGap.UseVisualStyleBackColor = true;
+            // 
+            // chkWidth
+            // 
+            this.chkWidth.AutoSize = true;
+            this.chkWidth.Checked = true;
+            this.chkWidth.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkWidth.Enabled = false;
+            this.chkWidth.Location = new System.Drawing.Point(14, 135);
+            this.chkWidth.Name = "chkWidth";
+            this.chkWidth.Size = new System.Drawing.Size(15, 14);
+            this.chkWidth.TabIndex = 64;
+            this.chkWidth.UseVisualStyleBackColor = true;
+            // 
+            // chkOutline
+            // 
+            this.chkOutline.AutoSize = true;
+            this.chkOutline.Checked = true;
+            this.chkOutline.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkOutline.Enabled = false;
+            this.chkOutline.Location = new System.Drawing.Point(14, 186);
+            this.chkOutline.Name = "chkOutline";
+            this.chkOutline.Size = new System.Drawing.Size(15, 14);
+            this.chkOutline.TabIndex = 63;
+            this.chkOutline.UseVisualStyleBackColor = true;
+            // 
+            // lblOutline
+            // 
+            this.lblOutline.AutoSize = true;
+            this.lblOutline.Location = new System.Drawing.Point(30, 186);
+            this.lblOutline.Name = "lblOutline";
+            this.lblOutline.Size = new System.Drawing.Size(40, 13);
+            this.lblOutline.TabIndex = 67;
+            this.lblOutline.Text = "Outline";
+            // 
+            // lblWidth
+            // 
+            this.lblWidth.AutoSize = true;
+            this.lblWidth.Location = new System.Drawing.Point(30, 135);
+            this.lblWidth.Name = "lblWidth";
+            this.lblWidth.Size = new System.Drawing.Size(35, 13);
+            this.lblWidth.TabIndex = 68;
+            this.lblWidth.Text = "Width";
+            // 
+            // lblGap
+            // 
+            this.lblGap.AutoSize = true;
+            this.lblGap.Location = new System.Drawing.Point(30, 84);
+            this.lblGap.Name = "lblGap";
+            this.lblGap.Size = new System.Drawing.Size(27, 13);
+            this.lblGap.TabIndex = 69;
+            this.lblGap.Text = "Gap";
+            // 
+            // lblSize
+            // 
+            this.lblSize.AutoSize = true;
+            this.lblSize.Location = new System.Drawing.Point(30, 33);
+            this.lblSize.Name = "lblSize";
+            this.lblSize.Size = new System.Drawing.Size(27, 13);
+            this.lblSize.TabIndex = 70;
+            this.lblSize.Text = "Size";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1473,13 +1549,9 @@
         private System.Windows.Forms.Label lblWidthValue;
         private System.Windows.Forms.Label lblGapValue;
         private System.Windows.Forms.Label lblSizeValue;
-        private System.Windows.Forms.Label lblOutline;
         private System.Windows.Forms.TrackBar crosshairOutline;
-        private System.Windows.Forms.Label lblWidth;
         private System.Windows.Forms.TrackBar crosshairWidth;
-        private System.Windows.Forms.Label lblGap;
         private System.Windows.Forms.TrackBar crosshairGap;
-        private System.Windows.Forms.Label lblSize;
         private System.Windows.Forms.TrackBar crosshairSize;
         private System.Windows.Forms.CheckBox chkCircle;
         private System.Windows.Forms.TabControl tabSettings;
@@ -1561,5 +1633,15 @@
         private System.Windows.Forms.CheckBox chkDotOutlineColor;
         private System.Windows.Forms.CheckBox chkDotFillColor;
         private System.Windows.Forms.CheckBox chkCrossOutlineColor;
+        private System.Windows.Forms.CheckBox chkFillColor;
+        private System.Windows.Forms.CheckBox chkOutlineColor;
+        private System.Windows.Forms.Label lblOutline;
+        private System.Windows.Forms.CheckBox chkSize;
+        private System.Windows.Forms.CheckBox chkGap;
+        private System.Windows.Forms.CheckBox chkWidth;
+        private System.Windows.Forms.CheckBox chkOutline;
+        private System.Windows.Forms.Label lblSize;
+        private System.Windows.Forms.Label lblGap;
+        private System.Windows.Forms.Label lblWidth;
     }
 }

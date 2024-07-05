@@ -32,8 +32,10 @@ namespace CrosshairOverlay.Drawing
             var fillColor = CreateBrush(gfx, _settings.DotSettings.GetFillColor());
             var outlineColor = CreateBrush(gfx, _settings.DotSettings.GetOutlineColor());
 
-            gfx.FillCircle(outlineColor, x, y, width + outline);
-            gfx.FillCircle(fillColor, x, y, width);
+            var halfWidth = width * .5f;
+
+            gfx.DrawRectangle(outlineColor, x - halfWidth, y - halfWidth, x + halfWidth, y + halfWidth, width + outline);
+            gfx.DrawRectangle(fillColor, x - halfWidth, y - halfWidth, x + halfWidth, y + halfWidth, width);
         }
 
         private void DrawCircle(Graphics gfx, float x, float y)

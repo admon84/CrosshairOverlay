@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 
 namespace CrosshairOverlay
@@ -55,9 +56,9 @@ namespace CrosshairOverlay
     public class GlobalSettings
     {
         public Color FillColor { get; set; } = Color.FromArgb(2, 238, 238);
-        public int FillColorAlpha { get; set; } = 100;
         public Color OutlineColor { get; set; } = Color.Black;
-        public int OutlineColorAlpha { get; set; } = 20;
+        public float FillColorAlpha { get; set; } = 1;
+        public float OutlineColorAlpha { get; set; } = .2f;
         public float CrosshairSize { get; set; } = 10;
         public float CrosshairGap { get; set; } = 10;
         public float CrosshairWidth { get; set; } = 1;
@@ -65,14 +66,34 @@ namespace CrosshairOverlay
         public Boolean CrosshairDot { get; set; } = true;
         public Boolean CrosshairCross { get; set; } = true;
         public Boolean CrosshairCircle { get; set; } = false;
+
+        public Color GetFillColor()
+        {
+            return Color.FromArgb(GetFillColorAlpha(), FillColor);
+        }
+
+        public Color GetOutlineColor()
+        {
+            return Color.FromArgb(GetOutlineColorAlpha(), OutlineColor);
+        }
+
+        public int GetFillColorAlpha()
+        {
+            return (int)(255 * FillColorAlpha);
+        }
+
+        public int GetOutlineColorAlpha()
+        {
+            return (int)(255 * OutlineColorAlpha);
+        }
     }
 
     public class ShapeSettings
     {
         public Color? FillColor { get; set; }
-        public int? FillColorAlpha { get; set; }
         public Color? OutlineColor { get; set; }
-        public int? OutlineColorAlpha { get; set; }
+        public float? FillColorAlpha { get; set; }
+        public float? OutlineColorAlpha { get; set; }
         public float? CrosshairSize { get; set; }
         public float? CrosshairGap { get; set; }
         public float? CrosshairWidth { get; set; }
@@ -87,22 +108,24 @@ namespace CrosshairOverlay
 
         public Color GetFillColor()
         {
-            return FillColor.HasValue ? Color.FromArgb(GetFillColorAlpha(), FillColor.Value) : _globalSettings.FillColor;
-        }
-
-        public int GetFillColorAlpha()
-        {
-            return FillColorAlpha ?? _globalSettings.FillColorAlpha;
+            return Color.FromArgb(GetFillColorAlpha(), FillColor.HasValue ? FillColor.Value : _globalSettings.FillColor);
         }
 
         public Color GetOutlineColor()
         {
-            return OutlineColor.HasValue ? Color.FromArgb(GetOutlineColorAlpha(), OutlineColor.Value) : _globalSettings.OutlineColor;
+            return Color.FromArgb(GetOutlineColorAlpha(), OutlineColor.HasValue ? OutlineColor.Value : _globalSettings.OutlineColor);
+        }
+
+        public int GetFillColorAlpha()
+        {
+            var fillColorAlpha = FillColorAlpha ?? _globalSettings.FillColorAlpha;
+            return (int)(255 * fillColorAlpha);
         }
 
         public int GetOutlineColorAlpha()
         {
-            return OutlineColorAlpha ?? _globalSettings.OutlineColorAlpha;
+            var outlineColorAlpha = OutlineColorAlpha ?? _globalSettings.OutlineColorAlpha;
+            return (int)(255 * outlineColorAlpha);
         }
 
         public float GetCrosshairSize()

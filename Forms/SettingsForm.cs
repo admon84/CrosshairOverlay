@@ -33,16 +33,16 @@ namespace CrosshairOverlay
 
             // Global settings
 
-            btnFillColor.BackColor = _settings.GlobalSettings.FillColor;
+            btnFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
             btnFillColor.ForeColor = ContrastTextColor(btnFillColor.BackColor);
 
-            btnOutlineColor.BackColor = _settings.GlobalSettings.OutlineColor;
+            btnOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
             btnOutlineColor.ForeColor = ContrastTextColor(btnOutlineColor.BackColor);
 
-            fillColorAlpha.Value = _settings.GlobalSettings.FillColorAlpha;
+            fillColorAlpha.Value = (int)(_settings.GlobalSettings.FillColorAlpha * fillColorAlpha.Maximum);
             lblFillColorAlpha.Text = fillColorAlpha.Value.ToString();
 
-            outlineColorAlpha.Value = _settings.GlobalSettings.OutlineColorAlpha;
+            outlineColorAlpha.Value = (int)(_settings.GlobalSettings.OutlineColorAlpha * outlineColorAlpha.Maximum);
             lblOutlineColorAlpha.Text = outlineColorAlpha.Value.ToString();
 
             crosshairSize.Value = (int)_settings.GlobalSettings.CrosshairSize;
@@ -59,10 +59,10 @@ namespace CrosshairOverlay
 
             // Dot settings
 
-            dotFillColorAlpha.Value = _settings.DotSettings.GetFillColorAlpha();
+            dotFillColorAlpha.Value = ConvertAlphaToSliderValue(_settings.DotSettings.GetFillColorAlpha(), dotFillColorAlpha.Maximum);
             lblDotFillColorAlpha.Text = dotFillColorAlpha.Value.ToString();
 
-            dotOutlineColorAlpha.Value = _settings.DotSettings.GetOutlineColorAlpha();
+            dotOutlineColorAlpha.Value = ConvertAlphaToSliderValue(_settings.DotSettings.GetOutlineColorAlpha(), dotOutlineColorAlpha.Maximum);
             lblDotOutlineColorAlpha.Text = dotOutlineColorAlpha.Value.ToString();
 
             LoadDotCrosshairOutline();
@@ -70,10 +70,10 @@ namespace CrosshairOverlay
 
             // Cross settings
 
-            crossFillColorAlpha.Value = _settings.CrossSettings.GetFillColorAlpha();
+            crossFillColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CrossSettings.GetFillColorAlpha(), crossFillColorAlpha.Maximum);
             lblCrossFillColorAlpha.Text = crossFillColorAlpha.Value.ToString();
 
-            crossOutlineColorAlpha.Value = _settings.CrossSettings.GetOutlineColorAlpha();
+            crossOutlineColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CrossSettings.GetOutlineColorAlpha(), crossOutlineColorAlpha.Maximum);
             lblCrossOutlineColorAlpha.Text = crossOutlineColorAlpha.Value.ToString();
 
             LoadCrossCrosshairSize();
@@ -83,10 +83,10 @@ namespace CrosshairOverlay
         
             // Circle settings
 
-            circleFillColorAlpha.Value = _settings.CircleSettings.GetFillColorAlpha();
+            circleFillColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CircleSettings.GetFillColorAlpha(), circleFillColorAlpha.Maximum);
             lblCircleFillColorAlpha.Text = circleFillColorAlpha.Value.ToString();
 
-            circleOutlineColorAlpha.Value = _settings.CircleSettings.GetOutlineColorAlpha();
+            circleOutlineColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CircleSettings.GetOutlineColorAlpha(), circleOutlineColorAlpha.Maximum);
             lblCircleOutlineColorAlpha.Text = circleOutlineColorAlpha.Value.ToString();
 
             LoadCircleCrosshairSize();
@@ -104,18 +104,18 @@ namespace CrosshairOverlay
         private void LoadDotCrosshairOutline()
         {
             dotCrosshairOutline.Value = ConvertSmallToBig(_settings.DotSettings.GetCrosshairOutline());
-             lblDotOutlineValue.Text = TrimDecimals(ConvertBigToSmall(dotCrosshairOutline.Value));
+            lblDotOutlineValue.Text = TrimDecimals(ConvertBigToSmall(dotCrosshairOutline.Value));
         }
 
         private void LoadCrossCrosshairSize()
         {
-            crossCrosshairSize.Value = (int) _settings.CrossSettings.GetCrosshairSize();
+            crossCrosshairSize.Value = (int)_settings.CrossSettings.GetCrosshairSize();
             lblCrossSizeValue.Text = crossCrosshairSize.Value.ToString();
         }
 
         private void LoadCrossCrosshairGap()
         {
-            crossCrosshairGap.Value = (int) _settings.CrossSettings.GetCrosshairGap();
+            crossCrosshairGap.Value = (int)_settings.CrossSettings.GetCrosshairGap();
             lblCrossGapValue.Text = crossCrosshairGap.Value.ToString();
         }
 
@@ -133,13 +133,13 @@ namespace CrosshairOverlay
 
         private void LoadCircleCrosshairSize()
         {
-            circleCrosshairSize.Value = (int) _settings.CircleSettings.GetCrosshairSize();
+            circleCrosshairSize.Value = (int)_settings.CircleSettings.GetCrosshairSize();
             lblCircleSizeValue.Text = circleCrosshairSize.Value.ToString();
         }
 
         private void LoadCircleCrosshairGap()
            {
-            circleCrosshairGap.Value = (int) _settings.CircleSettings.GetCrosshairGap();
+            circleCrosshairGap.Value = (int)_settings.CircleSettings.GetCrosshairGap();
             lblCircleGapValue.Text = circleCrosshairGap.Value.ToString();
         }
 
@@ -173,12 +173,17 @@ namespace CrosshairOverlay
 
         private float ConvertBigToSmall(int value)
         {
-            return value * .5f;
+            return (float)value * .5f;
         }
 
         private int ConvertSmallToBig(float value)
         {
             return (int)(value * 2);
+        }
+
+        private int ConvertAlphaToSliderValue(float value, float sliderMax)
+        {
+            return (int)(value / 255 * sliderMax);
         }
 
         private string TrimDecimals(float value)
@@ -230,12 +235,12 @@ namespace CrosshairOverlay
         {
             var fillColor = enabled ? settings.GetFillColor() : Color.Empty;
             fillColorButton.BackColor = fillColor;
-            fillColorButton.ForeColor = ContrastTextColor(fillColor);
+            fillColorButton.ForeColor = ContrastTextColor(fillColorButton.BackColor);
             checkFillColor.Checked = settings.FillColor.HasValue;
 
             var outlineColor = enabled ? settings.GetOutlineColor() : Color.Empty;
             outlineColorButton.BackColor = outlineColor;
-            outlineColorButton.ForeColor = ContrastTextColor(outlineColor);
+            outlineColorButton.ForeColor = ContrastTextColor(outlineColorButton.BackColor);
             checkOutlineColor.Checked = settings.OutlineColor.HasValue;
         }
 
@@ -250,9 +255,9 @@ namespace CrosshairOverlay
 
             if (!settings.FillColor.HasValue)
             {
-                button.BackColor = newColor;
-                button.ForeColor = ContrastTextColor(newColor);
-                check.Checked = settings.FillColor.HasValue;
+                button.BackColor = _settings.GlobalSettings.GetFillColor();
+                button.ForeColor = ContrastTextColor(button.BackColor);
+                check.Checked = false;
             }
         }
 
@@ -267,41 +272,45 @@ namespace CrosshairOverlay
 
             if (!settings.OutlineColor.HasValue)
             {
-                button.BackColor = newColor;
-                button.ForeColor = ContrastTextColor(newColor);
-                check.Checked = settings.OutlineColor.HasValue;
+                button.BackColor = _settings.GlobalSettings.GetOutlineColor();
+                button.ForeColor = ContrastTextColor(button.BackColor);
+                check.Checked = false;
             }
         }
 
-        private void UpdateFillColorAlphaSetting(ShapeSettings settings, int newAlpha, TrackBar slider, Label label)
+        private void UpdateFillColorAlphaSetting(ShapeSettings settings, float newAlpha, TrackBar slider, Label label, Button button)
         {
-            if (settings.FillColorAlpha.HasValue)
+            if (settings.FillColorAlpha.HasValue && settings.FillColorAlpha == newAlpha)
             {
-                if (_settings.GlobalSettings.FillColorAlpha == newAlpha)
-                {
-                    settings.FillColorAlpha = null;
-                }
+                settings.FillColorAlpha = null;
+                return;
             }
-            else
+
+            if (!settings.FillColorAlpha.HasValue)
             {
-                slider.Value = newAlpha;
-                label.Text = newAlpha.ToString();
+                var intAlpha = (int)(newAlpha * 100);
+                slider.Value = intAlpha;
+                label.Text = intAlpha.ToString();
+                button.BackColor = settings.GetFillColor();
+                button.ForeColor = ContrastTextColor(button.BackColor);
             }
         }
 
-        private void UpdateOutlineColorAlphaSetting(ShapeSettings settings, int newAlpha, TrackBar slider, Label label)
+        private void UpdateOutlineColorAlphaSetting(ShapeSettings settings, float newAlpha, TrackBar slider, Label label, Button button)
         {
-            if (settings.OutlineColorAlpha.HasValue)
+            if (settings.OutlineColorAlpha.HasValue && settings.OutlineColorAlpha == newAlpha)
             {
-                if (_settings.GlobalSettings.OutlineColorAlpha == newAlpha)
-                {
-                    settings.OutlineColorAlpha = null;
-                }
+                settings.OutlineColorAlpha = null;
+                return;
             }
-            else
+            
+            if (!settings.OutlineColorAlpha.HasValue)
             {
-                slider.Value = newAlpha;
-                label.Text = newAlpha.ToString();
+                var intAlpha = (int)(newAlpha * 100);
+                slider.Value = intAlpha;
+                label.Text = intAlpha.ToString();
+                button.BackColor = settings.GetOutlineColor();
+                button.ForeColor = ContrastTextColor(button.BackColor);
             }
         }
 
@@ -379,8 +388,8 @@ namespace CrosshairOverlay
             {
                 var newColor = colorDlg.Color;
                 _settings.GlobalSettings.FillColor = newColor;
-                btnFillColor.BackColor = newColor;
-                btnFillColor.ForeColor = ContrastTextColor(newColor);
+                btnFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
+                btnFillColor.ForeColor = ContrastTextColor(btnFillColor.BackColor);
 
                 UpdateFillColorSetting(_settings.DotSettings, newColor, btnDotFillColor, chkDotFillColor);
                 UpdateFillColorSetting(_settings.CrossSettings, newColor, btnCrossFillColor, chkCrossFillColor);
@@ -395,8 +404,8 @@ namespace CrosshairOverlay
             {
                 var newColor = colorDlg.Color;
                 _settings.GlobalSettings.OutlineColor = newColor;
-                btnOutlineColor.BackColor = newColor;
-                btnOutlineColor.ForeColor = ContrastTextColor(newColor);
+                btnOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
+                btnOutlineColor.ForeColor = ContrastTextColor(btnOutlineColor.BackColor);
 
                 UpdateOutlineColorSetting(_settings.DotSettings, newColor, btnDotOutlineColor, chkDotOutlineColor);
                 UpdateOutlineColorSetting(_settings.CrossSettings, newColor, btnCrossOutlineColor, chkCrossOutlineColor);
@@ -462,22 +471,28 @@ namespace CrosshairOverlay
 
         private void fillColorAlpha_Scroll(object sender, EventArgs e)
         {
+            var newAlpha = (float)fillColorAlpha.Value / (float)fillColorAlpha.Maximum;
             lblFillColorAlpha.Text = fillColorAlpha.Value.ToString();
-            _settings.GlobalSettings.FillColorAlpha = fillColorAlpha.Value;
+            _settings.GlobalSettings.FillColorAlpha = newAlpha;
+            btnFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
+            btnFillColor.ForeColor = ContrastTextColor(btnFillColor.BackColor);
 
-            UpdateFillColorAlphaSetting(_settings.DotSettings, fillColorAlpha.Value, dotFillColorAlpha, lblDotFillColorAlpha);
-            UpdateFillColorAlphaSetting(_settings.CrossSettings, fillColorAlpha.Value, crossFillColorAlpha, lblCrossFillColorAlpha);
-            UpdateFillColorAlphaSetting(_settings.CircleSettings, fillColorAlpha.Value, circleFillColorAlpha, lblCircleFillColorAlpha);
+            UpdateFillColorAlphaSetting(_settings.DotSettings, newAlpha, dotFillColorAlpha, lblDotFillColorAlpha, btnDotFillColor);
+            UpdateFillColorAlphaSetting(_settings.CrossSettings, newAlpha, crossFillColorAlpha, lblCrossFillColorAlpha, btnCrossFillColor);
+            UpdateFillColorAlphaSetting(_settings.CircleSettings, newAlpha, circleFillColorAlpha, lblCircleFillColorAlpha, btnCircleFillColor);
         }
 
         private void outlineColorAlpha_Scroll(object sender, EventArgs e)
         {
+            var newAlpha = (float)outlineColorAlpha.Value / (float)outlineColorAlpha.Maximum;
             lblOutlineColorAlpha.Text = outlineColorAlpha.Value.ToString();
-            _settings.GlobalSettings.OutlineColorAlpha = outlineColorAlpha.Value;
+            _settings.GlobalSettings.OutlineColorAlpha = newAlpha;
+            btnOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
+            btnOutlineColor.ForeColor = ContrastTextColor(btnOutlineColor.BackColor);
 
-            UpdateOutlineColorAlphaSetting(_settings.DotSettings, outlineColorAlpha.Value, dotOutlineColorAlpha, lblDotOutlineColorAlpha);
-            UpdateOutlineColorAlphaSetting(_settings.CrossSettings, outlineColorAlpha.Value, crossOutlineColorAlpha, lblCrossOutlineColorAlpha);
-            UpdateOutlineColorAlphaSetting(_settings.CircleSettings, outlineColorAlpha.Value, circleOutlineColorAlpha, lblCircleOutlineColorAlpha);
+            UpdateOutlineColorAlphaSetting(_settings.DotSettings, newAlpha, dotOutlineColorAlpha, lblDotOutlineColorAlpha, btnDotOutlineColor);
+            UpdateOutlineColorAlphaSetting(_settings.CrossSettings, newAlpha, crossOutlineColorAlpha, lblCrossOutlineColorAlpha, btnCrossOutlineColor);
+            UpdateOutlineColorAlphaSetting(_settings.CircleSettings, newAlpha, circleOutlineColorAlpha, lblCircleOutlineColorAlpha, btnCircleOutlineColor);
         }
 
         private void chkDotEnable_CheckedChanged(object sender, EventArgs e)
@@ -536,10 +551,12 @@ namespace CrosshairOverlay
             if (_settings.GlobalSettings.CrosshairSize == crossCrosshairSize.Value)
             {
                 _settings.CrossSettings.CrosshairSize = null;
+                chkCrossSize.Checked = false;
             }
             else
             {
                 _settings.CrossSettings.CrosshairSize = crossCrosshairSize.Value;
+                chkCrossSize.Checked = true;
             }
         }
 
@@ -550,10 +567,12 @@ namespace CrosshairOverlay
             if (_settings.GlobalSettings.CrosshairGap == crossCrosshairGap.Value)
             {
                 _settings.CrossSettings.CrosshairGap = null;
+                chkCrossGap.Checked = false;
             }
             else
             {
                 _settings.CrossSettings.CrosshairGap = crossCrosshairGap.Value;
+                chkCrossGap.Checked = true;
             }
         }
 
@@ -565,10 +584,12 @@ namespace CrosshairOverlay
             if (_settings.GlobalSettings.CrosshairWidth == width)
             {
                 _settings.CrossSettings.CrosshairWidth = null;
+                chkCrossWidth.Checked = false;
             }
             else
             {
                 _settings.CrossSettings.CrosshairWidth = width;
+                chkCrossWidth.Checked = true;
             }
         }
 
@@ -580,10 +601,12 @@ namespace CrosshairOverlay
             if (_settings.GlobalSettings.CrosshairOutline == outline)
             {
                 _settings.CrossSettings.CrosshairOutline = null;
+                chkCrossOutline.Checked = false;
             }
             else
             {
                 _settings.CrossSettings.CrosshairOutline = outline;
+                chkCrossOutline.Checked = true;
             }
         }
 
@@ -594,10 +617,12 @@ namespace CrosshairOverlay
             if (_settings.GlobalSettings.CrosshairSize == circleCrosshairSize.Value)
             {
                 _settings.CircleSettings.CrosshairSize = null;
+                chkCircleSize.Checked = false;
             }
             else
             {
                 _settings.CircleSettings.CrosshairSize = circleCrosshairSize.Value;
+                chkCircleSize.Checked = true;
             }
         }
 
@@ -608,10 +633,12 @@ namespace CrosshairOverlay
             if (_settings.GlobalSettings.CrosshairGap == circleCrosshairGap.Value)
             {
                 _settings.CircleSettings.CrosshairGap = null;
+                chkCircleGap.Checked = false;
             }
             else
             {
                 _settings.CircleSettings.CrosshairGap = circleCrosshairGap.Value;
+                chkCircleGap.Checked = true;
             }
         }
 
@@ -623,10 +650,12 @@ namespace CrosshairOverlay
             if (_settings.GlobalSettings.CrosshairWidth == width)
             {
                 _settings.CircleSettings.CrosshairWidth = null;
+                chkCircleWidth.Checked = false;
             }
             else
             {
                 _settings.CircleSettings.CrosshairWidth = width;
+                chkCircleWidth.Checked = true;
             }
         }
 
@@ -638,95 +667,139 @@ namespace CrosshairOverlay
             if (_settings.GlobalSettings.CrosshairOutline == outline)
             {
                 _settings.CircleSettings.CrosshairOutline = null;
+                chkCircleOutline.Checked = false;
             }
             else
             {
                 _settings.CircleSettings.CrosshairOutline = outline;
+                chkCircleOutline.Checked = true;
             }
         }
 
         private void dotFillColorAlpha_Scroll(object sender, EventArgs e)
         {
+            var newAlpha = (float)dotFillColorAlpha.Value / (float)dotFillColorAlpha.Maximum;
             lblDotFillColorAlpha.Text = dotFillColorAlpha.Value.ToString();
 
-            if (_settings.GlobalSettings.FillColorAlpha == dotFillColorAlpha.Value)
+            if (_settings.GlobalSettings.FillColorAlpha == newAlpha)
             {
                 _settings.DotSettings.FillColorAlpha = null;
+                if (!_settings.DotSettings.FillColor.HasValue)
+                    chkDotFillColor.Checked = false;
             }
             else
             {
-                _settings.DotSettings.FillColorAlpha = dotFillColorAlpha.Value;
+                _settings.DotSettings.FillColorAlpha = newAlpha;
+                chkDotFillColor.Checked = true;
             }
+
+            btnDotFillColor.BackColor = _settings.DotSettings.GetFillColor();
+            btnDotFillColor.ForeColor = ContrastTextColor(btnDotFillColor.BackColor);
         }
 
         private void dotOutlineColorAlpha_Scroll(object sender, EventArgs e)
         {
+            var newAlpha = (float)dotOutlineColorAlpha.Value / (float)dotOutlineColorAlpha.Maximum;
             lblDotOutlineColorAlpha.Text = dotOutlineColorAlpha.Value.ToString();
 
-            if (_settings.GlobalSettings.OutlineColorAlpha == dotOutlineColorAlpha.Value)
+            if (_settings.GlobalSettings.OutlineColorAlpha == newAlpha)
             {
                 _settings.DotSettings.OutlineColorAlpha = null;
+                if (!_settings.DotSettings.OutlineColor.HasValue)
+                    chkDotOutlineColor.Checked = false;
             }
             else
             {
-                _settings.DotSettings.OutlineColorAlpha = dotOutlineColorAlpha.Value;
+                _settings.DotSettings.OutlineColorAlpha = newAlpha;
+                chkDotOutlineColor.Checked = true;
             }
+
+            btnDotOutlineColor.BackColor = _settings.DotSettings.GetOutlineColor();
+            btnDotOutlineColor.ForeColor = ContrastTextColor(btnDotOutlineColor.BackColor);
         }
 
         private void crossFillColorAlpha_Scroll(object sender, EventArgs e)
         {
+            var newAlpha = (float)crossFillColorAlpha.Value / (float)crossFillColorAlpha.Maximum;
             lblCrossFillColorAlpha.Text = crossFillColorAlpha.Value.ToString();
 
-            if (_settings.GlobalSettings.FillColorAlpha == crossFillColorAlpha.Value)
+            if (_settings.GlobalSettings.FillColorAlpha == newAlpha)
             {
                 _settings.CrossSettings.FillColorAlpha = null;
+                if (!_settings.CrossSettings.FillColor.HasValue)
+                    chkCrossFillColor.Checked = false;
             }
             else
             {
-                _settings.CrossSettings.FillColorAlpha = crossFillColorAlpha.Value;
+                _settings.CrossSettings.FillColorAlpha = newAlpha;
+                chkCrossFillColor.Checked = true;
             }
+
+            btnCrossFillColor.BackColor = _settings.CrossSettings.GetFillColor();
+            btnCrossFillColor.ForeColor = ContrastTextColor(btnCrossFillColor.BackColor);
         }
 
         private void crossOutlineColorAlpha_Scroll(object sender, EventArgs e)
         {
+            var newAlpha = (float)crossOutlineColorAlpha.Value / (float)crossOutlineColorAlpha.Maximum;
             lblCrossOutlineColorAlpha.Text = crossOutlineColorAlpha.Value.ToString();
 
-            if (_settings.GlobalSettings.OutlineColorAlpha == crossOutlineColorAlpha.Value)
+            if (_settings.GlobalSettings.OutlineColorAlpha == newAlpha)
             {
                 _settings.CrossSettings.OutlineColorAlpha = null;
+                if (!_settings.CrossSettings.OutlineColor.HasValue)
+                    chkCrossOutlineColor.Checked = false;
             }
             else
             {
-                _settings.CrossSettings.OutlineColorAlpha = crossOutlineColorAlpha.Value;
+                _settings.CrossSettings.OutlineColorAlpha = newAlpha;
+                chkCrossOutlineColor.Checked = true;
             }
+
+            btnCrossOutlineColor.BackColor = _settings.CrossSettings.GetOutlineColor();
+            btnCrossOutlineColor.ForeColor = ContrastTextColor(btnCrossOutlineColor.BackColor);
         }
 
         private void circleFillColorAlpha_Scroll(object sender, EventArgs e)
         {
+            var newAlpha = (float)circleFillColorAlpha.Value / (float)circleFillColorAlpha.Maximum;
             lblCircleFillColorAlpha.Text = circleFillColorAlpha.Value.ToString();
 
-            if (_settings.GlobalSettings.FillColorAlpha == circleFillColorAlpha.Value)
+            if (_settings.GlobalSettings.FillColorAlpha == newAlpha)
             {
                 _settings.CircleSettings.FillColorAlpha = null;
+                if (!_settings.CircleSettings.FillColor.HasValue)
+                    chkCircleFillColor.Checked = false;
             }
             else
             {
-                _settings.CircleSettings.FillColorAlpha = circleFillColorAlpha.Value;
+                _settings.CircleSettings.FillColorAlpha = newAlpha;
+                chkCircleFillColor.Checked = true;
             }
+
+            btnCircleFillColor.BackColor = _settings.CircleSettings.GetFillColor();
+            btnCircleFillColor.ForeColor = ContrastTextColor(btnCircleFillColor.BackColor);
         }
 
         private void circleOutlineColorAlpha_Scroll(object sender, EventArgs e)
         {
+            var newAlpha = (float)circleOutlineColorAlpha.Value / (float)circleOutlineColorAlpha.Maximum;
             lblCircleOutlineColorAlpha.Text = circleOutlineColorAlpha.Value.ToString();
 
-            if (_settings.GlobalSettings.OutlineColorAlpha == circleOutlineColorAlpha.Value)
+            if (_settings.GlobalSettings.OutlineColorAlpha == newAlpha)
             {
                 _settings.CircleSettings.OutlineColorAlpha = null;
+                if (!_settings.CircleSettings.OutlineColor.HasValue)
+                    chkCircleOutlineColor.Checked = false;
             }
             else
             {
-                _settings.CircleSettings.OutlineColorAlpha = circleOutlineColorAlpha.Value;
+                _settings.CircleSettings.OutlineColorAlpha = newAlpha;
+                chkCircleOutlineColor.Checked = true;
             }
+
+            btnCircleOutlineColor.BackColor = _settings.CircleSettings.GetOutlineColor();
+            btnCircleOutlineColor.ForeColor = ContrastTextColor(btnCircleOutlineColor.BackColor);
         }
 
         private void btnDotFillColor_Click(object sender, EventArgs e)
@@ -737,7 +810,8 @@ namespace CrosshairOverlay
                 if (_settings.GlobalSettings.FillColor == colorDlg.Color)
                 {
                     _settings.DotSettings.FillColor = null;
-                    chkDotFillColor.Checked = false;
+                    if (!_settings.DotSettings.FillColorAlpha.HasValue)
+                        chkDotFillColor.Checked = false;
                 }
                 else
                 {
@@ -745,8 +819,8 @@ namespace CrosshairOverlay
                     chkDotFillColor.Checked = true;
                 }
 
-                btnDotFillColor.BackColor = colorDlg.Color;
-                btnDotFillColor.ForeColor = ContrastTextColor(colorDlg.Color);
+                btnDotFillColor.BackColor =  _settings.DotSettings.GetFillColor();
+                btnDotFillColor.ForeColor = ContrastTextColor(btnDotFillColor.BackColor);
             }
         }
 
@@ -758,7 +832,8 @@ namespace CrosshairOverlay
                 if (_settings.GlobalSettings.OutlineColor == colorDlg.Color)
                 {
                     _settings.DotSettings.OutlineColor = null;
-                    chkDotOutlineColor.Checked = false;
+                    if (!_settings.DotSettings.OutlineColorAlpha.HasValue)
+                        chkDotOutlineColor.Checked = false;
                 }
                 else
                 {
@@ -766,8 +841,8 @@ namespace CrosshairOverlay
                     chkDotOutlineColor.Checked = true;
                 }
 
-                btnDotOutlineColor.BackColor = colorDlg.Color;
-                btnDotOutlineColor.ForeColor = ContrastTextColor(colorDlg.Color);
+                btnDotOutlineColor.BackColor = _settings.DotSettings.GetOutlineColor();
+                btnDotOutlineColor.ForeColor = ContrastTextColor(btnDotOutlineColor.BackColor);
             }
         }
 
@@ -776,18 +851,21 @@ namespace CrosshairOverlay
             var (colorDlg, colorResult) = SelectColor(btnCrossFillColor.BackColor);
             if (colorResult == DialogResult.OK)
             {
-                btnCrossFillColor.BackColor = colorDlg.Color;
-                btnCrossFillColor.ForeColor = ContrastTextColor(colorDlg.Color);
-                chkCrossFillColor.Checked = true;
 
                 if (_settings.GlobalSettings.FillColor == colorDlg.Color)
                 {
                     _settings.CrossSettings.FillColor = null;
+                    if (!_settings.CrossSettings.FillColorAlpha.HasValue)
+                        chkCrossFillColor.Checked = false;
                 }
                 else
                 {
                     _settings.CrossSettings.FillColor = colorDlg.Color;
+                    chkCrossFillColor.Checked = true;
                 }
+
+                btnCrossFillColor.BackColor = _settings.CrossSettings.GetFillColor();
+                btnCrossFillColor.ForeColor = btnCrossFillColor.BackColor;
             }
         }
 
@@ -796,18 +874,20 @@ namespace CrosshairOverlay
             var (colorDlg, colorResult) = SelectColor(btnCrossOutlineColor.BackColor);
             if (colorResult == DialogResult.OK)
             {
-                btnCrossOutlineColor.BackColor = colorDlg.Color;
-                btnCrossOutlineColor.ForeColor = ContrastTextColor(colorDlg.Color);
-                chkCrossOutlineColor.Checked = true;
-
                 if (_settings.GlobalSettings.OutlineColor == colorDlg.Color)
                 {
                     _settings.CrossSettings.OutlineColor = null;
+                    if (!_settings.CrossSettings.OutlineColorAlpha.HasValue)
+                        chkCrossOutlineColor.Checked = false;
                 }
                 else
                 {
                     _settings.CrossSettings.OutlineColor = colorDlg.Color;
+                    chkCrossOutlineColor.Checked = true;
                 }
+
+                btnCrossOutlineColor.BackColor = _settings.CrossSettings.GetOutlineColor();
+                btnCrossOutlineColor.ForeColor = ContrastTextColor(btnCrossOutlineColor.BackColor);
             }
         }
 
@@ -816,18 +896,20 @@ namespace CrosshairOverlay
             var (colorDlg, colorResult) = SelectColor(btnCircleFillColor.BackColor);
             if (colorResult == DialogResult.OK)
             {
-                btnCircleFillColor.BackColor = colorDlg.Color;
-                btnCircleFillColor.ForeColor = ContrastTextColor(colorDlg.Color);
-                chkCircleFillColor.Checked = true;
-
                 if (_settings.GlobalSettings.FillColor == colorDlg.Color)
                 {
                     _settings.CircleSettings.FillColor = null;
+                    if (!_settings.CircleSettings.FillColorAlpha.HasValue)
+                        chkCircleFillColor.Checked = false;
                 }
                 else
                 {
                     _settings.CircleSettings.FillColor = colorDlg.Color;
+                    chkCircleFillColor.Checked = true;
                 }
+
+                btnCircleFillColor.BackColor = _settings.CircleSettings.GetFillColor();
+                btnCircleFillColor.ForeColor = ContrastTextColor(btnCircleFillColor.BackColor);
             }
         }
 
@@ -836,18 +918,20 @@ namespace CrosshairOverlay
             var (colorDlg, colorResult) = SelectColor(btnCircleOutlineColor.BackColor);
             if (colorResult == DialogResult.OK)
             {
-                btnCircleOutlineColor.BackColor = colorDlg.Color;
-                btnCircleOutlineColor.ForeColor = ContrastTextColor(colorDlg.Color);
-                chkCircleOutlineColor.Checked = true;
-
                 if (_settings.GlobalSettings.OutlineColor == colorDlg.Color)
                 {
                     _settings.CircleSettings.OutlineColor = null;
+                    if (!_settings.CircleSettings.OutlineColorAlpha.HasValue)
+                        chkCircleOutlineColor.Checked = false;
                 }
                 else
                 {
                     _settings.CircleSettings.OutlineColor = colorDlg.Color;
+                    chkCircleOutlineColor.Checked = true;
                 }
+
+                btnCircleOutlineColor.BackColor = _settings.CircleSettings.GetOutlineColor();
+                btnCircleOutlineColor.ForeColor = ContrastTextColor(btnCircleOutlineColor.BackColor);
             }
         }
 
@@ -946,8 +1030,12 @@ namespace CrosshairOverlay
             if (!chkDotFillColor.Checked)
             {
                 _settings.DotSettings.FillColor = null;
-                btnDotFillColor.BackColor = _settings.GlobalSettings.FillColor;
-                btnDotFillColor.ForeColor = ContrastTextColor(_settings.GlobalSettings.FillColor);
+                btnDotFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
+                btnDotFillColor.ForeColor = ContrastTextColor(btnDotFillColor.BackColor);
+
+                _settings.DotSettings.FillColorAlpha = null;
+                dotFillColorAlpha.Value = ConvertAlphaToSliderValue(_settings.DotSettings.GetFillColorAlpha(), dotFillColorAlpha.Maximum);
+                lblDotFillColorAlpha.Text = dotFillColorAlpha.Value.ToString();
             }
         }
 
@@ -956,8 +1044,12 @@ namespace CrosshairOverlay
             if (!chkDotOutlineColor.Checked)
             {
                 _settings.DotSettings.OutlineColor = null;
-                btnDotOutlineColor.BackColor = _settings.GlobalSettings.OutlineColor;
-                btnDotOutlineColor.ForeColor = ContrastTextColor(_settings.GlobalSettings.OutlineColor);
+                btnDotOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
+                btnDotOutlineColor.ForeColor = ContrastTextColor(btnDotOutlineColor.BackColor);
+
+                _settings.DotSettings.OutlineColorAlpha = null;
+                dotOutlineColorAlpha.Value = ConvertAlphaToSliderValue(_settings.DotSettings.GetOutlineColorAlpha(), dotOutlineColorAlpha.Maximum);
+                lblDotOutlineColorAlpha.Text = dotOutlineColorAlpha.Value.ToString();
             }
         }
 
@@ -966,8 +1058,12 @@ namespace CrosshairOverlay
             if (!chkCrossFillColor.Checked)
             {
                 _settings.CrossSettings.FillColor = null;
-                btnCrossFillColor.BackColor = _settings.GlobalSettings.FillColor;
-                btnCrossFillColor.ForeColor = ContrastTextColor(_settings.GlobalSettings.FillColor);
+                btnCrossFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
+                btnCrossFillColor.ForeColor = ContrastTextColor(btnCrossFillColor.BackColor);
+
+                _settings.CrossSettings.FillColorAlpha = null;
+                crossFillColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CrossSettings.GetFillColorAlpha(), crossFillColorAlpha.Maximum);
+                lblCrossFillColorAlpha.Text = crossFillColorAlpha.Value.ToString();
             }
         }
 
@@ -976,8 +1072,12 @@ namespace CrosshairOverlay
             if (!chkCrossOutlineColor.Checked)
             {
                 _settings.CrossSettings.OutlineColor = null;
-                btnCrossOutlineColor.BackColor = _settings.GlobalSettings.OutlineColor;
-                btnCrossOutlineColor.ForeColor = ContrastTextColor(_settings.GlobalSettings.OutlineColor);
+                btnCrossOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
+                btnCrossOutlineColor.ForeColor = ContrastTextColor(btnCrossOutlineColor.BackColor);
+
+                _settings.CrossSettings.OutlineColorAlpha = null;
+                crossOutlineColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CrossSettings.GetOutlineColorAlpha(), crossOutlineColorAlpha.Maximum);
+                lblCrossOutlineColorAlpha.Text = crossOutlineColorAlpha.Value.ToString();
             }
         }
 
@@ -986,8 +1086,12 @@ namespace CrosshairOverlay
             if (!chkCircleFillColor.Checked)
             {
                 _settings.CircleSettings.FillColor = null;
-                btnCircleFillColor.BackColor = _settings.GlobalSettings.FillColor;
-                btnCircleFillColor.ForeColor = ContrastTextColor(_settings.GlobalSettings.FillColor);
+                btnCircleFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
+                btnCircleFillColor.ForeColor = ContrastTextColor(btnCircleFillColor.BackColor);
+
+                _settings.CircleSettings.FillColorAlpha = null;
+                circleFillColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CircleSettings.GetFillColorAlpha(), circleFillColorAlpha.Maximum);
+                lblCircleFillColorAlpha.Text = circleFillColorAlpha.Value.ToString();
             }
         }
 
@@ -996,8 +1100,12 @@ namespace CrosshairOverlay
             if (!chkCircleOutlineColor.Checked)
             {
                 _settings.CircleSettings.OutlineColor = null;
-                btnCircleOutlineColor.BackColor = _settings.GlobalSettings.OutlineColor;
-                btnCircleOutlineColor.ForeColor = ContrastTextColor(_settings.GlobalSettings.OutlineColor);
+                btnCircleOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
+                btnCircleOutlineColor.ForeColor = ContrastTextColor(btnCircleOutlineColor.BackColor);
+
+                _settings.CircleSettings.OutlineColorAlpha = null;
+                circleOutlineColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CircleSettings.GetOutlineColorAlpha(), circleOutlineColorAlpha.Maximum);
+                lblCircleOutlineColorAlpha.Text = circleOutlineColorAlpha.Value.ToString();
             }
         }
     }
