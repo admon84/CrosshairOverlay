@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -29,6 +31,8 @@ namespace CrosshairOverlay
                     MessageBox.Show($"{_appName} is already running.", _appNameVersion, MessageBoxButtons.OK);
                     return;
                 }
+
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
                 Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
                 Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
@@ -127,6 +131,17 @@ namespace CrosshairOverlay
                 _isPaused = true;
                 ((ToolStripMenuItem)sender).Text = "Unpause";
             }
+        }
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            string assemblyName = new AssemblyName(args.Name).Name;
+            string assemblyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Lib", assemblyName + ".dll");
+            if (File.Exists(assemblyPath))
+            {
+                return Assembly.LoadFrom(assemblyPath);
+            }
+            return null;
         }
 
         private static void Dispose()

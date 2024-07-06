@@ -79,12 +79,12 @@ namespace CrosshairOverlay
 
         public int GetFillColorAlpha()
         {
-            return (int)(255 * FillColorAlpha);
+            return (int)Math.Round(255 * FillColorAlpha);
         }
 
         public int GetOutlineColorAlpha()
         {
-            return (int)(255 * OutlineColorAlpha);
+            return (int)Math.Round(255 * OutlineColorAlpha);
         }
     }
 
@@ -119,13 +119,13 @@ namespace CrosshairOverlay
         public int GetFillColorAlpha()
         {
             var fillColorAlpha = FillColorAlpha ?? _globalSettings.FillColorAlpha;
-            return (int)(255 * fillColorAlpha);
+            return (int)Math.Round(255 * fillColorAlpha);
         }
 
         public int GetOutlineColorAlpha()
         {
             var outlineColorAlpha = OutlineColorAlpha ?? _globalSettings.OutlineColorAlpha;
-            return (int)(255 * outlineColorAlpha);
+            return (int)Math.Round(255 * outlineColorAlpha);
         }
 
         public float GetCrosshairSize()

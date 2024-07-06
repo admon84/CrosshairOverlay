@@ -209,11 +209,11 @@
             // 
             this.btnFillColor.BackColor = System.Drawing.Color.Transparent;
             this.btnFillColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFillColor.Location = new System.Drawing.Point(35, 30);
+            this.btnFillColor.ForeColor = System.Drawing.Color.DarkGray;
+            this.btnFillColor.Location = new System.Drawing.Point(35, 27);
             this.btnFillColor.Name = "btnFillColor";
-            this.btnFillColor.Size = new System.Drawing.Size(79, 23);
+            this.btnFillColor.Size = new System.Drawing.Size(28, 28);
             this.btnFillColor.TabIndex = 46;
-            this.btnFillColor.Text = "Fill Color";
             this.btnFillColor.UseVisualStyleBackColor = false;
             this.btnFillColor.Click += new System.EventHandler(this.btnFillColor_Click);
             // 
@@ -234,10 +234,10 @@
             // 
             this.fillColorAlpha.BackColor = System.Drawing.Color.WhiteSmoke;
             this.fillColorAlpha.LargeChange = 10;
-            this.fillColorAlpha.Location = new System.Drawing.Point(122, 20);
+            this.fillColorAlpha.Location = new System.Drawing.Point(76, 20);
             this.fillColorAlpha.Maximum = 100;
             this.fillColorAlpha.Name = "fillColorAlpha";
-            this.fillColorAlpha.Size = new System.Drawing.Size(114, 45);
+            this.fillColorAlpha.Size = new System.Drawing.Size(160, 45);
             this.fillColorAlpha.TabIndex = 50;
             this.fillColorAlpha.TickFrequency = 10;
             this.fillColorAlpha.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -247,11 +247,11 @@
             // 
             this.btnOutlineColor.BackColor = System.Drawing.Color.Transparent;
             this.btnOutlineColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOutlineColor.Location = new System.Drawing.Point(35, 29);
+            this.btnOutlineColor.ForeColor = System.Drawing.Color.DarkGray;
+            this.btnOutlineColor.Location = new System.Drawing.Point(35, 26);
             this.btnOutlineColor.Name = "btnOutlineColor";
-            this.btnOutlineColor.Size = new System.Drawing.Size(79, 23);
+            this.btnOutlineColor.Size = new System.Drawing.Size(28, 28);
             this.btnOutlineColor.TabIndex = 48;
-            this.btnOutlineColor.Text = "Outline Color";
             this.btnOutlineColor.UseVisualStyleBackColor = false;
             this.btnOutlineColor.Click += new System.EventHandler(this.btnOutlineColor_Click);
             // 
@@ -575,10 +575,10 @@
             // 
             this.outlineColorAlpha.BackColor = System.Drawing.Color.WhiteSmoke;
             this.outlineColorAlpha.LargeChange = 10;
-            this.outlineColorAlpha.Location = new System.Drawing.Point(122, 19);
+            this.outlineColorAlpha.Location = new System.Drawing.Point(76, 19);
             this.outlineColorAlpha.Maximum = 100;
             this.outlineColorAlpha.Name = "outlineColorAlpha";
-            this.outlineColorAlpha.Size = new System.Drawing.Size(114, 45);
+            this.outlineColorAlpha.Size = new System.Drawing.Size(160, 45);
             this.outlineColorAlpha.TabIndex = 51;
             this.outlineColorAlpha.TickFrequency = 10;
             this.outlineColorAlpha.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -625,11 +625,11 @@
             // 
             this.btnDotOutlineColor.BackColor = System.Drawing.Color.Transparent;
             this.btnDotOutlineColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDotOutlineColor.Location = new System.Drawing.Point(35, 29);
+            this.btnDotOutlineColor.ForeColor = System.Drawing.Color.DarkGray;
+            this.btnDotOutlineColor.Location = new System.Drawing.Point(35, 26);
             this.btnDotOutlineColor.Name = "btnDotOutlineColor";
-            this.btnDotOutlineColor.Size = new System.Drawing.Size(79, 23);
+            this.btnDotOutlineColor.Size = new System.Drawing.Size(28, 28);
             this.btnDotOutlineColor.TabIndex = 48;
-            this.btnDotOutlineColor.Text = "Outline Color";
             this.btnDotOutlineColor.UseVisualStyleBackColor = false;
             this.btnDotOutlineColor.Click += new System.EventHandler(this.btnDotOutlineColor_Click);
             // 
@@ -650,10 +650,10 @@
             // 
             this.dotOutlineColorAlpha.BackColor = System.Drawing.Color.WhiteSmoke;
             this.dotOutlineColorAlpha.LargeChange = 10;
-            this.dotOutlineColorAlpha.Location = new System.Drawing.Point(122, 19);
+            this.dotOutlineColorAlpha.Location = new System.Drawing.Point(76, 19);
             this.dotOutlineColorAlpha.Maximum = 100;
             this.dotOutlineColorAlpha.Name = "dotOutlineColorAlpha";
-            this.dotOutlineColorAlpha.Size = new System.Drawing.Size(114, 45);
+            this.dotOutlineColorAlpha.Size = new System.Drawing.Size(160, 45);
             this.dotOutlineColorAlpha.TabIndex = 51;
             this.dotOutlineColorAlpha.TickFrequency = 10;
             this.dotOutlineColorAlpha.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -707,11 +707,11 @@
             // 
             this.btnDotFillColor.BackColor = System.Drawing.Color.Transparent;
             this.btnDotFillColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDotFillColor.Location = new System.Drawing.Point(35, 30);
+            this.btnDotFillColor.ForeColor = System.Drawing.Color.DarkGray;
+            this.btnDotFillColor.Location = new System.Drawing.Point(35, 27);
             this.btnDotFillColor.Name = "btnDotFillColor";
-            this.btnDotFillColor.Size = new System.Drawing.Size(79, 23);
+            this.btnDotFillColor.Size = new System.Drawing.Size(28, 28);
             this.btnDotFillColor.TabIndex = 46;
-            this.btnDotFillColor.Text = "Fill Color";
             this.btnDotFillColor.UseVisualStyleBackColor = false;
             this.btnDotFillColor.Click += new System.EventHandler(this.btnDotFillColor_Click);
             // 
@@ -732,10 +732,10 @@
             // 
             this.dotFillColorAlpha.BackColor = System.Drawing.Color.WhiteSmoke;
             this.dotFillColorAlpha.LargeChange = 10;
-            this.dotFillColorAlpha.Location = new System.Drawing.Point(122, 20);
+            this.dotFillColorAlpha.Location = new System.Drawing.Point(76, 20);
             this.dotFillColorAlpha.Maximum = 100;
             this.dotFillColorAlpha.Name = "dotFillColorAlpha";
-            this.dotFillColorAlpha.Size = new System.Drawing.Size(114, 45);
+            this.dotFillColorAlpha.Size = new System.Drawing.Size(160, 45);
             this.dotFillColorAlpha.TabIndex = 50;
             this.dotFillColorAlpha.TickFrequency = 10;
             this.dotFillColorAlpha.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -865,11 +865,11 @@
             // 
             this.btnCrossOutlineColor.BackColor = System.Drawing.Color.Transparent;
             this.btnCrossOutlineColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCrossOutlineColor.Location = new System.Drawing.Point(35, 29);
+            this.btnCrossOutlineColor.ForeColor = System.Drawing.Color.DarkGray;
+            this.btnCrossOutlineColor.Location = new System.Drawing.Point(35, 26);
             this.btnCrossOutlineColor.Name = "btnCrossOutlineColor";
-            this.btnCrossOutlineColor.Size = new System.Drawing.Size(79, 23);
+            this.btnCrossOutlineColor.Size = new System.Drawing.Size(28, 28);
             this.btnCrossOutlineColor.TabIndex = 48;
-            this.btnCrossOutlineColor.Text = "Outline Color";
             this.btnCrossOutlineColor.UseVisualStyleBackColor = false;
             this.btnCrossOutlineColor.Click += new System.EventHandler(this.btnCrossOutlineColor_Click);
             // 
@@ -890,10 +890,10 @@
             // 
             this.crossOutlineColorAlpha.BackColor = System.Drawing.Color.WhiteSmoke;
             this.crossOutlineColorAlpha.LargeChange = 10;
-            this.crossOutlineColorAlpha.Location = new System.Drawing.Point(122, 19);
+            this.crossOutlineColorAlpha.Location = new System.Drawing.Point(76, 19);
             this.crossOutlineColorAlpha.Maximum = 100;
             this.crossOutlineColorAlpha.Name = "crossOutlineColorAlpha";
-            this.crossOutlineColorAlpha.Size = new System.Drawing.Size(114, 45);
+            this.crossOutlineColorAlpha.Size = new System.Drawing.Size(160, 45);
             this.crossOutlineColorAlpha.TabIndex = 51;
             this.crossOutlineColorAlpha.TickFrequency = 10;
             this.crossOutlineColorAlpha.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -947,11 +947,11 @@
             // 
             this.btnCrossFillColor.BackColor = System.Drawing.Color.Transparent;
             this.btnCrossFillColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCrossFillColor.Location = new System.Drawing.Point(35, 30);
+            this.btnCrossFillColor.ForeColor = System.Drawing.Color.DarkGray;
+            this.btnCrossFillColor.Location = new System.Drawing.Point(35, 27);
             this.btnCrossFillColor.Name = "btnCrossFillColor";
-            this.btnCrossFillColor.Size = new System.Drawing.Size(79, 23);
+            this.btnCrossFillColor.Size = new System.Drawing.Size(28, 28);
             this.btnCrossFillColor.TabIndex = 46;
-            this.btnCrossFillColor.Text = "Fill Color";
             this.btnCrossFillColor.UseVisualStyleBackColor = false;
             this.btnCrossFillColor.Click += new System.EventHandler(this.btnCrossFillColor_Click);
             // 
@@ -972,10 +972,10 @@
             // 
             this.crossFillColorAlpha.BackColor = System.Drawing.Color.WhiteSmoke;
             this.crossFillColorAlpha.LargeChange = 10;
-            this.crossFillColorAlpha.Location = new System.Drawing.Point(122, 20);
+            this.crossFillColorAlpha.Location = new System.Drawing.Point(76, 20);
             this.crossFillColorAlpha.Maximum = 100;
             this.crossFillColorAlpha.Name = "crossFillColorAlpha";
-            this.crossFillColorAlpha.Size = new System.Drawing.Size(114, 45);
+            this.crossFillColorAlpha.Size = new System.Drawing.Size(160, 45);
             this.crossFillColorAlpha.TabIndex = 50;
             this.crossFillColorAlpha.TickFrequency = 10;
             this.crossFillColorAlpha.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -1183,11 +1183,11 @@
             // 
             this.btnCircleOutlineColor.BackColor = System.Drawing.Color.Transparent;
             this.btnCircleOutlineColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCircleOutlineColor.Location = new System.Drawing.Point(35, 29);
+            this.btnCircleOutlineColor.ForeColor = System.Drawing.Color.DarkGray;
+            this.btnCircleOutlineColor.Location = new System.Drawing.Point(35, 26);
             this.btnCircleOutlineColor.Name = "btnCircleOutlineColor";
-            this.btnCircleOutlineColor.Size = new System.Drawing.Size(79, 23);
+            this.btnCircleOutlineColor.Size = new System.Drawing.Size(28, 28);
             this.btnCircleOutlineColor.TabIndex = 48;
-            this.btnCircleOutlineColor.Text = "Outline Color";
             this.btnCircleOutlineColor.UseVisualStyleBackColor = false;
             this.btnCircleOutlineColor.Click += new System.EventHandler(this.btnCircleOutlineColor_Click);
             // 
@@ -1208,10 +1208,10 @@
             // 
             this.circleOutlineColorAlpha.BackColor = System.Drawing.Color.WhiteSmoke;
             this.circleOutlineColorAlpha.LargeChange = 10;
-            this.circleOutlineColorAlpha.Location = new System.Drawing.Point(122, 19);
+            this.circleOutlineColorAlpha.Location = new System.Drawing.Point(76, 19);
             this.circleOutlineColorAlpha.Maximum = 100;
             this.circleOutlineColorAlpha.Name = "circleOutlineColorAlpha";
-            this.circleOutlineColorAlpha.Size = new System.Drawing.Size(114, 45);
+            this.circleOutlineColorAlpha.Size = new System.Drawing.Size(160, 45);
             this.circleOutlineColorAlpha.TabIndex = 51;
             this.circleOutlineColorAlpha.TickFrequency = 10;
             this.circleOutlineColorAlpha.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -1266,11 +1266,11 @@
             // 
             this.btnCircleFillColor.BackColor = System.Drawing.Color.Transparent;
             this.btnCircleFillColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCircleFillColor.Location = new System.Drawing.Point(35, 30);
+            this.btnCircleFillColor.ForeColor = System.Drawing.Color.DarkGray;
+            this.btnCircleFillColor.Location = new System.Drawing.Point(35, 27);
             this.btnCircleFillColor.Name = "btnCircleFillColor";
-            this.btnCircleFillColor.Size = new System.Drawing.Size(79, 23);
+            this.btnCircleFillColor.Size = new System.Drawing.Size(28, 28);
             this.btnCircleFillColor.TabIndex = 46;
-            this.btnCircleFillColor.Text = "Fill Color";
             this.btnCircleFillColor.UseVisualStyleBackColor = false;
             this.btnCircleFillColor.Click += new System.EventHandler(this.btnCircleFillColor_Click);
             // 
@@ -1291,10 +1291,10 @@
             // 
             this.circleFillColorAlpha.BackColor = System.Drawing.Color.WhiteSmoke;
             this.circleFillColorAlpha.LargeChange = 10;
-            this.circleFillColorAlpha.Location = new System.Drawing.Point(122, 20);
+            this.circleFillColorAlpha.Location = new System.Drawing.Point(76, 20);
             this.circleFillColorAlpha.Maximum = 100;
             this.circleFillColorAlpha.Name = "circleFillColorAlpha";
-            this.circleFillColorAlpha.Size = new System.Drawing.Size(114, 45);
+            this.circleFillColorAlpha.Size = new System.Drawing.Size(160, 45);
             this.circleFillColorAlpha.TabIndex = 50;
             this.circleFillColorAlpha.TickFrequency = 10;
             this.circleFillColorAlpha.TickStyle = System.Windows.Forms.TickStyle.Both;

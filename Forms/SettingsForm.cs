@@ -39,10 +39,10 @@ namespace CrosshairOverlay
             btnOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
             btnOutlineColor.ForeColor = ContrastForeColor(btnOutlineColor.BackColor);
 
-            fillColorAlpha.Value = (int)(_settings.GlobalSettings.FillColorAlpha * fillColorAlpha.Maximum);
+            fillColorAlpha.Value = (int)Math.Round(_settings.GlobalSettings.FillColorAlpha * fillColorAlpha.Maximum);
             lblFillColorAlpha.Text = fillColorAlpha.Value.ToString();
 
-            outlineColorAlpha.Value = (int)(_settings.GlobalSettings.OutlineColorAlpha * outlineColorAlpha.Maximum);
+            outlineColorAlpha.Value = (int)Math.Round(_settings.GlobalSettings.OutlineColorAlpha * outlineColorAlpha.Maximum);
             lblOutlineColorAlpha.Text = outlineColorAlpha.Value.ToString();
 
             crosshairSize.Value = (int)_settings.GlobalSettings.CrosshairSize;
@@ -178,12 +178,12 @@ namespace CrosshairOverlay
 
         private int ConvertSmallToBig(float value)
         {
-            return (int)(value * 2);
+            return (int)Math.Round(value * 2f);
         }
 
-        private int ConvertAlphaToSliderValue(float value, float sliderMax)
+        private int ConvertAlphaToSliderValue(int value, int sliderMax)
         {
-            return (int)(value / 255 * sliderMax);
+            return (int)Math.Round((float)value / 255f * (float)sliderMax);
         }
 
         private string TrimDecimals(float value)
@@ -235,12 +235,12 @@ namespace CrosshairOverlay
         {
             var fillColor = enabled ? settings.GetFillColor() : Color.Empty;
             fillColorButton.BackColor = fillColor;
-            fillColorButton.ForeColor = enabled ? ContrastForeColor(fillColorButton.BackColor) : Color.Silver;
+            fillColorButton.ForeColor = enabled ? ContrastForeColor(fillColorButton.BackColor) : Color.DarkGray;
             checkFillColor.Checked = settings.FillColor.HasValue;
 
             var outlineColor = enabled ? settings.GetOutlineColor() : Color.Empty;
             outlineColorButton.BackColor = outlineColor;
-            outlineColorButton.ForeColor = enabled ? ContrastForeColor(outlineColorButton.BackColor) : Color.Silver;
+            outlineColorButton.ForeColor = enabled ? ContrastForeColor(outlineColorButton.BackColor) : Color.DarkGray;
             checkOutlineColor.Checked = settings.OutlineColor.HasValue;
         }
 
@@ -294,7 +294,7 @@ namespace CrosshairOverlay
 
             if (!settings.FillColorAlpha.HasValue)
             {
-                var intAlpha = (int)(newAlpha * 100);
+                var intAlpha = (int)(newAlpha * 100f);
                 slider.Value = intAlpha;
                 label.Text = intAlpha.ToString();
                 if (enabled)
@@ -315,7 +315,7 @@ namespace CrosshairOverlay
             
             if (!settings.OutlineColorAlpha.HasValue)
             {
-                var intAlpha = (int)(newAlpha * 100);
+                var intAlpha = (int)(newAlpha * 100f);
                 slider.Value = intAlpha;
                 label.Text = intAlpha.ToString();
                 if (enabled)
@@ -427,13 +427,15 @@ namespace CrosshairOverlay
 
         private Color ContrastForeColor(Color backgroundColor)
         {
-            var brightness = (int)Math.Sqrt(
-                backgroundColor.R * backgroundColor.R * .299 +
-                backgroundColor.G * backgroundColor.G * .587 +
-                backgroundColor.B * backgroundColor.B * .114);
-
             var darkGray = Color.FromArgb(32, 32, 32);
-            return brightness >= 128 ? darkGray : (backgroundColor.A >= 128 ? Color.WhiteSmoke : darkGray);
+            return darkGray;
+
+            //var brightness = (int)Math.Sqrt(
+            //    backgroundColor.R * backgroundColor.R * .299 +
+            //    backgroundColor.G * backgroundColor.G * .587 +
+            //    backgroundColor.B * backgroundColor.B * .114);
+
+            //return brightness >= 128 ? darkGray : (backgroundColor.A >= 128 ? Color.WhiteSmoke : darkGray);
         }
 
         private void crosshairSize_Scroll(object sender, EventArgs e)
