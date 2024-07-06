@@ -1,23 +1,30 @@
-# CrosshairOverlay
+# CrosshairOverlay 🎯
 
-CrosshairOverlay is a small C# application that draws a customizable crosshair on your screen.
-
-![crosshair-overlay](https://github.com/admon84/CrosshairOverlay/assets/10291543/a1feccbd-0b2b-48bd-9a6a-b1974cd60654)
+CrosshairOverlay is a simple C# application that draws a customizable crosshair on your screen, perfect for keeping your aim steady. Designed specifically for Windows users.
 
 ### Prerequisites
 
+Make sure you have:
 - .NET Framework (version 4.7 or higher)
 
-### Build
+### Getting Started
 
-1. Download or clone the repository.
-2. Build the project using your preferred IDE (e.g. Visual Studio)
+1. **Download the Latest Release**: Grab the latest release from our [GitHub Releases page](https://github.com/admon84/CrosshairOverlay/releases).
+2. **Unzip the Download**: Extract the downloaded ZIP file to your desired location.
+3. **Run the Application**: Launch the downloaded application to start using the crosshair.
+
+### Building from Source (Optional)
+
+1. **Get the Code**: Download or clone this repository.
+2. **Build**: Open the project in your preferred IDE (like Visual Studio) and build the project.
 
 ### Usage
 
-1. Run the application.
-2. Right-click the system tray icon to access the following options:
+1. **Run the Application**: Launch the application to start using the crosshair.
+2. **Options**: Right-click the system tray icon to access the following options:
    - **Settings**: Open the settings form to customize the crosshair.
    - **Pause**: Temporarily disable the crosshair overlay.
-   - **Exit**: Close the application.
-3. Use the settings form to customize the crosshair.
+   - **Exit**: Close the application when you're done.
+3. **Customize**: Adjust the crosshair settings to suit your preferences.
+
+   ![CrosshairOverlay](https://github.com/admon84/CrosshairOverlay/assets/8539634/cbc2304f-37c5-4955-8a3d-ad7a8ee4ba56)

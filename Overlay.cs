@@ -28,7 +28,7 @@ namespace CrosshairOverlay
             };
             _window = new GraphicsWindow(0, 0, SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height, gfx)
             {
-                FPS = 30,
+                FPS = 60,
                 IsTopmost = true,
                 IsVisible = true,
             };

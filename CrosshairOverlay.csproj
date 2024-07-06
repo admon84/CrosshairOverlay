@@ -149,4 +149,10 @@
   <PropertyGroup>
     <PostBuildEvent>echo Assembly Version: @(VersionNumber)</PostBuildEvent>
   </PropertyGroup>
+  <Target Name="MoveDllsToLib" AfterTargets="Build">
+    <ItemGroup>
+      <LibDlls Include="$(OutputPath)Newtonsoft.Json.dll;$(OutputPath)GameOverlay.dll;$(OutputPath)SharpDX.dll;$(OutputPath)SharpDX.pdb;$(OutputPath)SharpDX.DXGI.dll;$(OutputPath)SharpDX.DXGI.pdb;$(OutputPath)SharpDX.Direct2D1.dll;$(OutputPath)SharpDX.Direct2D1.pdb" />
+    </ItemGroup>
+    <Move SourceFiles="@(LibDlls)" DestinationFolder="$(OutputPath)Lib\" />
+  </Target>
 </Project>
