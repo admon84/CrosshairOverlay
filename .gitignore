@@ -18,8 +18,9 @@
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
-# VS temp
+# Visual Studio
 .vs/
+*.user
 
 # VSCode
 .vscode/
