@@ -12,11 +12,12 @@ namespace CrosshairOverlay
         private Settings _settings = Settings.Instance;
         private List<Color> _customColors = new List<Color>();
 
-        public SettingsForm()
+        public SettingsForm(string title)
         {
             InitializeComponent();
             SetStartupLocation();
             LoadSettings();
+            this.Text = title;
             this.FormClosing += SettingsForm_FormClosing;
         }
 

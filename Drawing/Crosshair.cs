@@ -7,8 +7,8 @@ namespace CrosshairOverlay.Drawing
 {
     class Crosshair
     {
-        private Settings _settings = Settings.Instance;
-        private Dictionary<Color, SolidBrush> _brushes = new Dictionary<Color, SolidBrush>();
+        private readonly Settings _settings = Settings.Instance;
+        private readonly Dictionary<Color, SolidBrush> _brushes = new Dictionary<Color, SolidBrush>();
 
         public void DrawCrosshair(Graphics gfx)
         {

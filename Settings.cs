@@ -13,7 +13,7 @@ namespace CrosshairOverlay
         public ShapeSettings CrossSettings { get; set; }
         public ShapeSettings CircleSettings { get; set; }
 
-        private static readonly string SettingsFilePath = "settings.json";
+        private static readonly string SettingsFilePath = "Settings.json";
         private static Settings _instance;
 
         private Settings()
@@ -99,7 +99,7 @@ namespace CrosshairOverlay
         public float? CrosshairWidth { get; set; }
         public float? CrosshairOutline { get; set; }
 
-        private GlobalSettings _globalSettings;
+        private readonly GlobalSettings _globalSettings;
 
         public ShapeSettings(GlobalSettings globalSettings)
         {
@@ -108,12 +108,12 @@ namespace CrosshairOverlay
 
         public Color GetFillColor()
         {
-            return Color.FromArgb(GetFillColorAlpha(), FillColor.HasValue ? FillColor.Value : _globalSettings.FillColor);
+            return Color.FromArgb(GetFillColorAlpha(), FillColor ?? _globalSettings.FillColor);
         }
 
         public Color GetOutlineColor()
         {
-            return Color.FromArgb(GetOutlineColorAlpha(), OutlineColor.HasValue ? OutlineColor.Value : _globalSettings.OutlineColor);
+            return Color.FromArgb(GetOutlineColorAlpha(), OutlineColor ?? _globalSettings.OutlineColor);
         }
 
         public int GetFillColorAlpha()

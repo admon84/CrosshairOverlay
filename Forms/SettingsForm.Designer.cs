@@ -1474,7 +1474,7 @@
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Crosshair Overlay";
+            this.Text = "CrosshairOverlay";
             this.grpFillColor.ResumeLayout(false);
             this.grpFillColor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fillColorAlpha)).EndInit();

@@ -10,14 +10,14 @@ namespace CrosshairOverlay
     public static class Program
     {
         private static readonly string _appName = "CrosshairOverlay";
-        private static readonly string _appVersion = $"v{typeof(Program).Assembly.GetName().Version}";
+        private static readonly Version _assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
+        private static readonly string _appVersion = string.Format("v{0}.{1}.{2}", _assemblyVersion.Major, _assemblyVersion.Minor, _assemblyVersion.Build);
         private static readonly string _appNameVersion = $"{_appName} {_appVersion}";
-
+        private static readonly BackgroundWorker _worker = new BackgroundWorker();
         private static SettingsForm settingsForm;
         private static Mutex _mutex = null;
         private static Overlay _overlay;
         private static NotifyIcon _trayIcon;
-        private static BackgroundWorker _worker = new BackgroundWorker();
         private static bool _isPaused = false;
 
         [STAThread]
@@ -74,7 +74,7 @@ namespace CrosshairOverlay
         {
             if (settingsForm == null || settingsForm.IsDisposed)
             {
-                settingsForm = new SettingsForm();
+                settingsForm = new SettingsForm(_appNameVersion);
             }
 
             if (settingsForm.Visible)
@@ -146,11 +146,8 @@ namespace CrosshairOverlay
 
         private static void Dispose()
         {
-            if (settingsForm != null)
-            {
-                settingsForm.Dispose();
-            }
             _overlay.Dispose();
+            settingsForm?.Dispose();
             _trayIcon.Dispose();
             if (_worker.IsBusy)
             {

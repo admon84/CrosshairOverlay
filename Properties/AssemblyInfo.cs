@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Examples")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("CrosshairOverlay")]
+[assembly: AssemblyDescription("A customizable crosshair overlay for gaming.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Examples")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCompany("admon84")]
+[assembly: AssemblyProduct("CrosshairOverlay Application")]
+[assembly: AssemblyCopyright("Copyright © 2024 admon84")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -23,14 +23,6 @@ using System.Runtime.InteropServices;
 [assembly: Guid("d3786839-3187-4d78-a17c-81e6c461fd9c")]
 
 // Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+// Format: [Major].[Minor].[Build].[Revision]
+[assembly: AssemblyVersion("0.2.1")]
+[assembly: AssemblyFileVersion("0.2.1")]
