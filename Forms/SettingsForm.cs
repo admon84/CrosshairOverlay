@@ -34,10 +34,10 @@ namespace CrosshairOverlay
             // Global settings
 
             btnFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
-            btnFillColor.ForeColor = ContrastTextColor(btnFillColor.BackColor);
+            btnFillColor.ForeColor = ContrastForeColor(btnFillColor.BackColor);
 
             btnOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
-            btnOutlineColor.ForeColor = ContrastTextColor(btnOutlineColor.BackColor);
+            btnOutlineColor.ForeColor = ContrastForeColor(btnOutlineColor.BackColor);
 
             fillColorAlpha.Value = (int)(_settings.GlobalSettings.FillColorAlpha * fillColorAlpha.Maximum);
             lblFillColorAlpha.Text = fillColorAlpha.Value.ToString();
@@ -235,16 +235,16 @@ namespace CrosshairOverlay
         {
             var fillColor = enabled ? settings.GetFillColor() : Color.Empty;
             fillColorButton.BackColor = fillColor;
-            fillColorButton.ForeColor = ContrastTextColor(fillColorButton.BackColor);
+            fillColorButton.ForeColor = enabled ? ContrastForeColor(fillColorButton.BackColor) : Color.Silver;
             checkFillColor.Checked = settings.FillColor.HasValue;
 
             var outlineColor = enabled ? settings.GetOutlineColor() : Color.Empty;
             outlineColorButton.BackColor = outlineColor;
-            outlineColorButton.ForeColor = ContrastTextColor(outlineColorButton.BackColor);
+            outlineColorButton.ForeColor = enabled ? ContrastForeColor(outlineColorButton.BackColor) : Color.Silver;
             checkOutlineColor.Checked = settings.OutlineColor.HasValue;
         }
 
-        private void UpdateFillColorSetting(ShapeSettings settings, Color newColor, Button button, CheckBox check)
+        private void UpdateFillColorSetting(ShapeSettings settings, Color newColor, Button button, CheckBox check, bool enabled)
         {
             if (settings.FillColor.HasValue && settings.FillColor == newColor)
             {
@@ -255,13 +255,16 @@ namespace CrosshairOverlay
 
             if (!settings.FillColor.HasValue)
             {
-                button.BackColor = _settings.GlobalSettings.GetFillColor();
-                button.ForeColor = ContrastTextColor(button.BackColor);
+                if (enabled)
+                {
+                    button.BackColor = _settings.GlobalSettings.GetFillColor();
+                    button.ForeColor = ContrastForeColor(button.BackColor);
+                }
                 check.Checked = false;
             }
         }
 
-        private void UpdateOutlineColorSetting(ShapeSettings settings, Color newColor, Button button, CheckBox check)
+        private void UpdateOutlineColorSetting(ShapeSettings settings, Color newColor, Button button, CheckBox check, bool enabled)
         {
             if (settings.OutlineColor.HasValue && settings.OutlineColor == newColor)
             {
@@ -272,13 +275,16 @@ namespace CrosshairOverlay
 
             if (!settings.OutlineColor.HasValue)
             {
-                button.BackColor = _settings.GlobalSettings.GetOutlineColor();
-                button.ForeColor = ContrastTextColor(button.BackColor);
+                if (enabled)
+                {
+                    button.BackColor = _settings.GlobalSettings.GetOutlineColor();
+                    button.ForeColor = ContrastForeColor(button.BackColor);
+                }
                 check.Checked = false;
             }
         }
 
-        private void UpdateFillColorAlphaSetting(ShapeSettings settings, float newAlpha, TrackBar slider, Label label, Button button)
+        private void UpdateFillColorAlphaSetting(ShapeSettings settings, float newAlpha, TrackBar slider, Label label, Button button, bool enabled)
         {
             if (settings.FillColorAlpha.HasValue && settings.FillColorAlpha == newAlpha)
             {
@@ -291,12 +297,15 @@ namespace CrosshairOverlay
                 var intAlpha = (int)(newAlpha * 100);
                 slider.Value = intAlpha;
                 label.Text = intAlpha.ToString();
-                button.BackColor = settings.GetFillColor();
-                button.ForeColor = ContrastTextColor(button.BackColor);
+                if (enabled)
+                {
+                    button.BackColor = settings.GetFillColor();
+                    button.ForeColor = ContrastForeColor(button.BackColor);
+                }
             }
         }
 
-        private void UpdateOutlineColorAlphaSetting(ShapeSettings settings, float newAlpha, TrackBar slider, Label label, Button button)
+        private void UpdateOutlineColorAlphaSetting(ShapeSettings settings, float newAlpha, TrackBar slider, Label label, Button button, bool enabled)
         {
             if (settings.OutlineColorAlpha.HasValue && settings.OutlineColorAlpha == newAlpha)
             {
@@ -309,8 +318,11 @@ namespace CrosshairOverlay
                 var intAlpha = (int)(newAlpha * 100);
                 slider.Value = intAlpha;
                 label.Text = intAlpha.ToString();
-                button.BackColor = settings.GetOutlineColor();
-                button.ForeColor = ContrastTextColor(button.BackColor);
+                if (enabled)
+                {
+                    button.BackColor = settings.GetOutlineColor();
+                    button.ForeColor = ContrastForeColor(button.BackColor);
+                }
             }
         }
 
@@ -389,11 +401,11 @@ namespace CrosshairOverlay
                 var newColor = colorDlg.Color;
                 _settings.GlobalSettings.FillColor = newColor;
                 btnFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
-                btnFillColor.ForeColor = ContrastTextColor(btnFillColor.BackColor);
+                btnFillColor.ForeColor = ContrastForeColor(btnFillColor.BackColor);
 
-                UpdateFillColorSetting(_settings.DotSettings, newColor, btnDotFillColor, chkDotFillColor);
-                UpdateFillColorSetting(_settings.CrossSettings, newColor, btnCrossFillColor, chkCrossFillColor);
-                UpdateFillColorSetting(_settings.CircleSettings, newColor, btnCircleFillColor, chkCircleFillColor);
+                UpdateFillColorSetting(_settings.DotSettings, newColor, btnDotFillColor, chkDotFillColor, _settings.GlobalSettings.CrosshairDot);
+                UpdateFillColorSetting(_settings.CrossSettings, newColor, btnCrossFillColor, chkCrossFillColor, _settings.GlobalSettings.CrosshairCross);
+                UpdateFillColorSetting(_settings.CircleSettings, newColor, btnCircleFillColor, chkCircleFillColor, _settings.GlobalSettings.CrosshairCircle);
             }
         }
 
@@ -405,24 +417,23 @@ namespace CrosshairOverlay
                 var newColor = colorDlg.Color;
                 _settings.GlobalSettings.OutlineColor = newColor;
                 btnOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
-                btnOutlineColor.ForeColor = ContrastTextColor(btnOutlineColor.BackColor);
+                btnOutlineColor.ForeColor = ContrastForeColor(btnOutlineColor.BackColor);
 
-                UpdateOutlineColorSetting(_settings.DotSettings, newColor, btnDotOutlineColor, chkDotOutlineColor);
-                UpdateOutlineColorSetting(_settings.CrossSettings, newColor, btnCrossOutlineColor, chkCrossOutlineColor);
-                UpdateOutlineColorSetting(_settings.CircleSettings, newColor, btnCircleOutlineColor, chkCircleOutlineColor);
+                UpdateOutlineColorSetting(_settings.DotSettings, newColor, btnDotOutlineColor, chkDotOutlineColor, _settings.GlobalSettings.CrosshairDot);
+                UpdateOutlineColorSetting(_settings.CrossSettings, newColor, btnCrossOutlineColor, chkCrossOutlineColor, _settings.GlobalSettings.CrosshairCross);
+                UpdateOutlineColorSetting(_settings.CircleSettings, newColor, btnCircleOutlineColor, chkCircleOutlineColor, _settings.GlobalSettings.CrosshairCircle);
             }
         }
 
-        private Color ContrastTextColor(Color color)
+        private Color ContrastForeColor(Color backgroundColor)
         {
-            var backgroundColor = color == Color.Empty ? Color.White : color;
-
             var brightness = (int)Math.Sqrt(
                 backgroundColor.R * backgroundColor.R * .299 +
                 backgroundColor.G * backgroundColor.G * .587 +
                 backgroundColor.B * backgroundColor.B * .114);
 
-            return brightness > 128 ? Color.Black : Color.White;
+            var darkGray = Color.FromArgb(32, 32, 32);
+            return brightness >= 128 ? darkGray : (backgroundColor.A >= 128 ? Color.WhiteSmoke : darkGray);
         }
 
         private void crosshairSize_Scroll(object sender, EventArgs e)
@@ -454,6 +465,17 @@ namespace CrosshairOverlay
             UpdateSmallCrosshairSetting(_settings.CircleSettings.CrosshairWidth, _settings.GlobalSettings.CrosshairWidth, width, circleCrosshairWidth, lblCircleWidthValue);
         }
 
+        private void crosshairOutline_Scroll(object sender, EventArgs e)
+        {
+            var outline = ConvertBigToSmall(crosshairOutline.Value);
+            lblOutlineValue.Text = TrimDecimals(outline);
+            _settings.GlobalSettings.CrosshairOutline = outline;
+
+            UpdateSmallCrosshairSetting(_settings.DotSettings.CrosshairOutline, _settings.GlobalSettings.CrosshairOutline, outline, dotCrosshairOutline, lblDotOutlineValue);
+            UpdateSmallCrosshairSetting(_settings.CrossSettings.CrosshairOutline, _settings.GlobalSettings.CrosshairOutline, outline, crossCrosshairOutline, lblCrossOutlineValue);
+            UpdateSmallCrosshairSetting(_settings.CircleSettings.CrosshairOutline, _settings.GlobalSettings.CrosshairOutline, outline, circleCrosshairOutline, lblCircleOutlineValue);
+        }
+
         private void chkDot_CheckedChanged(object sender, EventArgs e)
         {
             ToggleDotEnabled(chkDot.Checked);
@@ -475,11 +497,11 @@ namespace CrosshairOverlay
             lblFillColorAlpha.Text = fillColorAlpha.Value.ToString();
             _settings.GlobalSettings.FillColorAlpha = newAlpha;
             btnFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
-            btnFillColor.ForeColor = ContrastTextColor(btnFillColor.BackColor);
+            btnFillColor.ForeColor = ContrastForeColor(btnFillColor.BackColor);
 
-            UpdateFillColorAlphaSetting(_settings.DotSettings, newAlpha, dotFillColorAlpha, lblDotFillColorAlpha, btnDotFillColor);
-            UpdateFillColorAlphaSetting(_settings.CrossSettings, newAlpha, crossFillColorAlpha, lblCrossFillColorAlpha, btnCrossFillColor);
-            UpdateFillColorAlphaSetting(_settings.CircleSettings, newAlpha, circleFillColorAlpha, lblCircleFillColorAlpha, btnCircleFillColor);
+            UpdateFillColorAlphaSetting(_settings.DotSettings, newAlpha, dotFillColorAlpha, lblDotFillColorAlpha, btnDotFillColor, _settings.GlobalSettings.CrosshairDot);
+            UpdateFillColorAlphaSetting(_settings.CrossSettings, newAlpha, crossFillColorAlpha, lblCrossFillColorAlpha, btnCrossFillColor, _settings.GlobalSettings.CrosshairCross);
+            UpdateFillColorAlphaSetting(_settings.CircleSettings, newAlpha, circleFillColorAlpha, lblCircleFillColorAlpha, btnCircleFillColor, _settings.GlobalSettings.CrosshairCircle);
         }
 
         private void outlineColorAlpha_Scroll(object sender, EventArgs e)
@@ -488,11 +510,11 @@ namespace CrosshairOverlay
             lblOutlineColorAlpha.Text = outlineColorAlpha.Value.ToString();
             _settings.GlobalSettings.OutlineColorAlpha = newAlpha;
             btnOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
-            btnOutlineColor.ForeColor = ContrastTextColor(btnOutlineColor.BackColor);
+            btnOutlineColor.ForeColor = ContrastForeColor(btnOutlineColor.BackColor);
 
-            UpdateOutlineColorAlphaSetting(_settings.DotSettings, newAlpha, dotOutlineColorAlpha, lblDotOutlineColorAlpha, btnDotOutlineColor);
-            UpdateOutlineColorAlphaSetting(_settings.CrossSettings, newAlpha, crossOutlineColorAlpha, lblCrossOutlineColorAlpha, btnCrossOutlineColor);
-            UpdateOutlineColorAlphaSetting(_settings.CircleSettings, newAlpha, circleOutlineColorAlpha, lblCircleOutlineColorAlpha, btnCircleOutlineColor);
+            UpdateOutlineColorAlphaSetting(_settings.DotSettings, newAlpha, dotOutlineColorAlpha, lblDotOutlineColorAlpha, btnDotOutlineColor, _settings.GlobalSettings.CrosshairDot);
+            UpdateOutlineColorAlphaSetting(_settings.CrossSettings, newAlpha, crossOutlineColorAlpha, lblCrossOutlineColorAlpha, btnCrossOutlineColor, _settings.GlobalSettings.CrosshairCross);
+            UpdateOutlineColorAlphaSetting(_settings.CircleSettings, newAlpha, circleOutlineColorAlpha, lblCircleOutlineColorAlpha, btnCircleOutlineColor, _settings.GlobalSettings.CrosshairCircle);
         }
 
         private void chkDotEnable_CheckedChanged(object sender, EventArgs e)
@@ -694,7 +716,7 @@ namespace CrosshairOverlay
             }
 
             btnDotFillColor.BackColor = _settings.DotSettings.GetFillColor();
-            btnDotFillColor.ForeColor = ContrastTextColor(btnDotFillColor.BackColor);
+            btnDotFillColor.ForeColor = ContrastForeColor(btnDotFillColor.BackColor);
         }
 
         private void dotOutlineColorAlpha_Scroll(object sender, EventArgs e)
@@ -715,7 +737,7 @@ namespace CrosshairOverlay
             }
 
             btnDotOutlineColor.BackColor = _settings.DotSettings.GetOutlineColor();
-            btnDotOutlineColor.ForeColor = ContrastTextColor(btnDotOutlineColor.BackColor);
+            btnDotOutlineColor.ForeColor = ContrastForeColor(btnDotOutlineColor.BackColor);
         }
 
         private void crossFillColorAlpha_Scroll(object sender, EventArgs e)
@@ -736,7 +758,7 @@ namespace CrosshairOverlay
             }
 
             btnCrossFillColor.BackColor = _settings.CrossSettings.GetFillColor();
-            btnCrossFillColor.ForeColor = ContrastTextColor(btnCrossFillColor.BackColor);
+            btnCrossFillColor.ForeColor = ContrastForeColor(btnCrossFillColor.BackColor);
         }
 
         private void crossOutlineColorAlpha_Scroll(object sender, EventArgs e)
@@ -757,7 +779,7 @@ namespace CrosshairOverlay
             }
 
             btnCrossOutlineColor.BackColor = _settings.CrossSettings.GetOutlineColor();
-            btnCrossOutlineColor.ForeColor = ContrastTextColor(btnCrossOutlineColor.BackColor);
+            btnCrossOutlineColor.ForeColor = ContrastForeColor(btnCrossOutlineColor.BackColor);
         }
 
         private void circleFillColorAlpha_Scroll(object sender, EventArgs e)
@@ -778,7 +800,7 @@ namespace CrosshairOverlay
             }
 
             btnCircleFillColor.BackColor = _settings.CircleSettings.GetFillColor();
-            btnCircleFillColor.ForeColor = ContrastTextColor(btnCircleFillColor.BackColor);
+            btnCircleFillColor.ForeColor = ContrastForeColor(btnCircleFillColor.BackColor);
         }
 
         private void circleOutlineColorAlpha_Scroll(object sender, EventArgs e)
@@ -799,7 +821,7 @@ namespace CrosshairOverlay
             }
 
             btnCircleOutlineColor.BackColor = _settings.CircleSettings.GetOutlineColor();
-            btnCircleOutlineColor.ForeColor = ContrastTextColor(btnCircleOutlineColor.BackColor);
+            btnCircleOutlineColor.ForeColor = ContrastForeColor(btnCircleOutlineColor.BackColor);
         }
 
         private void btnDotFillColor_Click(object sender, EventArgs e)
@@ -820,7 +842,7 @@ namespace CrosshairOverlay
                 }
 
                 btnDotFillColor.BackColor =  _settings.DotSettings.GetFillColor();
-                btnDotFillColor.ForeColor = ContrastTextColor(btnDotFillColor.BackColor);
+                btnDotFillColor.ForeColor = ContrastForeColor(btnDotFillColor.BackColor);
             }
         }
 
@@ -842,7 +864,7 @@ namespace CrosshairOverlay
                 }
 
                 btnDotOutlineColor.BackColor = _settings.DotSettings.GetOutlineColor();
-                btnDotOutlineColor.ForeColor = ContrastTextColor(btnDotOutlineColor.BackColor);
+                btnDotOutlineColor.ForeColor = ContrastForeColor(btnDotOutlineColor.BackColor);
             }
         }
 
@@ -887,7 +909,7 @@ namespace CrosshairOverlay
                 }
 
                 btnCrossOutlineColor.BackColor = _settings.CrossSettings.GetOutlineColor();
-                btnCrossOutlineColor.ForeColor = ContrastTextColor(btnCrossOutlineColor.BackColor);
+                btnCrossOutlineColor.ForeColor = ContrastForeColor(btnCrossOutlineColor.BackColor);
             }
         }
 
@@ -909,7 +931,7 @@ namespace CrosshairOverlay
                 }
 
                 btnCircleFillColor.BackColor = _settings.CircleSettings.GetFillColor();
-                btnCircleFillColor.ForeColor = ContrastTextColor(btnCircleFillColor.BackColor);
+                btnCircleFillColor.ForeColor = ContrastForeColor(btnCircleFillColor.BackColor);
             }
         }
 
@@ -931,7 +953,7 @@ namespace CrosshairOverlay
                 }
 
                 btnCircleOutlineColor.BackColor = _settings.CircleSettings.GetOutlineColor();
-                btnCircleOutlineColor.ForeColor = ContrastTextColor(btnCircleOutlineColor.BackColor);
+                btnCircleOutlineColor.ForeColor = ContrastForeColor(btnCircleOutlineColor.BackColor);
             }
         }
 
@@ -1031,7 +1053,7 @@ namespace CrosshairOverlay
             {
                 _settings.DotSettings.FillColor = null;
                 btnDotFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
-                btnDotFillColor.ForeColor = ContrastTextColor(btnDotFillColor.BackColor);
+                btnDotFillColor.ForeColor = ContrastForeColor(btnDotFillColor.BackColor);
 
                 _settings.DotSettings.FillColorAlpha = null;
                 dotFillColorAlpha.Value = ConvertAlphaToSliderValue(_settings.DotSettings.GetFillColorAlpha(), dotFillColorAlpha.Maximum);
@@ -1045,7 +1067,7 @@ namespace CrosshairOverlay
             {
                 _settings.DotSettings.OutlineColor = null;
                 btnDotOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
-                btnDotOutlineColor.ForeColor = ContrastTextColor(btnDotOutlineColor.BackColor);
+                btnDotOutlineColor.ForeColor = ContrastForeColor(btnDotOutlineColor.BackColor);
 
                 _settings.DotSettings.OutlineColorAlpha = null;
                 dotOutlineColorAlpha.Value = ConvertAlphaToSliderValue(_settings.DotSettings.GetOutlineColorAlpha(), dotOutlineColorAlpha.Maximum);
@@ -1059,7 +1081,7 @@ namespace CrosshairOverlay
             {
                 _settings.CrossSettings.FillColor = null;
                 btnCrossFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
-                btnCrossFillColor.ForeColor = ContrastTextColor(btnCrossFillColor.BackColor);
+                btnCrossFillColor.ForeColor = ContrastForeColor(btnCrossFillColor.BackColor);
 
                 _settings.CrossSettings.FillColorAlpha = null;
                 crossFillColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CrossSettings.GetFillColorAlpha(), crossFillColorAlpha.Maximum);
@@ -1073,7 +1095,7 @@ namespace CrosshairOverlay
             {
                 _settings.CrossSettings.OutlineColor = null;
                 btnCrossOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
-                btnCrossOutlineColor.ForeColor = ContrastTextColor(btnCrossOutlineColor.BackColor);
+                btnCrossOutlineColor.ForeColor = ContrastForeColor(btnCrossOutlineColor.BackColor);
 
                 _settings.CrossSettings.OutlineColorAlpha = null;
                 crossOutlineColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CrossSettings.GetOutlineColorAlpha(), crossOutlineColorAlpha.Maximum);
@@ -1087,7 +1109,7 @@ namespace CrosshairOverlay
             {
                 _settings.CircleSettings.FillColor = null;
                 btnCircleFillColor.BackColor = _settings.GlobalSettings.GetFillColor();
-                btnCircleFillColor.ForeColor = ContrastTextColor(btnCircleFillColor.BackColor);
+                btnCircleFillColor.ForeColor = ContrastForeColor(btnCircleFillColor.BackColor);
 
                 _settings.CircleSettings.FillColorAlpha = null;
                 circleFillColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CircleSettings.GetFillColorAlpha(), circleFillColorAlpha.Maximum);
@@ -1101,7 +1123,7 @@ namespace CrosshairOverlay
             {
                 _settings.CircleSettings.OutlineColor = null;
                 btnCircleOutlineColor.BackColor = _settings.GlobalSettings.GetOutlineColor();
-                btnCircleOutlineColor.ForeColor = ContrastTextColor(btnCircleOutlineColor.BackColor);
+                btnCircleOutlineColor.ForeColor = ContrastForeColor(btnCircleOutlineColor.BackColor);
 
                 _settings.CircleSettings.OutlineColorAlpha = null;
                 circleOutlineColorAlpha.Value = ConvertAlphaToSliderValue(_settings.CircleSettings.GetOutlineColorAlpha(), circleOutlineColorAlpha.Maximum);

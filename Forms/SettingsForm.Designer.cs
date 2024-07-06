@@ -41,6 +41,14 @@
             this.chkCross = new System.Windows.Forms.CheckBox();
             this.chkDot = new System.Windows.Forms.CheckBox();
             this.grpSize = new System.Windows.Forms.GroupBox();
+            this.lblSize = new System.Windows.Forms.Label();
+            this.lblGap = new System.Windows.Forms.Label();
+            this.lblWidth = new System.Windows.Forms.Label();
+            this.lblOutline = new System.Windows.Forms.Label();
+            this.chkSize = new System.Windows.Forms.CheckBox();
+            this.chkGap = new System.Windows.Forms.CheckBox();
+            this.chkWidth = new System.Windows.Forms.CheckBox();
+            this.chkOutline = new System.Windows.Forms.CheckBox();
             this.lblOutlineValue = new System.Windows.Forms.Label();
             this.lblWidthValue = new System.Windows.Forms.Label();
             this.lblGapValue = new System.Windows.Forms.Label();
@@ -127,14 +135,6 @@
             this.circleCrosshairWidth = new System.Windows.Forms.TrackBar();
             this.circleCrosshairGap = new System.Windows.Forms.TrackBar();
             this.circleCrosshairSize = new System.Windows.Forms.TrackBar();
-            this.chkSize = new System.Windows.Forms.CheckBox();
-            this.chkGap = new System.Windows.Forms.CheckBox();
-            this.chkWidth = new System.Windows.Forms.CheckBox();
-            this.chkOutline = new System.Windows.Forms.CheckBox();
-            this.lblOutline = new System.Windows.Forms.Label();
-            this.lblWidth = new System.Windows.Forms.Label();
-            this.lblGap = new System.Windows.Forms.Label();
-            this.lblSize = new System.Windows.Forms.Label();
             this.grpFillColor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fillColorAlpha)).BeginInit();
             this.grpShape.SuspendLayout();
@@ -225,9 +225,9 @@
             this.lblFillColorAlpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFillColorAlpha.Location = new System.Drawing.Point(242, 35);
             this.lblFillColorAlpha.Name = "lblFillColorAlpha";
-            this.lblFillColorAlpha.Size = new System.Drawing.Size(22, 13);
+            this.lblFillColorAlpha.Size = new System.Drawing.Size(25, 13);
             this.lblFillColorAlpha.TabIndex = 52;
-            this.lblFillColorAlpha.Text = "0.0";
+            this.lblFillColorAlpha.Text = "100";
             this.lblFillColorAlpha.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // fillColorAlpha
@@ -324,6 +324,90 @@
             this.grpSize.TabIndex = 34;
             this.grpSize.TabStop = false;
             // 
+            // lblSize
+            // 
+            this.lblSize.AutoSize = true;
+            this.lblSize.Location = new System.Drawing.Point(30, 33);
+            this.lblSize.Name = "lblSize";
+            this.lblSize.Size = new System.Drawing.Size(27, 13);
+            this.lblSize.TabIndex = 70;
+            this.lblSize.Text = "Size";
+            // 
+            // lblGap
+            // 
+            this.lblGap.AutoSize = true;
+            this.lblGap.Location = new System.Drawing.Point(30, 84);
+            this.lblGap.Name = "lblGap";
+            this.lblGap.Size = new System.Drawing.Size(27, 13);
+            this.lblGap.TabIndex = 69;
+            this.lblGap.Text = "Gap";
+            // 
+            // lblWidth
+            // 
+            this.lblWidth.AutoSize = true;
+            this.lblWidth.Location = new System.Drawing.Point(30, 135);
+            this.lblWidth.Name = "lblWidth";
+            this.lblWidth.Size = new System.Drawing.Size(35, 13);
+            this.lblWidth.TabIndex = 68;
+            this.lblWidth.Text = "Width";
+            // 
+            // lblOutline
+            // 
+            this.lblOutline.AutoSize = true;
+            this.lblOutline.Location = new System.Drawing.Point(30, 186);
+            this.lblOutline.Name = "lblOutline";
+            this.lblOutline.Size = new System.Drawing.Size(40, 13);
+            this.lblOutline.TabIndex = 67;
+            this.lblOutline.Text = "Outline";
+            // 
+            // chkSize
+            // 
+            this.chkSize.AutoSize = true;
+            this.chkSize.Checked = true;
+            this.chkSize.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSize.Enabled = false;
+            this.chkSize.Location = new System.Drawing.Point(14, 33);
+            this.chkSize.Name = "chkSize";
+            this.chkSize.Size = new System.Drawing.Size(15, 14);
+            this.chkSize.TabIndex = 66;
+            this.chkSize.UseVisualStyleBackColor = true;
+            // 
+            // chkGap
+            // 
+            this.chkGap.AutoSize = true;
+            this.chkGap.Checked = true;
+            this.chkGap.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkGap.Enabled = false;
+            this.chkGap.Location = new System.Drawing.Point(14, 84);
+            this.chkGap.Name = "chkGap";
+            this.chkGap.Size = new System.Drawing.Size(15, 14);
+            this.chkGap.TabIndex = 65;
+            this.chkGap.UseVisualStyleBackColor = true;
+            // 
+            // chkWidth
+            // 
+            this.chkWidth.AutoSize = true;
+            this.chkWidth.Checked = true;
+            this.chkWidth.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkWidth.Enabled = false;
+            this.chkWidth.Location = new System.Drawing.Point(14, 135);
+            this.chkWidth.Name = "chkWidth";
+            this.chkWidth.Size = new System.Drawing.Size(15, 14);
+            this.chkWidth.TabIndex = 64;
+            this.chkWidth.UseVisualStyleBackColor = true;
+            // 
+            // chkOutline
+            // 
+            this.chkOutline.AutoSize = true;
+            this.chkOutline.Checked = true;
+            this.chkOutline.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkOutline.Enabled = false;
+            this.chkOutline.Location = new System.Drawing.Point(14, 186);
+            this.chkOutline.Name = "chkOutline";
+            this.chkOutline.Size = new System.Drawing.Size(15, 14);
+            this.chkOutline.TabIndex = 63;
+            this.chkOutline.UseVisualStyleBackColor = true;
+            // 
             // lblOutlineValue
             // 
             this.lblOutlineValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -332,9 +416,9 @@
             this.lblOutlineValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOutlineValue.Location = new System.Drawing.Point(242, 186);
             this.lblOutlineValue.Name = "lblOutlineValue";
-            this.lblOutlineValue.Size = new System.Drawing.Size(22, 13);
+            this.lblOutlineValue.Size = new System.Drawing.Size(25, 13);
             this.lblOutlineValue.TabIndex = 54;
-            this.lblOutlineValue.Text = "0.0";
+            this.lblOutlineValue.Text = "100";
             this.lblOutlineValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblWidthValue
@@ -345,9 +429,9 @@
             this.lblWidthValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWidthValue.Location = new System.Drawing.Point(242, 135);
             this.lblWidthValue.Name = "lblWidthValue";
-            this.lblWidthValue.Size = new System.Drawing.Size(22, 13);
+            this.lblWidthValue.Size = new System.Drawing.Size(25, 13);
             this.lblWidthValue.TabIndex = 53;
-            this.lblWidthValue.Text = "0.0";
+            this.lblWidthValue.Text = "100";
             this.lblWidthValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblGapValue
@@ -358,9 +442,9 @@
             this.lblGapValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGapValue.Location = new System.Drawing.Point(242, 84);
             this.lblGapValue.Name = "lblGapValue";
-            this.lblGapValue.Size = new System.Drawing.Size(22, 13);
+            this.lblGapValue.Size = new System.Drawing.Size(25, 13);
             this.lblGapValue.TabIndex = 52;
-            this.lblGapValue.Text = "0.0";
+            this.lblGapValue.Text = "100";
             this.lblGapValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblSizeValue
@@ -371,9 +455,9 @@
             this.lblSizeValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSizeValue.Location = new System.Drawing.Point(242, 33);
             this.lblSizeValue.Name = "lblSizeValue";
-            this.lblSizeValue.Size = new System.Drawing.Size(22, 13);
+            this.lblSizeValue.Size = new System.Drawing.Size(25, 13);
             this.lblSizeValue.TabIndex = 51;
-            this.lblSizeValue.Text = "0.0";
+            this.lblSizeValue.Text = "100";
             this.lblSizeValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // crosshairOutline
@@ -385,6 +469,7 @@
             this.crosshairOutline.Size = new System.Drawing.Size(160, 45);
             this.crosshairOutline.TabIndex = 49;
             this.crosshairOutline.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.crosshairOutline.Scroll += new System.EventHandler(this.crosshairOutline_Scroll);
             // 
             // crosshairWidth
             // 
@@ -427,6 +512,7 @@
             this.tabSettings.Controls.Add(this.tabDot);
             this.tabSettings.Controls.Add(this.tabCross);
             this.tabSettings.Controls.Add(this.tabCircle);
+            this.tabSettings.HotTrack = true;
             this.tabSettings.Location = new System.Drawing.Point(12, 12);
             this.tabSettings.Name = "tabSettings";
             this.tabSettings.SelectedIndex = 0;
@@ -480,9 +566,9 @@
             this.lblOutlineColorAlpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOutlineColorAlpha.Location = new System.Drawing.Point(242, 34);
             this.lblOutlineColorAlpha.Name = "lblOutlineColorAlpha";
-            this.lblOutlineColorAlpha.Size = new System.Drawing.Size(22, 13);
+            this.lblOutlineColorAlpha.Size = new System.Drawing.Size(25, 13);
             this.lblOutlineColorAlpha.TabIndex = 52;
-            this.lblOutlineColorAlpha.Text = "0.0";
+            this.lblOutlineColorAlpha.Text = "100";
             this.lblOutlineColorAlpha.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // outlineColorAlpha
@@ -555,9 +641,9 @@
             this.lblDotOutlineColorAlpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDotOutlineColorAlpha.Location = new System.Drawing.Point(242, 34);
             this.lblDotOutlineColorAlpha.Name = "lblDotOutlineColorAlpha";
-            this.lblDotOutlineColorAlpha.Size = new System.Drawing.Size(22, 13);
+            this.lblDotOutlineColorAlpha.Size = new System.Drawing.Size(25, 13);
             this.lblDotOutlineColorAlpha.TabIndex = 52;
-            this.lblDotOutlineColorAlpha.Text = "0.0";
+            this.lblDotOutlineColorAlpha.Text = "100";
             this.lblDotOutlineColorAlpha.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dotOutlineColorAlpha
@@ -637,9 +723,9 @@
             this.lblDotFillColorAlpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDotFillColorAlpha.Location = new System.Drawing.Point(242, 35);
             this.lblDotFillColorAlpha.Name = "lblDotFillColorAlpha";
-            this.lblDotFillColorAlpha.Size = new System.Drawing.Size(22, 13);
+            this.lblDotFillColorAlpha.Size = new System.Drawing.Size(25, 13);
             this.lblDotFillColorAlpha.TabIndex = 52;
-            this.lblDotFillColorAlpha.Text = "0.0";
+            this.lblDotFillColorAlpha.Text = "100";
             this.lblDotFillColorAlpha.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dotFillColorAlpha
@@ -699,9 +785,9 @@
             this.lblDotOutlineValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDotOutlineValue.Location = new System.Drawing.Point(242, 84);
             this.lblDotOutlineValue.Name = "lblDotOutlineValue";
-            this.lblDotOutlineValue.Size = new System.Drawing.Size(22, 13);
+            this.lblDotOutlineValue.Size = new System.Drawing.Size(25, 13);
             this.lblDotOutlineValue.TabIndex = 54;
-            this.lblDotOutlineValue.Text = "0.0";
+            this.lblDotOutlineValue.Text = "100";
             this.lblDotOutlineValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblDotWidthValue
@@ -712,9 +798,9 @@
             this.lblDotWidthValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDotWidthValue.Location = new System.Drawing.Point(242, 33);
             this.lblDotWidthValue.Name = "lblDotWidthValue";
-            this.lblDotWidthValue.Size = new System.Drawing.Size(22, 13);
+            this.lblDotWidthValue.Size = new System.Drawing.Size(25, 13);
             this.lblDotWidthValue.TabIndex = 53;
-            this.lblDotWidthValue.Text = "0.0";
+            this.lblDotWidthValue.Text = "100";
             this.lblDotWidthValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dotCrosshairOutline
@@ -795,9 +881,9 @@
             this.lblCrossOutlineColorAlpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCrossOutlineColorAlpha.Location = new System.Drawing.Point(242, 34);
             this.lblCrossOutlineColorAlpha.Name = "lblCrossOutlineColorAlpha";
-            this.lblCrossOutlineColorAlpha.Size = new System.Drawing.Size(22, 13);
+            this.lblCrossOutlineColorAlpha.Size = new System.Drawing.Size(25, 13);
             this.lblCrossOutlineColorAlpha.TabIndex = 52;
-            this.lblCrossOutlineColorAlpha.Text = "0.0";
+            this.lblCrossOutlineColorAlpha.Text = "100";
             this.lblCrossOutlineColorAlpha.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // crossOutlineColorAlpha
@@ -877,9 +963,9 @@
             this.lblCrossFillColorAlpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCrossFillColorAlpha.Location = new System.Drawing.Point(242, 35);
             this.lblCrossFillColorAlpha.Name = "lblCrossFillColorAlpha";
-            this.lblCrossFillColorAlpha.Size = new System.Drawing.Size(22, 13);
+            this.lblCrossFillColorAlpha.Size = new System.Drawing.Size(25, 13);
             this.lblCrossFillColorAlpha.TabIndex = 52;
-            this.lblCrossFillColorAlpha.Text = "0.0";
+            this.lblCrossFillColorAlpha.Text = "100";
             this.lblCrossFillColorAlpha.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // crossFillColorAlpha
@@ -967,9 +1053,9 @@
             this.lblCrossOutlineValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCrossOutlineValue.Location = new System.Drawing.Point(242, 186);
             this.lblCrossOutlineValue.Name = "lblCrossOutlineValue";
-            this.lblCrossOutlineValue.Size = new System.Drawing.Size(22, 13);
+            this.lblCrossOutlineValue.Size = new System.Drawing.Size(25, 13);
             this.lblCrossOutlineValue.TabIndex = 54;
-            this.lblCrossOutlineValue.Text = "0.0";
+            this.lblCrossOutlineValue.Text = "100";
             this.lblCrossOutlineValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblCrossWidthValue
@@ -980,9 +1066,9 @@
             this.lblCrossWidthValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCrossWidthValue.Location = new System.Drawing.Point(242, 135);
             this.lblCrossWidthValue.Name = "lblCrossWidthValue";
-            this.lblCrossWidthValue.Size = new System.Drawing.Size(22, 13);
+            this.lblCrossWidthValue.Size = new System.Drawing.Size(25, 13);
             this.lblCrossWidthValue.TabIndex = 53;
-            this.lblCrossWidthValue.Text = "0.0";
+            this.lblCrossWidthValue.Text = "100";
             this.lblCrossWidthValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblCrossGapValue
@@ -993,9 +1079,9 @@
             this.lblCrossGapValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCrossGapValue.Location = new System.Drawing.Point(242, 84);
             this.lblCrossGapValue.Name = "lblCrossGapValue";
-            this.lblCrossGapValue.Size = new System.Drawing.Size(22, 13);
+            this.lblCrossGapValue.Size = new System.Drawing.Size(25, 13);
             this.lblCrossGapValue.TabIndex = 52;
-            this.lblCrossGapValue.Text = "0.0";
+            this.lblCrossGapValue.Text = "100";
             this.lblCrossGapValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblCrossSizeValue
@@ -1006,9 +1092,9 @@
             this.lblCrossSizeValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCrossSizeValue.Location = new System.Drawing.Point(242, 33);
             this.lblCrossSizeValue.Name = "lblCrossSizeValue";
-            this.lblCrossSizeValue.Size = new System.Drawing.Size(22, 13);
+            this.lblCrossSizeValue.Size = new System.Drawing.Size(25, 13);
             this.lblCrossSizeValue.TabIndex = 51;
-            this.lblCrossSizeValue.Text = "0.0";
+            this.lblCrossSizeValue.Text = "100";
             this.lblCrossSizeValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // crossCrosshairOutline
@@ -1113,9 +1199,9 @@
             this.lblCircleOutlineColorAlpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCircleOutlineColorAlpha.Location = new System.Drawing.Point(242, 34);
             this.lblCircleOutlineColorAlpha.Name = "lblCircleOutlineColorAlpha";
-            this.lblCircleOutlineColorAlpha.Size = new System.Drawing.Size(22, 13);
+            this.lblCircleOutlineColorAlpha.Size = new System.Drawing.Size(25, 13);
             this.lblCircleOutlineColorAlpha.TabIndex = 52;
-            this.lblCircleOutlineColorAlpha.Text = "0.0";
+            this.lblCircleOutlineColorAlpha.Text = "100";
             this.lblCircleOutlineColorAlpha.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // circleOutlineColorAlpha
@@ -1196,9 +1282,9 @@
             this.lblCircleFillColorAlpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCircleFillColorAlpha.Location = new System.Drawing.Point(242, 35);
             this.lblCircleFillColorAlpha.Name = "lblCircleFillColorAlpha";
-            this.lblCircleFillColorAlpha.Size = new System.Drawing.Size(22, 13);
+            this.lblCircleFillColorAlpha.Size = new System.Drawing.Size(25, 13);
             this.lblCircleFillColorAlpha.TabIndex = 52;
-            this.lblCircleFillColorAlpha.Text = "0.0";
+            this.lblCircleFillColorAlpha.Text = "100";
             this.lblCircleFillColorAlpha.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // circleFillColorAlpha
@@ -1286,9 +1372,9 @@
             this.lblCircleOutlineValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCircleOutlineValue.Location = new System.Drawing.Point(242, 186);
             this.lblCircleOutlineValue.Name = "lblCircleOutlineValue";
-            this.lblCircleOutlineValue.Size = new System.Drawing.Size(22, 13);
+            this.lblCircleOutlineValue.Size = new System.Drawing.Size(25, 13);
             this.lblCircleOutlineValue.TabIndex = 54;
-            this.lblCircleOutlineValue.Text = "0.0";
+            this.lblCircleOutlineValue.Text = "100";
             this.lblCircleOutlineValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblCircleWidthValue
@@ -1299,9 +1385,9 @@
             this.lblCircleWidthValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCircleWidthValue.Location = new System.Drawing.Point(242, 135);
             this.lblCircleWidthValue.Name = "lblCircleWidthValue";
-            this.lblCircleWidthValue.Size = new System.Drawing.Size(22, 13);
+            this.lblCircleWidthValue.Size = new System.Drawing.Size(25, 13);
             this.lblCircleWidthValue.TabIndex = 53;
-            this.lblCircleWidthValue.Text = "0.0";
+            this.lblCircleWidthValue.Text = "100";
             this.lblCircleWidthValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblCircleGapValue
@@ -1312,9 +1398,9 @@
             this.lblCircleGapValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCircleGapValue.Location = new System.Drawing.Point(242, 84);
             this.lblCircleGapValue.Name = "lblCircleGapValue";
-            this.lblCircleGapValue.Size = new System.Drawing.Size(22, 13);
+            this.lblCircleGapValue.Size = new System.Drawing.Size(25, 13);
             this.lblCircleGapValue.TabIndex = 52;
-            this.lblCircleGapValue.Text = "0.0";
+            this.lblCircleGapValue.Text = "100";
             this.lblCircleGapValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblCircleSizeValue
@@ -1325,9 +1411,9 @@
             this.lblCircleSizeValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCircleSizeValue.Location = new System.Drawing.Point(242, 33);
             this.lblCircleSizeValue.Name = "lblCircleSizeValue";
-            this.lblCircleSizeValue.Size = new System.Drawing.Size(22, 13);
+            this.lblCircleSizeValue.Size = new System.Drawing.Size(25, 13);
             this.lblCircleSizeValue.TabIndex = 51;
-            this.lblCircleSizeValue.Text = "0.0";
+            this.lblCircleSizeValue.Text = "100";
             this.lblCircleSizeValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // circleCrosshairOutline
@@ -1375,90 +1461,6 @@
             this.circleCrosshairSize.TickFrequency = 5;
             this.circleCrosshairSize.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.circleCrosshairSize.Scroll += new System.EventHandler(this.circleCrosshairSize_Scroll);
-            // 
-            // chkSize
-            // 
-            this.chkSize.AutoSize = true;
-            this.chkSize.Checked = true;
-            this.chkSize.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSize.Enabled = false;
-            this.chkSize.Location = new System.Drawing.Point(14, 33);
-            this.chkSize.Name = "chkSize";
-            this.chkSize.Size = new System.Drawing.Size(15, 14);
-            this.chkSize.TabIndex = 66;
-            this.chkSize.UseVisualStyleBackColor = true;
-            // 
-            // chkGap
-            // 
-            this.chkGap.AutoSize = true;
-            this.chkGap.Checked = true;
-            this.chkGap.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkGap.Enabled = false;
-            this.chkGap.Location = new System.Drawing.Point(14, 84);
-            this.chkGap.Name = "chkGap";
-            this.chkGap.Size = new System.Drawing.Size(15, 14);
-            this.chkGap.TabIndex = 65;
-            this.chkGap.UseVisualStyleBackColor = true;
-            // 
-            // chkWidth
-            // 
-            this.chkWidth.AutoSize = true;
-            this.chkWidth.Checked = true;
-            this.chkWidth.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkWidth.Enabled = false;
-            this.chkWidth.Location = new System.Drawing.Point(14, 135);
-            this.chkWidth.Name = "chkWidth";
-            this.chkWidth.Size = new System.Drawing.Size(15, 14);
-            this.chkWidth.TabIndex = 64;
-            this.chkWidth.UseVisualStyleBackColor = true;
-            // 
-            // chkOutline
-            // 
-            this.chkOutline.AutoSize = true;
-            this.chkOutline.Checked = true;
-            this.chkOutline.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkOutline.Enabled = false;
-            this.chkOutline.Location = new System.Drawing.Point(14, 186);
-            this.chkOutline.Name = "chkOutline";
-            this.chkOutline.Size = new System.Drawing.Size(15, 14);
-            this.chkOutline.TabIndex = 63;
-            this.chkOutline.UseVisualStyleBackColor = true;
-            // 
-            // lblOutline
-            // 
-            this.lblOutline.AutoSize = true;
-            this.lblOutline.Location = new System.Drawing.Point(30, 186);
-            this.lblOutline.Name = "lblOutline";
-            this.lblOutline.Size = new System.Drawing.Size(40, 13);
-            this.lblOutline.TabIndex = 67;
-            this.lblOutline.Text = "Outline";
-            // 
-            // lblWidth
-            // 
-            this.lblWidth.AutoSize = true;
-            this.lblWidth.Location = new System.Drawing.Point(30, 135);
-            this.lblWidth.Name = "lblWidth";
-            this.lblWidth.Size = new System.Drawing.Size(35, 13);
-            this.lblWidth.TabIndex = 68;
-            this.lblWidth.Text = "Width";
-            // 
-            // lblGap
-            // 
-            this.lblGap.AutoSize = true;
-            this.lblGap.Location = new System.Drawing.Point(30, 84);
-            this.lblGap.Name = "lblGap";
-            this.lblGap.Size = new System.Drawing.Size(27, 13);
-            this.lblGap.TabIndex = 69;
-            this.lblGap.Text = "Gap";
-            // 
-            // lblSize
-            // 
-            this.lblSize.AutoSize = true;
-            this.lblSize.Location = new System.Drawing.Point(30, 33);
-            this.lblSize.Name = "lblSize";
-            this.lblSize.Size = new System.Drawing.Size(27, 13);
-            this.lblSize.TabIndex = 70;
-            this.lblSize.Text = "Size";
             // 
             // SettingsForm
             // 
