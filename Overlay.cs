@@ -32,11 +32,11 @@ namespace CrosshairOverlay
                 IsTopmost = true,
                 IsVisible = true,
             };
-            _window.DestroyGraphics += _window_DestroyGraphics;
-            _window.DrawGraphics += _window_DrawGraphics;
+            _window.DestroyGraphics += Window_DestroyGraphics;
+            _window.DrawGraphics += Window_DrawGraphics;
         }
 
-        private void _window_DrawGraphics(object sender, DrawGraphicsEventArgs e)
+        private void Window_DrawGraphics(object sender, DrawGraphicsEventArgs e)
         {
             if (_isDisposed || _isDrawing) return;
 
@@ -54,12 +54,9 @@ namespace CrosshairOverlay
             _isDrawing = false;
         }
 
-        private void _window_DestroyGraphics(object sender, DestroyGraphicsEventArgs e)
+        private void Window_DestroyGraphics(object sender, DestroyGraphicsEventArgs e)
         {
-            if (_crosshair != null)
-            {
-                _crosshair.Dispose();
-            }
+            _crosshair?.Dispose();
             _crosshair = null;
         }
 
@@ -116,10 +113,7 @@ namespace CrosshairOverlay
                 {
                     _isDisposed = true;
                     _window.Dispose();
-                    if (_crosshair != null)
-                    {
-                        _crosshair.Dispose();
-                    }
+                    _crosshair?.Dispose();
                 }
             }
         }
