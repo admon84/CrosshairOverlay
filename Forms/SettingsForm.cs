@@ -9,7 +9,7 @@ namespace CrosshairOverlay
 {
     public partial class SettingsForm : Form
     {
-        private Settings _settings = Settings.Instance;
+        private readonly Settings _settings = Settings.Instance;
         private List<Color> _customColors = new List<Color>();
 
         public SettingsForm(string title)
@@ -327,22 +327,6 @@ namespace CrosshairOverlay
             }
         }
 
-        private void UpdateCrosshairSizeSetting(ShapeSettings settings, int newSize, TrackBar slider, Label label)
-        {
-            if (settings.CrosshairSize.HasValue)
-            {
-                if (_settings.GlobalSettings.CrosshairSize == newSize)
-                {
-                    settings.CrosshairSize = null;
-                }
-            }
-            else
-            {
-                slider.Value = newSize;
-                label.Text = newSize.ToString();
-            }
-        }
-
         private void UpdateCrosshairSetting(float? setting, float globalSetting, int newValue, TrackBar slider, Label label)
         {
             if (setting.HasValue)
@@ -377,9 +361,11 @@ namespace CrosshairOverlay
 
         private (ColorDialog, DialogResult) SelectColor(Color presetColor)
         {
-            var colorDlg = new ColorDialog();
-            colorDlg.FullOpen = true;
-            colorDlg.Color = presetColor;
+            var colorDlg = new ColorDialog
+            {
+                FullOpen = true,
+                Color = presetColor
+            };
             if (_customColors.Count > 0)
             {
                 colorDlg.CustomColors = _customColors.Select(color => ColorTranslator.ToOle(color)).ToArray();

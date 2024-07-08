@@ -28,14 +28,12 @@ namespace CrosshairOverlay.Drawing
         {
             var width = _settings.DotSettings.GetCrosshairWidth();
             var outline = _settings.DotSettings.GetCrosshairOutline();
-
             var fillColor = CreateBrush(gfx, _settings.DotSettings.GetFillColor());
             var outlineColor = CreateBrush(gfx, _settings.DotSettings.GetOutlineColor());
+            var halfSize = width * .5f;
 
-            var halfWidth = width * .5f;
-
-            gfx.DrawRectangle(outlineColor, x - halfWidth, y - halfWidth, x + halfWidth, y + halfWidth, width + outline);
-            gfx.DrawRectangle(fillColor, x - halfWidth, y - halfWidth, x + halfWidth, y + halfWidth, width);
+            gfx.DrawRectangle(outlineColor, x - halfSize, y - halfSize, x + halfSize, y + halfSize, width + outline);
+            gfx.DrawRectangle(fillColor, x - halfSize, y - halfSize, x + halfSize, y + halfSize, width);
         }
 
         private void DrawCircle(Graphics gfx, float x, float y)
@@ -44,11 +42,9 @@ namespace CrosshairOverlay.Drawing
             var outline = _settings.CircleSettings.GetCrosshairOutline();
             var size = _settings.CircleSettings.GetCrosshairSize();
             var gap = _settings.CircleSettings.GetCrosshairGap();
-
-            var circleSize = .5f * size + gap;
-
             var fillColor = CreateBrush(gfx, _settings.CircleSettings.GetFillColor());
             var outlineColor = CreateBrush(gfx, _settings.CircleSettings.GetOutlineColor());
+            var circleSize = .5f * size + gap;
 
             gfx.DrawEllipse(outlineColor, x, y, circleSize, circleSize, width + outline);
             gfx.DrawEllipse(fillColor, x, y, circleSize, circleSize, width);
@@ -60,7 +56,6 @@ namespace CrosshairOverlay.Drawing
             var outline = _settings.CrossSettings.GetCrosshairOutline();
             var size = _settings.CrossSettings.GetCrosshairSize();
             var gap = _settings.CrossSettings.GetCrosshairGap();
-
             var fillColor = CreateBrush(gfx, _settings.CrossSettings.GetFillColor());
             var outlineColor = CreateBrush(gfx, _settings.CrossSettings.GetOutlineColor());
 

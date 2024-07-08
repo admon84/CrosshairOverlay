@@ -2,29 +2,30 @@
 
 CrosshairOverlay is a simple C# application that draws a customizable crosshair on your screen, perfect for keeping your aim steady. Designed specifically for Windows users.
 
+### Disclaimer
+
+CrosshairOverlay does not alter any game code or files; it simply overlays a crosshair on your screen. However, some games may consider this to be cheating as it modifies the player's experience. Use it at your own risk, and be aware that using CrosshairOverlay in online games could lead to penalties, bans, or other consequences imposed by game developers or administrators.
+
 ### Prerequisites
 
-Make sure you have:
-- .NET Framework (version 4.7 or higher)
+.NET Framework 4.7
 
 ### Getting Started
 
-1. **Download the Latest Release**: Grab the latest release from our [GitHub Releases page](https://github.com/admon84/CrosshairOverlay/releases).
-2. **Unzip the Download**: Extract the downloaded ZIP file to your desired location.
-3. **Run the Application**: Launch the downloaded application to start using the crosshair.
+Get the latest version from the [Releases](https://github.com/admon84/CrosshairOverlay/releases) page.
 
 ### Building from Source (Optional)
 
-1. **Get the Code**: Download or clone this repository.
-2. **Build**: Open the project in your preferred IDE (like Visual Studio) and build the project.
+Clone the repository, open the project in your preferred IDE (like Visual Studio) and build the project.
 
 ### Usage
 
-1. **Run the Application**: Launch the application to start using the crosshair.
+1. **Launch `CrosshairOverlay.exe`**: Start the application to display the crosshair overlay.
 2. **Options**: Right-click the system tray icon to access the following options:
-   - **Settings**: Open the settings form to customize the crosshair.
-   - **Pause**: Temporarily disable the crosshair overlay.
-   - **Exit**: Close the application when you're done.
-3. **Customize**: Adjust the crosshair settings to suit your preferences.
+   - **Settings**: Personalize the crosshair in the settings window.
+   - **Monitor**: Choose which display to show the crosshair on.
+   - **Pause**: Temporarily hide the crosshair.
+   - **Exit**: Close the application.
+3. **Customize**: Adjust the crosshair settings to fit your needs.
 
    ![CrosshairOverlay](https://github.com/admon84/CrosshairOverlay/assets/8539634/cbc2304f-37c5-4955-8a3d-ad7a8ee4ba56)

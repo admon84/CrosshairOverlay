@@ -9,24 +9,26 @@ namespace CrosshairOverlay
 {
     public class Overlay : IDisposable
     {
-        private bool _isRunning;
-        private bool _isPaused;
         private static readonly object _pauseLock = new object();
         private static readonly object _drawLock = new object();
         private readonly GraphicsWindow _window;
-
         private Crosshair _crosshair = new Crosshair();
         private bool _isDisposed = false;
         private bool _isDrawing = false;
+        private bool _isRunning = false;
+        private bool _isPaused = false;
 
         public Overlay()
         {
             GameOverlay.TimerService.EnableHighPrecisionTimers();
+            var bounds = Screen.PrimaryScreen.Bounds;
             var gfx = new Graphics()
             {
-                PerPrimitiveAntiAliasing = false
+                PerPrimitiveAntiAliasing = false,
+                UseMultiThreadedFactories = true,
+                VSync = true,
             };
-            _window = new GraphicsWindow(0, 0, SystemInformation.PrimaryMonitorSize.Width, SystemInformation.PrimaryMonitorSize.Height, gfx)
+            _window = new GraphicsWindow(bounds.Left, bounds.Top, bounds.Width, bounds.Height, gfx)
             {
                 FPS = 60,
                 IsTopmost = true,
@@ -34,6 +36,19 @@ namespace CrosshairOverlay
             };
             _window.DestroyGraphics += Window_DestroyGraphics;
             _window.DrawGraphics += Window_DrawGraphics;
+        }
+
+        public void Refresh()
+        {
+            _window.Resize(_window.X, _window.Y, _window.Width, _window.Height);
+        }
+
+        public void SetBounds(int x, int y, int width, int height)
+        {
+            _window.X = x;
+            _window.Y = y;
+            _window.Width = width;
+            _window.Height = height;
         }
 
         private void Window_DrawGraphics(object sender, DrawGraphicsEventArgs e)
@@ -86,7 +101,7 @@ namespace CrosshairOverlay
             }
         }
 
-        public void Unpause()
+        public void Resume()
         {
             lock (_pauseLock)
             {
@@ -98,7 +113,7 @@ namespace CrosshairOverlay
         public void Stop()
         {
             _isRunning = false;
-            Unpause();
+            Resume();
         }
 
         ~Overlay() => Dispose();
