@@ -4,18 +4,15 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using CrosshairOverlay.Utils;
 
 namespace CrosshairOverlay
 {
     public static class Program
     {
-        private static readonly string _appName = "CrosshairOverlay";
-        private static readonly Version _assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
-        private static readonly string _appVersion = string.Format("v{0}.{1}.{2}", _assemblyVersion.Major, _assemblyVersion.Minor, _assemblyVersion.Build);
-        private static readonly string _appNameVersion = $"{_appName} {_appVersion}";
         private static readonly BackgroundWorker _worker = new BackgroundWorker();
-        private static SettingsForm settingsForm;
         private static Mutex _mutex = null;
+        private static SettingsForm _settingsForm;
         private static Overlay _overlay;
         private static NotifyIcon _trayIcon;
         private static bool _isPaused = false;
@@ -25,26 +22,42 @@ namespace CrosshairOverlay
         {
             try
             {
-                _mutex = new Mutex(true, _appName, out var createdNew);
+                _mutex = new Mutex(true, AppInfo.AppName, out var createdNew);
                 if (!createdNew)
                 {
-                    MessageBox.Show($"{_appName} is already running.", _appNameVersion, MessageBoxButtons.OK);
+                    MessageBox.Show($"{AppInfo.AppName} is already running.", AppInfo.AppNameVersion, MessageBoxButtons.OK);
                     return;
                 }
-
-                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
                 Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
                 Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
                 AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-
-                Application.EnableVisualStyles();
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
                 Application.SetCompatibleTextRenderingDefault(false);
+                Application.EnableVisualStyles();
 
                 var contextMenu = new ContextMenuStrip();
+
+                contextMenu.Items.Add(new ToolStripMenuItem("Settings", null, ShowSettingsForm));
+
+                if (Screen.AllScreens.Length > 1)
+                {
+                    var monitorItems = new ToolStripMenuItem("Monitor");
+                    foreach (var screen in Screen.AllScreens)
+                    {
+                        var menuItem = new ToolStripMenuItem(screen.DeviceName.Replace("\\\\.\\DISPLAY", "Monitor "))
+                        {
+                            Tag = screen,
+                            Checked = screen == Screen.PrimaryScreen
+                        };
+                        menuItem.Click += MonitorMenuItem_Click;
+                        monitorItems.DropDownItems.Add(menuItem);
+                    }
+                    contextMenu.Items.Add(monitorItems);
+                }
+
                 contextMenu.Items.AddRange(new ToolStripItem[]
                 {
-                    new ToolStripMenuItem("Settings", null, ShowSettingsForm),
                     new ToolStripSeparator(),
                     new ToolStripMenuItem("Pause", null, TrayPause),
                     new ToolStripMenuItem("Exit", null, TrayExit)
@@ -54,7 +67,7 @@ namespace CrosshairOverlay
                 {
                     Icon = Properties.Resources.Icon,
                     ContextMenuStrip = contextMenu,
-                    Text = _appNameVersion,
+                    Text = AppInfo.AppNameVersion,
                     Visible = true
                 };
 
@@ -70,20 +83,35 @@ namespace CrosshairOverlay
             }
         }
 
+        private static void MonitorMenuItem_Click(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem menuItem && menuItem.Tag is Screen selectedScreen)
+            {
+                var bounds = selectedScreen.Bounds;
+                _overlay.SetBounds(bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+                _overlay.Refresh();
+
+                foreach (ToolStripMenuItem item in menuItem.GetCurrentParent().Items)
+                {
+                    item.Checked = item == menuItem;
+                }
+            }
+        }
+
         private static void ShowSettingsForm(object sender, EventArgs e)
         {
-            if (settingsForm == null || settingsForm.IsDisposed)
+            if (_settingsForm == null || _settingsForm.IsDisposed)
             {
-                settingsForm = new SettingsForm(_appNameVersion);
+                _settingsForm = new SettingsForm(AppInfo.AppNameVersion);
             }
 
-            if (settingsForm.Visible)
+            if (_settingsForm.Visible)
             {
-                settingsForm.Activate();
+                _settingsForm.Activate();
             }
             else
             {
-                settingsForm.ShowDialog();
+                _settingsForm.ShowDialog();
             }
         }
 
@@ -107,7 +135,7 @@ namespace CrosshairOverlay
 
         private static void HandleException(Exception e)
         {
-            MessageBox.Show(e.Message, $"Error - {_appNameVersion}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(e.Message, $"Error - {AppInfo.AppNameVersion}", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Application.Exit();
         }
 
@@ -119,17 +147,18 @@ namespace CrosshairOverlay
 
         private static void TrayPause(object sender, EventArgs e)
         {
+            var menuItem = (ToolStripMenuItem)sender;
             if (_isPaused)
             {
-                _overlay.Unpause();
                 _isPaused = false;
-                ((ToolStripMenuItem)sender).Text = "Pause";
+                _overlay.Resume();
+                menuItem.Checked = false;
             }
             else
             {
-                _overlay.Pause();
                 _isPaused = true;
-                ((ToolStripMenuItem)sender).Text = "Unpause";
+                _overlay.Pause();
+                menuItem.Checked = true;
             }
         }
 
@@ -147,7 +176,7 @@ namespace CrosshairOverlay
         private static void Dispose()
         {
             _overlay.Dispose();
-            settingsForm?.Dispose();
+            _settingsForm?.Dispose();
             _trayIcon.Dispose();
             if (_worker.IsBusy)
             {

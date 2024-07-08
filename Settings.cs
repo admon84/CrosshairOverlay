@@ -13,7 +13,7 @@ namespace CrosshairOverlay
         public ShapeSettings CrossSettings { get; set; }
         public ShapeSettings CircleSettings { get; set; }
 
-        private static readonly string SettingsFilePath = "Settings.json";
+        private static readonly string _filename = "Settings.json";
         private static Settings _instance;
 
         private Settings()
@@ -38,17 +38,17 @@ namespace CrosshairOverlay
         public void Save()
         {
             var json = JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            File.WriteAllText(SettingsFilePath, json);
+            File.WriteAllText(_filename, json);
         }
 
         public static Settings Load()
         {
-            if (!File.Exists(SettingsFilePath))
+            if (!File.Exists(_filename))
             {
                 return new Settings();
             }
 
-            var json = File.ReadAllText(SettingsFilePath);
+            var json = File.ReadAllText(_filename);
             return JsonConvert.DeserializeObject<Settings>(json);
         }
     }
@@ -67,25 +67,10 @@ namespace CrosshairOverlay
         public Boolean CrosshairCross { get; set; } = true;
         public Boolean CrosshairCircle { get; set; } = false;
 
-        public Color GetFillColor()
-        {
-            return Color.FromArgb(GetFillColorAlpha(), FillColor);
-        }
-
-        public Color GetOutlineColor()
-        {
-            return Color.FromArgb(GetOutlineColorAlpha(), OutlineColor);
-        }
-
-        public int GetFillColorAlpha()
-        {
-            return (int)Math.Round(255 * FillColorAlpha);
-        }
-
-        public int GetOutlineColorAlpha()
-        {
-            return (int)Math.Round(255 * OutlineColorAlpha);
-        }
+        public Color GetFillColor() => Color.FromArgb(GetFillColorAlpha(), FillColor);
+        public Color GetOutlineColor() => Color.FromArgb(GetOutlineColorAlpha(), OutlineColor);
+        public int GetFillColorAlpha() => (int)Math.Round(255 * FillColorAlpha);
+        public int GetOutlineColorAlpha() => (int)Math.Round(255 * OutlineColorAlpha);
     }
 
     public class ShapeSettings
@@ -106,47 +91,14 @@ namespace CrosshairOverlay
             _globalSettings = globalSettings;
         }
 
-        public Color GetFillColor()
-        {
-            return Color.FromArgb(GetFillColorAlpha(), FillColor ?? _globalSettings.FillColor);
-        }
-
-        public Color GetOutlineColor()
-        {
-            return Color.FromArgb(GetOutlineColorAlpha(), OutlineColor ?? _globalSettings.OutlineColor);
-        }
-
-        public int GetFillColorAlpha()
-        {
-            var fillColorAlpha = FillColorAlpha ?? _globalSettings.FillColorAlpha;
-            return (int)Math.Round(255 * fillColorAlpha);
-        }
-
-        public int GetOutlineColorAlpha()
-        {
-            var outlineColorAlpha = OutlineColorAlpha ?? _globalSettings.OutlineColorAlpha;
-            return (int)Math.Round(255 * outlineColorAlpha);
-        }
-
-        public float GetCrosshairSize()
-        {
-            return CrosshairSize ?? _globalSettings.CrosshairSize;
-        }
-
-        public float GetCrosshairGap()
-        {
-            return CrosshairGap ?? _globalSettings.CrosshairGap;
-        }
-
-        public float GetCrosshairWidth()
-        {
-            return CrosshairWidth ?? _globalSettings.CrosshairWidth;
-        }
-
-        public float GetCrosshairOutline()
-        {
-            return CrosshairOutline ?? _globalSettings.CrosshairOutline;
-        }
+        public Color GetFillColor() => Color.FromArgb(GetFillColorAlpha(), FillColor ?? _globalSettings.FillColor);
+        public Color GetOutlineColor() => Color.FromArgb(GetOutlineColorAlpha(), OutlineColor ?? _globalSettings.OutlineColor);
+        public int GetFillColorAlpha() => (int)Math.Round(255 * (FillColorAlpha ?? _globalSettings.FillColorAlpha));
+        public int GetOutlineColorAlpha() => (int)Math.Round(255 * (OutlineColorAlpha ?? _globalSettings.OutlineColorAlpha));
+        public float GetCrosshairSize() => CrosshairSize ?? _globalSettings.CrosshairSize;
+        public float GetCrosshairGap() => CrosshairGap ?? _globalSettings.CrosshairGap;
+        public float GetCrosshairWidth() => CrosshairWidth ?? _globalSettings.CrosshairWidth;
+        public float GetCrosshairOutline() => CrosshairOutline ?? _globalSettings.CrosshairOutline;
     }
 
     public class ColorJsonConverter : JsonConverter<Color>
