@@ -14,7 +14,7 @@ namespace CrosshairOverlay.Drawing
         {
             var (x, y) = (gfx.Width / 2f, gfx.Height / 2f);
 
-            if (_settings.GlobalSettings.CrosshairDot) 
+            if (_settings.GlobalSettings.CrosshairDot)
                 DrawDot(gfx, x, y);
 
             if (_settings.GlobalSettings.CrosshairCircle)
@@ -30,10 +30,10 @@ namespace CrosshairOverlay.Drawing
             var outline = _settings.DotSettings.GetCrosshairOutline();
             var fillColor = CreateBrush(gfx, _settings.DotSettings.GetFillColor());
             var outlineColor = CreateBrush(gfx, _settings.DotSettings.GetOutlineColor());
-            var halfSize = width * .5f;
+            var radius = width * .5f;
 
-            gfx.DrawRectangle(outlineColor, x - halfSize, y - halfSize, x + halfSize, y + halfSize, width + outline);
-            gfx.DrawRectangle(fillColor, x - halfSize, y - halfSize, x + halfSize, y + halfSize, width);
+            gfx.DrawRectangle(outlineColor, x - radius, y - radius, x + radius, y + radius, width + outline);
+            gfx.DrawRectangle(fillColor, x - radius, y - radius, x + radius, y + radius, width);
         }
 
         private void DrawCircle(Graphics gfx, float x, float y)
@@ -44,10 +44,10 @@ namespace CrosshairOverlay.Drawing
             var gap = _settings.CircleSettings.GetCrosshairGap();
             var fillColor = CreateBrush(gfx, _settings.CircleSettings.GetFillColor());
             var outlineColor = CreateBrush(gfx, _settings.CircleSettings.GetOutlineColor());
-            var circleSize = .5f * size + gap;
+            var radius = .5f * size + gap;
 
-            gfx.DrawEllipse(outlineColor, x, y, circleSize, circleSize, width + outline);
-            gfx.DrawEllipse(fillColor, x, y, circleSize, circleSize, width);
+            gfx.DrawEllipse(outlineColor, x, y, radius, radius, width + outline);
+            gfx.DrawEllipse(fillColor, x, y, radius, radius, width);
         }
 
         private void DrawCross(Graphics gfx, float x, float y)
